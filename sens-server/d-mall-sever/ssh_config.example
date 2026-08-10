@@ -1,0 +1,8 @@
+Host d-mall-server
+    HostName 47.83.1.157
+    Port 22
+    User sens
+    IdentityFile /Users/lingang/.ssh/id_ed25519_d_mall
+    IdentitiesOnly yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 3

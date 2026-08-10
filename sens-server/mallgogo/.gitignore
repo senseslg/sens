@@ -1,0 +1,6 @@
+reports/
+*.log
+*.env
+*.pem
+*.key
+id_*

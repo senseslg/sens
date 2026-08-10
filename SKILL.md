@@ -9,10 +9,15 @@
 | 长期沟通与上下文沉淀 | [reference/communication-protocol.md](reference/communication-protocol.md) | 从自然语言沟通中提炼事实、决定、行动项、风险和待确认事项 |
 | 记录维护 | [reference/record-maintenance.md](reference/record-maintenance.md) | 新建或更新总览、迭代日志、项目、每日或会议记录 |
 | 工作项生命周期 | [reference/work-item-lifecycle.md](reference/work-item-lifecycle.md) | 接收、推进、暂停、完成或归档一个持续工作项 |
+| CCSL 服务器基线 | [new-ccsl-server/scripts/server_baseline.py](new-ccsl-server/scripts/server_baseline.py) | 通过 SSH 或服务器本机采集脱敏的系统、磁盘、服务、端口与 Java 基线 |
+| CCSL Jenkins 发布验证 | [new-ccsl-server/scripts/verify_deployment.py](new-ccsl-server/scripts/verify_deployment.py) | 核对产物、进程启动时间、端口、HTTP 入口和发布后致命日志信号 |
 
 ## 使用规则
 
+- 所有流程说明和执行记录必须简短、明确、可快速扫描；先给结论和适用场景，再给必要步骤与边界。
 - Playbook 提供默认顺序，但不能替代读取当前文件和核对真实状态。
 - 新流程只有在重复出现并形成稳定步骤后才加入本索引。
 - 一次性任务留在对应记录中，不包装成通用流程。
 - 如果实际做法与 playbook 不一致，先确认原因，再更新文档或明确例外。
+- 稳定且会重复执行的命令流程应实现为项目内 Python 脚本；脚本默认只读、脱敏、参数化，并用退出码或 JSON 提供可复核结果。
+- 生产服务器地址和凭证不得硬编码到脚本。需要修改远端状态的自动化必须与只读检查分离，并明确授权、影响与回滚。

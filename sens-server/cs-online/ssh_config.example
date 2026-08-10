@@ -1,0 +1,7 @@
+Host sens-cs-online
+    HostName 47.239.215.30
+    User sens
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 3

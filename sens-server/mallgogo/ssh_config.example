@@ -1,0 +1,8 @@
+Host sens-mallgogo
+    HostName 47.83.14.210
+    Port 22
+    User sens
+    IdentityFile ~/.ssh/id_ed25519_cel_mall_server
+    IdentitiesOnly yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 3

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MYSQL_BIN="/usr/local/opt/mysql@8.4/bin/mysql"
+SOCKET="$ROOT_DIR/.local-mysql84/run/mysql.sock"
+
+if [[ ! -x "$MYSQL_BIN" ]]; then
+  echo "mysql 8.4 client not found at $MYSQL_BIN" >&2
+  exit 1
+fi
+
+exec "$MYSQL_BIN" \
+  -uroot \
+  -p \
+  --protocol=SOCKET \
+  --socket="$SOCKET" \
+  "$@"

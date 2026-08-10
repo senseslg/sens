@@ -1,0 +1,7 @@
+Host sens-new-ccsl
+    HostName 47.83.1.157
+    User sens
+    IdentityFile ~/.ssh/id_ed25519_d_mall
+    IdentitiesOnly yes
+    ServerAliveInterval 30
+    ServerAliveCountMax 3

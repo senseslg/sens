@@ -1,0 +1,14 @@
+# Never place credentials or private keys in this directory.
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+credentials*
+secrets*
+*.log
+ssh_config.local
+
+# Generated read-only daily reports.
+reports/

@@ -1,0 +1,11 @@
+Host ccsl-new
+    HostName 8.212.48.176
+    User sens
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    BatchMode yes
+    ConnectTimeout 10
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+    StrictHostKeyChecking yes
