@@ -33,6 +33,15 @@ sudo tail -n 120 /tmp/YYYY-MM-DD/<log-id>.log
 
 ## 源码与 Git 核对
 
+本地源码更新：
+
+```bash
+git -C /Users/lingang/sens/otwms-server/otwms-backend pull --ff-only
+git -C /Users/lingang/sens/otwms-server/otwms-frontend pull --ff-only
+```
+
+公司 Bitbucket SSH 当前只提供旧版 `ssh-rsa`。两个仓库已在各自 `.git/config` 设置兼容参数；不要把该设置扩大到全局 SSH 配置。
+
 生产 Jenkins 工作区：
 
 ```text

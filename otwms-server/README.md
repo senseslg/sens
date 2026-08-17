@@ -16,6 +16,15 @@ OTWMS Java 后端的源码、构建、生产部署、XXL-JOB 执行和故障定�
 - 修改前确认 `2026-08-15` 日账单是否存在部分结果，以及任务重跑是否幂等。
 - 通过 Bitbucket 提交、Jenkins 构建和受控生产发布完成修复，不直接修改 Jenkins 工作区或生产 JAR。
 
+## 本地源码
+
+| 仓库 | 本地目录 | 当前分支 |
+|---|---|---|
+| `OTWMS/otwms-backend` | `otwms-server/otwms-backend/` | `master` |
+| `OTWMS/otwms-frontend` | `otwms-server/otwms-frontend/` | `master` |
+
+两个目录是独立 Git 仓库，并由本目录 `.gitignore` 排除，不进入父级 `sens` 文档仓库。
+
 ## 安全边界
 
 - 默认只读检查；部署、重启、数据库写入和任务重跑需要单独授权。

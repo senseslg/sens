@@ -4,6 +4,7 @@
 
 ---
 
+- **v0.13.1** 2026-08-17 — 将 OTWMS 后端与前端仓库作为独立 Git checkout 克隆到 `otwms-server`，确认后端当前提交与生产构建映射一致，并为两个仓库设置局部 `ssh-rsa` 兼容
 - **v0.13.0** 2026-08-17 — 新增 `otwms-server` 子项目，确认 OTWMS 源码、Jenkins 与生产 `BladeX.jar` 的精确映射，归档任务 13 大型 `IN` 查询退化事故，并明确完成后由助手评估 Skill/Python 脚本沉淀价值
 - **v0.12.0** 2026-08-17 — 建立 `ce-lb`、GCP `dev-lb`、`wms-db` 与 `wms-server` 的完整定位图，确认 XXL-JOB/Bitbucket/Jenkins/CEWMS 角色，并记录 `wms-server` 磁盘 100% 事故
 - **v0.11.4** 2026-08-16 — 确认 `cambodianexpress.com` 到期未续费导致 GoDaddy 停放官网入口，原 `ce-lb` WordPress 源站仍可正常响应

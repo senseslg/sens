@@ -24,6 +24,15 @@ Bitbucket OTWMS/otwms-backend (master)
 | 生产产物 | `otwms-group-cq0l:/root/BladeX.jar` |
 | 两端 SHA-256 | `7e00a63099441b9482610783ce65b13f9a87759b74957e9a8baf5887ea143c16` |
 
+## 本地源码 checkout
+
+| 用途 | 本地目录 | 远程仓库 | 2026-08-17 当前提交 |
+|---|---|---|---|
+| 后端 | `otwms-server/otwms-backend/` | `ssh://git@code.cambodianexpress.com:9200/otwms/otwms-backend.git` | `00a94febfdb50dca1175ac1940f576c4a29493dd` |
+| 前端 | `otwms-server/otwms-frontend/` | `ssh://git@code.cambodianexpress.com:9200/otwms/otwms-frontend.git` | `5cda7fb19565687cf9931fd1481d71f76520a913` |
+
+两个 checkout 当前均为 `master` 并跟踪 `origin/master`。源码目录由父仓库忽略，提交与分支操作应在各自目录内执行。
+
 校验值只证明该时间点两端产物一致；每次发布后必须重新核对。
 
 ## 本次问题源码位置

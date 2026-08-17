@@ -12,6 +12,8 @@
 |---|---|
 | 调度后台 | `wms-db` 上的 `xxl-job-admin`；只负责调度 |
 | 源码仓库 | `OTWMS/otwms-backend` |
+| 本地后端 | `otwms-server/otwms-backend/` |
+| 本地前端 | `otwms-server/otwms-frontend/` |
 | 生产分支 | `master` |
 | Jenkins Job | `otwms / prod / otwms-backend` |
 | Jenkins 工作区 | `/home/daniel/containers/jenkins/jenkins/workspace/otwms/prod/otwms-backend` |

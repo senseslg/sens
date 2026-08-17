@@ -4,7 +4,7 @@
 
 ## 当前版本
 
-- `v0.13.0`
+- `v0.13.1`
 - 建立日期：`2026-07-15`
 - 版本规则：
   - `MAJOR`：记录体系、目录结构或长期协作方式发生不兼容调整。
@@ -62,7 +62,7 @@
 
 - 路径：[`otwms-server/`](otwms-server/)
 - 范围：OTWMS Java 后端的 Bitbucket 源码、Jenkins 构建、生产 `BladeX.jar` 部署、XXL-JOB 执行链路和数据库查询故障定位。
-- 当前状态：已确认生产 `/root/BladeX.jar` 对应 `OTWMS/otwms-backend` 的 `master` 构建，并定位任务 13 因 8,209 个 `shipment_code` 触发 MySQL range optimizer 内存上限、退化为全表扫描后超时；修复与重跑尚未执行。
+- 当前状态：已确认生产 `/root/BladeX.jar` 对应 `OTWMS/otwms-backend` 的 `master` 构建，后端与前端源码已分别克隆到子项目；任务 13 因 8,209 个 `shipment_code` 触发 MySQL range optimizer 内存上限、退化为全表扫描后超时，修复与重跑尚未执行。
 
 ### ssl
 
