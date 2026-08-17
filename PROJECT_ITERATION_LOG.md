@@ -4,6 +4,11 @@
 
 ---
 
+- **v0.13.0** 2026-08-17 — 新增 `otwms-server` 子项目，确认 OTWMS 源码、Jenkins 与生产 `BladeX.jar` 的精确映射，归档任务 13 大型 `IN` 查询退化事故，并明确完成后由助手评估 Skill/Python 脚本沉淀价值
+- **v0.12.0** 2026-08-17 — 建立 `ce-lb`、GCP `dev-lb`、`wms-db` 与 `wms-server` 的完整定位图，确认 XXL-JOB/Bitbucket/Jenkins/CEWMS 角色，并记录 `wms-server` 磁盘 100% 事故
+- **v0.11.4** 2026-08-16 — 确认 `cambodianexpress.com` 到期未续费导致 GoDaddy 停放官网入口，原 `ce-lb` WordPress 源站仍可正常响应
+- **v0.11.3** 2026-08-10 — 确认 `ce-lb` Certbot Cron 虽每日触发但因找不到 Nginx 而续期失败，当前有效证书来自非计划时刻的二次运行
+- **v0.11.2** 2026-08-10 — 补充 `ce-lb` 域名路由与服务组件清单，明确其为单机边缘反向代理和官网源站，并区分 MySQL/GCS Fuse 的已确认状态与业务依赖推断
 - **v0.11.1** 2026-08-10 — 确认 `ce-lb` 承担 TLS、反向代理与 WordPress/MySQL 多角色，核对主域名证书有效并识别多个过期证书与续期风险
 - **v0.11.0** 2026-08-10 — 新增 `otwms-ce-lb` 子项目，完成 `ce-lb` 首次只读基线并记录 CPU、内存、系统生命周期和端口暴露风险
 - **v0.10.0** 2026-08-08 — 新增 `office-network` 子项目，建立 MikroTik 网络管理框架，识别两台 VMware ESXi 主机并完成其中一台的只读基线

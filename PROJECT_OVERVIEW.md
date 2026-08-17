@@ -4,7 +4,7 @@
 
 ## 当前版本
 
-- `v0.11.1`
+- `v0.13.0`
 - 建立日期：`2026-07-15`
 - 版本规则：
   - `MAJOR`：记录体系、目录结构或长期协作方式发生不兼容调整。
@@ -55,8 +55,14 @@
 ### otwms-ce-lb
 
 - 路径：[`otwms-ce-lb/`](otwms-ce-lb/)
-- 范围：GCP `ce-lb` 实例的访问、运行基线、网络入口、服务关系与风险管理。
-- 当前状态：已于 `2026-08-10` 完成首次只读基线与 SSL/服务梳理；该实例承担 TLS 终止、反向代理、WordPress/PHP、MySQL 和 GCS Fuse，多角色集中形成单点与资源风险，且部分生效域名证书已过期。
+- 范围：GCP `ce-lb`、`dev-lb`、`wms-db` 和 `wms-server` 的入口、源码/构建平台、应用部署与风险管理。
+- 当前状态：已建立完整基础设施链路图；`job` 经 GCP `dev-lb` 落到 `wms-db` 的 XXL-JOB，Bitbucket/Jenkins 同机运行，CEWMS 部署在 `wms-server`。当前最高风险为 `wms-server` 磁盘 100% 与 inode 97%，官网域名停放和 Certbot 故障仍待处理。
+
+### otwms-server
+
+- 路径：[`otwms-server/`](otwms-server/)
+- 范围：OTWMS Java 后端的 Bitbucket 源码、Jenkins 构建、生产 `BladeX.jar` 部署、XXL-JOB 执行链路和数据库查询故障定位。
+- 当前状态：已确认生产 `/root/BladeX.jar` 对应 `OTWMS/otwms-backend` 的 `master` 构建，并定位任务 13 因 8,209 个 `shipment_code` 触发 MySQL range optimizer 内存上限、退化为全表扫描后超时；修复与重跑尚未执行。
 
 ### ssl
 
@@ -124,7 +130,8 @@
 - `records/daily/`：跨天日常记录。
 - `records/meetings/`：会议记录。
 - `google-otwms/`：OTWMS / GCP 运维子项目。
-- `otwms-ce-lb/`：GCP `ce-lb` 实例运行基线与运维子项目。
+- `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享平台、源码/构建与应用服务器运维子项目。
+- `otwms-server/`：OTWMS Java 后端源码、构建、生产部署和任务执行故障子项目。
 - `ssl/`：`ceccsl.com` HTTPS 与网站部署子项目。
 - `mallgogo-sever/`：MallGoGo SSR 服务器性能子项目。
 - `new-ccsl-server/`：新 CCSL 服务器建设与运维子项目。

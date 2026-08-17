@@ -8,6 +8,15 @@ gcloud compute ssh --zone "asia-southeast1-a" "ce-lb" --project "cambodian-expre
 
 当前验证使用远程用户 `lingang`。如果 GCloud 身份、实例 Metadata 或 OS Login 改变，应重新确认实际账号，不在仓库记录密钥内容。
 
+关联服务器：
+
+```bash
+gcloud compute ssh wms-db --zone "asia-southeast1-a" --project "cambodian-express"
+gcloud compute ssh wms-server --zone "asia-southeast1-a" --project "cambodian-express"
+```
+
+两台关联服务器当前无外部 IP，GCloud CLI 会通过 IAP tunnel 连接。
+
 ## 默认只读巡检
 
 登录后优先检查：
