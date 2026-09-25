@@ -4,15 +4,15 @@
 
 ## 当前结论
 
-- MikroTik 管理设备在线；型号和 RouterOS 版本待登录确认。
+- MikroTik 网关已确认为 `RB3011UiAS (arm)`，运行 RouterOS `6.49.1 stable`。
 - `192.168.1.0/24` 内有两台 VMware ESXi 主机，均开放 HTTPS Host Client，SSH 当前关闭。
-- 管理账号和只读访问策略待确认；完整管理地址不写入版本化记录。
+- 当前 `admin` 账号属于自定义 `admin` 组，具备 `read`、`write` 和 `web`，可通过 WebFig 管理 NAT/Firewall；不具备 `policy`、`ssh`、`telnet` 或 `api`。
 
 ## 设备清单
 
 | 设备代号 | 角色 | 型号 | RouterOS | 网络位置 | 管理方式 | 状态 |
 |---|---|---|---|---|---|---|
-| 待确认 | 办公网交换设备 | 待确认 | 待确认 | 待确认 | 待确认 | 待盘点 |
+| `office-gateway` | 办公网网关/交换设备 | RB3011UiAS | 6.49.1 stable | `192.168.0.0/23` | HTTP WebFig / WinBox | 在线，已确认写权限 |
 
 ## 服务器入口
 
@@ -31,8 +31,9 @@
 
 - 身份与时间：设备命名、时区、NTP 待确认。
 - 二层网络：Bridge、VLAN、STP/RSTP 和链路聚合待确认。
-- 三层服务：网关、DHCP、DNS、路由和防火墙是否由本项目设备承担待确认。
-- 管理面：允许的管理网段、WinBox/SSH/API 服务和只读账号待确认。
+- 三层服务：该设备是当前默认网关；DHCP、DNS 和完整路由基线仍待盘点。
+- 防火墙：已确认可读取 Filter/NAT；现有动态规则包含 UDP 5060 与 UDP 10000–65535 的 SIP/RTP 转发，新增 UDP 映射前必须复核冲突。
+- 管理面：当前 WebFig 使用 HTTP，登录流量未加密；账号可写 NAT/Firewall，但不能管理用户或通过 SSH/API 登录。
 - 可观测性：日志、SNMP、流量和资源监控待确认。
 - 恢复能力：配置导出、二进制备份、保留周期和恢复演练待确认。
 

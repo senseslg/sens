@@ -1,26 +1,31 @@
 # otwms-server
 
-OTWMS Java 后端的源码、构建、生产部署、XXL-JOB 执行和故障定位记录。这里的 `server` 指运行 `BladeX.jar` 的 OTWMS 后端体系，不是 `wms-db` 上的 XXL-JOB 管理后台。
+OTWMS 后端、前端、构建发布、XXL-JOB 和相关 Google Cloud 资源的故障定位记录。这里的 `server` 主要指运行 `BladeX.jar` 的 OTWMS 后端体系，同时记录直接影响 OTWMS 业务的前端存储事故；它不是 `wms-db` 上的 XXL-JOB 管理后台源码。
 
 ## 阅读顺序
 
 1. [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)：当前状态、风险和下一步。
 2. [SOURCE_DEPLOYMENT_MAP.md](SOURCE_DEPLOYMENT_MAP.md)：Bitbucket、Jenkins、生产实例和 JAR 的精确映射。
 3. [INCIDENT_2026-08-17_DAILY_BILL_QUERY_TIMEOUT.md](INCIDENT_2026-08-17_DAILY_BILL_QUERY_TIMEOUT.md)：任务 13 查询超时事故。
-4. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码与构建产物的只读核对方法。
-5. [reference/README.md](reference/README.md)：可复用诊断参考。
+4. [INCIDENT_2026-08-22_UAT_I18N_LIFECYCLE_DELETE.md](INCIDENT_2026-08-22_UAT_I18N_LIFECYCLE_DELETE.md)：UAT 前端 i18n 被 Lifecycle 删除及软删除恢复。
+5. [INCIDENT_2026-09-17_TMS_OUTAGE.md](INCIDENT_2026-09-17_TMS_OUTAGE.md)：OTWMS 受 TMS 中断影响；TMS 故障主记录见 [`tms-server`](../tms-server/README.md)。
+6. [INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md](INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md)：Daily Report 导出与 Order Print 因磁盘/inode 满载失效。
+7. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码、构建产物和 Cloud Storage 的安全核对方法。
+8. [reference/README.md](reference/README.md)：可复用诊断参考。
 
 ## 当前重点
 
-- 在 `TmsShipmentRevenueCostServiceImpl.getShipmentRevenueCosts()` 中对 shipment code 分批查询，避免超大 `IN` 触发全表扫描。
+- 生产根盘已从容量/inode 100% 紧急恢复到 22%/2%，导出与打印业务恢复；尚需修复 XXL-JOB/POI 清理、日志轮转和实例模板容量。
+- 日账单查询分批修复已在功能分支提交并推送，尚未部署生产或重跑生产任务。
 - 修改前确认 `2026-08-15` 日账单是否存在部分结果，以及任务重跑是否幂等。
 - 通过 Bitbucket 提交、Jenkins 构建和受控生产发布完成修复，不直接修改 Jenkins 工作区或生产 JAR。
+- `otwms-frontend-uat/i18n/` 已从 7 天软删除保护中恢复；桶级 90 天 Lifecycle 已移除，重新配置前必须限定前缀并评估业务保留期。
 
 ## 本地源码
 
 | 仓库 | 本地目录 | 当前分支 |
 |---|---|---|
-| `OTWMS/otwms-backend` | `otwms-server/otwms-backend/` | `master` |
+| `OTWMS/otwms-backend` | `otwms-server/otwms-backend/` | `codex/fix-daily-bill-revenue-cost-batching` |
 | `OTWMS/otwms-frontend` | `otwms-server/otwms-frontend/` | `master` |
 
 两个目录是独立 Git 仓库，并由本目录 `.gitignore` 排除，不进入父级 `sens` 文档仓库。

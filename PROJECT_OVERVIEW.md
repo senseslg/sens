@@ -4,7 +4,7 @@
 
 ## 当前版本
 
-- `v0.13.1`
+- `v0.17.0`
 - 建立日期：`2026-07-15`
 - 版本规则：
   - `MAJOR`：记录体系、目录结构或长期协作方式发生不兼容调整。
@@ -46,6 +46,12 @@
 
 ## 当前子项目
 
+### google-cloud
+
+- 路径：[`google-cloud/`](google-cloud/)
+- 范围：Google Cloud 项目级资源索引、控制台检查、访问/费用/变更规则。
+- 当前状态：`2026-09-17` 已在 Chrome 控制台核实 `cambodian-express` 项目与 Compute Engine 基础资源；其他产品及治理配置待盘点，动态数量见[资源快照](google-cloud/RESOURCE_INVENTORY.md)。
+
 ### google-otwms
 
 - 路径：[`google-otwms/`](google-otwms/)
@@ -56,13 +62,25 @@
 
 - 路径：[`otwms-ce-lb/`](otwms-ce-lb/)
 - 范围：GCP `ce-lb`、`dev-lb`、`wms-db` 和 `wms-server` 的入口、源码/构建平台、应用部署与风险管理。
-- 当前状态：已建立完整基础设施链路图；`job` 经 GCP `dev-lb` 落到 `wms-db` 的 XXL-JOB，Bitbucket/Jenkins 同机运行，CEWMS 部署在 `wms-server`。当前最高风险为 `wms-server` 磁盘 100% 与 inode 97%，官网域名停放和 Certbot 故障仍待处理。
+- 当前状态：已建立基础设施链路图；`job` 经 GCP `dev-lb` 落到 `wms-db` 的 XXL-JOB，Bitbucket/Jenkins 同机运行，CEWMS 部署在 `wms-server`。官网证书与 Cron PATH 已恢复；`cp` 在 `wms-server` 扩容后恢复，其他旧证书及 WMS 历史大文件仍需处理。
+
+### otwms-wms-server
+
+- 路径：[`otwms-wms-server/`](otwms-wms-server/)
+- 范围：GCP `wms-server` 的访问、运行基线、CEWMS 与 `cp` 后端服务边界和故障恢复。
+- 当前状态：`2026-09-18` 启动盘已扩至 600 GB，XFS、SSH、CEWMS 与公网 `cp` 入口均恢复；约 101 GB 可用。主要剩余风险是 `/home/daniel` 历史大文件及空间告警，详见 [事故记录](otwms-wms-server/INCIDENT_2026-09-17_UNRESPONSIVE.md)。
 
 ### otwms-server
 
 - 路径：[`otwms-server/`](otwms-server/)
 - 范围：OTWMS Java 后端的 Bitbucket 源码、Jenkins 构建、生产 `BladeX.jar` 部署、XXL-JOB 执行链路和数据库查询故障定位。
-- 当前状态：已确认生产 `/root/BladeX.jar` 对应 `OTWMS/otwms-backend` 的 `master` 构建，后端与前端源码已分别克隆到子项目；任务 13 因 8,209 个 `shipment_code` 触发 MySQL range optimizer 内存上限、退化为全表扫描后超时，修复与重跑尚未执行。
+- 当前状态：`2026-09-21` 已通过保留证据并原位截断 42.2 GB 日志，将生产根盘容量/inode 从 100% 恢复到 22%/2%，导出打印业务恢复；XXL-JOB 保留期、POI 临时文件释放、日志轮转和模板扩容仍待受控发布。任务 13 的分批查询修复分支已推送，尚未部署或重跑。
+
+### tms-server
+
+- 路径：[`tms-server/`](tms-server/)
+- 范围：`tms.cambodianexpress.com` 的 GCP 入口、Tomcat 实例、Bitbucket/Jenkins 发布链路和服务故障定位。
+- 当前状态：`2026-09-18` Jenkins #456 发布后登录入口已恢复；先前 Java 因 OOM 被杀，内存增长根因与 Franchise/Courier App 全流程恢复尚待验证。[事故记录](tms-server/INCIDENT_2026-09-17_OOM_AND_RECOVERY.md)。
 
 ### ssl
 
@@ -112,7 +130,7 @@
 
 - 路径：[`office-network/`](office-network/)
 - 范围：以 MikroTik 设备为核心的办公网络资产、拓扑、配置、监控、备份和故障处理。
-- 当前状态：已建立基础记录框架；设备型号、数量、RouterOS 版本、网络拓扑和管理要求待盘点。
+- 当前状态：已确认网关为 RB3011UiAS / RouterOS 6.49.1，当前 WebFig 账号可读写 NAT/Firewall，并建立公网端口映射 Runbook/只读预检查脚本；完整网络拓扑和规则顺序仍待盘点。
 
 ## 记录质量标准
 
@@ -130,8 +148,11 @@
 - `records/daily/`：跨天日常记录。
 - `records/meetings/`：会议记录。
 - `google-otwms/`：OTWMS / GCP 运维子项目。
+- `google-cloud/`：Google Cloud 项目级管理子项目。
 - `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享平台、源码/构建与应用服务器运维子项目。
+- `otwms-wms-server/`：GCP `wms-server` 的独立基线和故障恢复子项目。
 - `otwms-server/`：OTWMS Java 后端源码、构建、生产部署和任务执行故障子项目。
+- `tms-server/`：TMS 域名入口、Java/Tomcat、源码发布与故障恢复子项目。
 - `ssl/`：`ceccsl.com` HTTPS 与网站部署子项目。
 - `mallgogo-sever/`：MallGoGo SSR 服务器性能子项目。
 - `new-ccsl-server/`：新 CCSL 服务器建设与运维子项目。

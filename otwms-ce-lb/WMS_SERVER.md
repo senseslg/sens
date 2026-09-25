@@ -1,5 +1,7 @@
 # WMS Server
 
+> 本文件保留 `2026-08-17` 的历史基线；`2026-09-17` 的实时访问与故障状态见 [otwms-wms-server](../otwms-wms-server/PROJECT_OVERVIEW.md)。以下“当前结论”仅指当时快照。
+
 ## 当前结论
 
 `wms-server` 是 CEWMS .NET 管理后台的部署服务器，不是源码工作区。`cewms.service` 仍在运行，但根磁盘已 100% 满载、inode 使用率 97%，本机 HTTP 返回空响应，并出现持续的磁盘空间与应用错误信号，需要优先处置。

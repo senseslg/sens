@@ -7,6 +7,8 @@
 1. [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)：目标、范围、状态、行动项和风险。
 2. [DEVICE_INVENTORY.md](DEVICE_INVENTORY.md)：脱敏后的网络设备、服务器入口和服务基线。
 3. [ESXI_BASELINE.md](ESXI_BASELINE.md)：已登录 ESXi 主机的脱敏硬件、虚拟机、存储、网络与风险基线。
+4. [PORT_FORWARDING_RUNBOOK.md](PORT_FORWARDING_RUNBOOK.md)：MikroTik 公网端口映射的预检、配置、验证与回滚流程。
+5. [scripts/README.md](scripts/README.md)：只读端口映射预检查脚本。
 
 ## 当前状态
 

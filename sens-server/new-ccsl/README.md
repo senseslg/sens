@@ -20,6 +20,11 @@ cd /Users/lingang/sens/sens-server/new-ccsl
 ./bin/health-check.sh prod
 ./bin/health-check.sh uat
 ./bin/health-check.sh all
+
+# 检查夜间定时任务（自动集包 01:00 / 转运+TMS推送 02:00、03:00 / 失败单重推 13:00）
+./bin/check-nightly-jobs.sh                 # 最近一个完整凌晨（默认生产）
+./bin/check-nightly-jobs.sh --date 2026-09-03 --compare   # 指定日期并对比前一天
+./bin/check-nightly-jobs.sh --env uat       # 检查 UAT
 ```
 
 其他项目可以直接使用绝对路径调用：
@@ -27,6 +32,7 @@ cd /Users/lingang/sens/sens-server/new-ccsl
 ```bash
 /Users/lingang/sens/sens-server/new-ccsl/bin/server-status.sh
 /Users/lingang/sens/sens-server/new-ccsl/bin/health-check.sh uat
+/Users/lingang/sens/sens-server/new-ccsl/bin/check-nightly-jobs.sh
 ```
 
 服务器、应用路径、域名及当前状态见 [SERVER_INFO.md](SERVER_INFO.md)。
@@ -38,7 +44,11 @@ cd /Users/lingang/sens/sens-server/new-ccsl
 - `bin/check-ssh.sh`：验证连接、主机名和远端用户。
 - `bin/server-status.sh`：只读采集服务器基线。
 - `bin/health-check.sh`：分别验证生产和 UAT。
-- `scripts/`：由上述入口调用的 Python 检查实现。
+- `bin/check-nightly-jobs.sh`：只读检查夜间定时任务执行情况（自动集包、转运+TMS推送、失败重推），入口。
+- `scripts/`：由上述入口调用的 Python 检查实现（`check_scheduled_jobs.py` 为夜间任务检查实现，判断口径见技能 `ccsl-nightly-job-check`）。
+- 夜间任务检查工具的**规范源**（多设备同步用）位于项目内
+  `/Users/lingang/work/new_ccsl/tools/ccsl-nightly-job-check/`，本目录两份为同步副本，
+  修改时以规范源为准并同步（见规范源 README「维护约定」）。
 
 ## 安全边界
 

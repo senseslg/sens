@@ -4,6 +4,20 @@
 
 ---
 
+- **v0.17.0** 2026-09-21 — OTWMS 通过保留证据并原位截断 42.2 GB 日志恢复容量/inode 与导出打印业务，确认 XXL-JOB 保留期失效和 POI 临时文件泄漏，并新增只读磁盘压力巡检流程
+- **v0.16.3** 2026-09-21 — OTWMS Daily Report 导出与 Order Print 故障定位为 50 GB 根盘及 inode 同时满载，主因为 42.2 GB 单日志和约 27 万个 `/tmp` 文件；尚待授权恢复与长期治理
+- **v0.16.2** 2026-09-19 — 确认办公网网关为 RB3011UiAS / RouterOS 6.49.1，当前 `admin` 具备 WebFig NAT/Firewall 写权限，并记录 HTTP 管理与现有 SIP/RTP 动态映射边界
+- **v0.16.1** 2026-09-19 — 为 `office-network` 建立 MikroTik 公网端口映射 Runbook 和只读预检查脚本，固化预检、最小规则、外网验证与回滚边界
+- **v0.16.0** 2026-09-18 — 新增 `tms-server` 子项目，固化 TMS 域名到实例、Bitbucket/Jenkins 发布链路及 OOM 恢复主记录；OTWMS 保留跨系统影响索引
+- **v0.15.5** 2026-09-18 — TMS Java 因 OOM 中断；Jenkins #456 发布后应用延迟就绪，公网登录页与本机 HTTP 已恢复，仍需排查内存根因和改进 HTTP 就绪检查
+- **v0.15.4** 2026-09-18 — 用户将 `wms-server` 启动盘扩至 600 GB 后受控 Reset；XFS 自动增长、SSH 与 CEWMS/`cp` 恢复，临时救援资源已清理，需处理历史大文件和容量告警
+- **v0.15.3** 2026-09-17 — `wms-server` 快照副本只读检查确认根分区 500 GB 用满、余 33 MB；用户决定先自行扩容原盘，救援机暂停并保留恢复资源
+- **v0.15.2** 2026-09-17 — 为 `wms-server` 建立启动盘恢复快照并受控 Reset；新串口确认 XFS 根文件系统挂载失败、进入 emergency mode，SSH 仍不可达
+- **v0.15.1** 2026-09-17 — 复核 `wms-server` 失联：最近一小时 CPU 约 98%–99%，串口仍以 OOM/soft lockup 结束，启动盘 READY 且未找到该盘快照；待确认恢复点与受控重启
+- **v0.15.0** 2026-09-17 — 新增 `google-cloud` 项目级管理子项目；核实 `cambodian-express` 的 Compute Engine 基础资源，建立资源快照、只读检查与变更管理规则
+- **v0.14.0** 2026-09-17 — 新增 `otwms-wms-server` 子项目；确认 `cp` 超时发生在连接后端阶段，实例虽显示运行但 IAP SSH 和内网端口均超时，串口出现 OOM/soft lockup
+- **v0.13.3** 2026-09-17 — 恢复 `cambodianexpress.com`、`www`、`cp` 的 HTTPS 证书并修复 Certbot Cron PATH，公网及官网 dry-run 验收通过
+- **v0.13.2** 2026-09-17 — 确认 `cambodianexpress.com`、`www`、`cp` 证书已于 9 月 13 日过期，Certbot Cron 的 Nginx 路径故障持续导致自动续期失败
 - **v0.13.1** 2026-08-17 — 将 OTWMS 后端与前端仓库作为独立 Git checkout 克隆到 `otwms-server`，确认后端当前提交与生产构建映射一致，并为两个仓库设置局部 `ssh-rsa` 兼容
 - **v0.13.0** 2026-08-17 — 新增 `otwms-server` 子项目，确认 OTWMS 源码、Jenkins 与生产 `BladeX.jar` 的精确映射，归档任务 13 大型 `IN` 查询退化事故，并明确完成后由助手评估 Skill/Python 脚本沉淀价值
 - **v0.12.0** 2026-08-17 — 建立 `ce-lb`、GCP `dev-lb`、`wms-db` 与 `wms-server` 的完整定位图，确认 XXL-JOB/Bitbucket/Jenkins/CEWMS 角色，并记录 `wms-server` 磁盘 100% 事故

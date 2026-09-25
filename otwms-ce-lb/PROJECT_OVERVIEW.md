@@ -47,29 +47,27 @@
 
 ## SSL 状态
 
-- **2026-08-16 入口故障：** 用户已确认域名到期且尚未续费，GoDaddy 将根域名和 `www` 指向停放页；公网未进入 `ce-lb`，但源站绕过 DNS 仍可正常返回完整 WordPress 页面。详见 [INCIDENT_2026-08-16_DOMAIN_PARKING.md](INCIDENT_2026-08-16_DOMAIN_PARKING.md)。
-- `ce-lb` 上 `cambodianexpress.com` 与 `www.cambodianexpress.com` 的 Let's Encrypt 证书仍有效至 `2026-09-13`，但当前公网 DNS 未使用该入口。
-- `cp.cambodianexpress.com` 证书同日到期；`api-scm`、`scm` 及部分共享证书已经过期。
-- root Cron 每日执行 Certbot renew，但 Cron 环境找不到 Nginx，最近一次自动任务仍失败；当前三张有效证书来自非 Cron 计划时刻的二次运行，不能视为自动续期已生效。
+- **2026-09-17 已恢复：** 根域名、`www`、`cp` 的 Let's Encrypt 证书已续期至 `2026-12-16`；公网官网 TLS 验证通过，`www` 返回 HTTP 200。
+- root Cron 已补充 Nginx 所在目录的 PATH，官网证书 dry-run 通过；其他历史证书的失败项尚待处理。
+- 8 月的 GoDaddy 停放事故为历史事件，见 [INCIDENT_2026-08-16_DOMAIN_PARKING.md](INCIDENT_2026-08-16_DOMAIN_PARKING.md)；详细证书状态见 [SSL_INVENTORY.md](SSL_INVENTORY.md)。
 - 详细域名和证书状态见 [SSL_INVENTORY.md](SSL_INVENTORY.md)。
 
 ## 当前风险与判断
 
-- **WMS Server 磁盘满载：** `wms-server` 根磁盘 100%、inode 97%，CEWMS 已出现空响应和空间错误；这是当前最高优先级基础设施风险。
+- **WMS Server 容量：** `wms-server` 已扩至 600 GB 并恢复服务，约 101 GB 可用；`/home/daniel` 历史大文件仍占约 473 GB，需确认保留要求和容量告警。
 - **共享平台单点：** `wms-db` 同时承载负载均衡后端、源码、构建、XXL-JOB、数据库和多项工具服务，故障影响范围大。
-- **官网不可达：** 当前公网访问进入 GoDaddy 停放页；根因已确认为域名到期且尚未续费。
-- **邮件 DNS 风险：** 权威查询未返回原 `mail` 与 MX 记录，必须在 GoDaddy 后台核对完整邮件记录，避免只恢复官网。
+- **`cp` 业务：** 证书与后端均已恢复，`ce-lb` 上游和公网入口 HTTP 200。见 [独立故障记录](../otwms-wms-server/INCIDENT_2026-09-17_UNRESPONSIVE.md)。
 - **CPU 高负载：** 两轮采样中 1 vCPU 均无空闲，负载约 3.7–4.1；第二轮 `systemd-journald` 占用约 82% CPU。需要继续定位日志产生源，当前不能仅凭短时采样认定永久根因。
 - **内存余量低：** 可用内存约 230 MB，且无 Swap；多个 PHP-FPM worker 各占约 80–110 MB，存在突发流量下的内存压力。
 - **系统生命周期：** CentOS 7 已进入停止常规维护的旧系统阶段，需要规划升级，不宜直接在生产实例上原地尝试。
 - **数据库监听：** `3306` 显示为非 loopback 监听。尚未核对 GCP 防火墙、主机防火墙和 MySQL 授权，不能据此断言公网可访问，但必须确认暴露边界。
 - **主机防火墙：** firewalld 将 `eth0` 放在 `trusted` zone 且目标为 `ACCEPT`，主机层未形成有效端口收敛；需核对 GCP 防火墙是否承担完整访问控制。
-- **证书风险：** 自动续期链路已确认故障；三张当前有效证书将在 `2026-09-13` 到期，另有多张生效配置引用的过期证书。
+- **历史证书风险：** 官网续期链路已修复，但其他旧 lineage 仍可能使整批续期任务报错。
 - **服务管理不清晰：** Nginx 进程存在，但 `systemctl is-active nginx` 返回 `unknown`；其启动、重载和恢复方式待确认。
 
 ## 决定与运维边界
 
-- 当前仅执行只读检查，不修改服务、配置、数据库、防火墙或日志。
+- 默认仅执行只读检查；本次证书续期及 Cron PATH 变更已获用户授权并完成备份与验收。
 - 重启、升级、端口调整、日志清理和数据库操作必须先确认影响、回滚与验收方式。
 - 仓库不保存公网地址、密码、私钥、数据库连接串或业务数据。
 
@@ -77,13 +75,11 @@
 
 - [ ] 在明确备份、负责人和回滚后处理 `wms-server` 的超大日志、历史 SQL 备份和高 inode 文件目录，并完成 CEWMS 恢复验证。
 - [ ] 建立 `wms-db` Bitbucket/Jenkins/XXL-JOB/数据库的备份与恢复清单，确认源码到部署的映射。
-- [ ] 在 GoDaddy 完成域名续费；解除停放后核对并按需恢复根域名、`www`、`mail`、MX、SPF、DKIM 和 DMARC。
-- [ ] DNS 生效后复查公网官网、证书、邮件解析和投递链路。
+- [ ] 按 [wms-server 故障记录](../otwms-wms-server/INCIDENT_2026-09-17_UNRESPONSIVE.md) 跟进容量与内存风险，并清理或修复旧证书续期项。
 - [ ] 只读确认 `systemd-journald` 的高 CPU 来源、日志速率与异常日志单元。
-- [ ] 修复 Certbot 的 Cron/Nginx 路径问题，受控验证续期后再处理仍在配置中的过期证书。
 - [ ] 确认 Nginx、PHP-FPM、MySQL 和 GCS Fuse 的启动方式与业务归属。
 - [ ] 核对主机 firewalld 与 GCP 防火墙，确认 `3306`、`20201`、`20202` 的允许来源。
 - [ ] 评估扩容、Swap 策略和 CentOS 7 迁移方案；形成方案后再决定是否变更。
 - [ ] 建立关键服务、HTTP、磁盘、内存和 CPU 的重复巡检脚本。
 
-最近更新：`2026-08-17`
+最近更新：`2026-09-17`

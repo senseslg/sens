@@ -11,6 +11,7 @@
 | 工作项生命周期 | [reference/work-item-lifecycle.md](reference/work-item-lifecycle.md) | 接收、推进、暂停、完成或归档一个持续工作项 |
 | CCSL 服务器基线 | [new-ccsl-server/scripts/server_baseline.py](new-ccsl-server/scripts/server_baseline.py) | 通过 SSH 或服务器本机采集脱敏的系统、磁盘、服务、端口与 Java 基线 |
 | CCSL Jenkins 发布验证 | [new-ccsl-server/scripts/verify_deployment.py](new-ccsl-server/scripts/verify_deployment.py) | 核对产物、进程启动时间、端口、HTTP 入口和发布后致命日志信号 |
+| OTWMS 磁盘压力巡检 | [otwms-server/scripts/check_disk_pressure.py](otwms-server/scripts/check_disk_pressure.py) | OTWMS 导出、打印或任务写入异常时，只读检查容量、inode、大日志、临时文件和 HTTP |
 
 ## 使用规则
 

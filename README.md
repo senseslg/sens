@@ -20,8 +20,11 @@
 - `records/daily/`：需要跨天保留的日常工作记录。
 - `records/meetings/`：会议结论、负责人和后续行动。
 - `google-otwms/`：OTWMS 在 Google Cloud 上的运维子项目记录。
+- `google-cloud/`：Google Cloud 项目级资源、访问、费用与管理规则记录。
 - `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享服务、源码/构建平台和应用服务器记录。
+- `otwms-wms-server/`：GCP `wms-server` 的独立运行基线、访问和故障记录。
 - `otwms-server/`：OTWMS Java 后端的源码、Jenkins 构建、生产部署、XXL-JOB 执行与故障定位记录。
+- `tms-server/`：`tms.cambodianexpress.com` 的路由、Tomcat、源码与 Jenkins 发布映射及 OOM 事故记录。
 - `ssl/`：`ceccsl.com` 的 SSL、Nginx、DNS 与网站部署子项目。
 - `mallgogo-sever/`：MallGoGo SSR 的服务器部署与性能诊断子项目。
 - `new-ccsl-server/`：新 CCSL 服务器的建设、迁移、部署与运维子项目。
@@ -45,6 +48,6 @@
 
 ## 当前状态
 
-- 记录体系版本：`v0.13.1`
+- 记录体系版本：`v0.17.0`
 - 建立日期：`2026-07-15`
 - 当前阶段：基础记录框架已建立，正在沉淀技术运维、业务对接与财务管理子项目。
