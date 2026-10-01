@@ -83,6 +83,9 @@ sudo env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
 ## 当前环境注意事项
 
+- Ops Agent 异常时，先核对上传 403、实际 FD 上限和缓存；不能只提高 FD 后一次性处理旧缓存。已验证的风险、保留位置文件的隔离方式及专用资源限额见 [日志事故记录](INCIDENT_2026-09-30_LOGGING_PRESSURE.md)。
+- CentOS 7 的 `systemctl show` 不支持 `--value`；用 `systemctl show <unit> -p MainPID | cut -d= -f2` 获取 PID。变更前始终重新核实 PID 和二进制路径。
+
 - 系统没有 `ss` 命令，当前用 `netstat -lnt` 查看监听地址；进程归属需在授权范围内进一步核对。
 - 当前 `lsblk` 版本不支持 `MOUNTPOINTS` 列，应使用 `MOUNTPOINT`。
 - SSH 会出现 `LC_ALL=C.UTF-8` locale 警告，未影响本次命令执行。

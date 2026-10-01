@@ -8,7 +8,7 @@ if [[ -f "$ENV_FILE" ]]; then
   source "$ENV_FILE"
   set +a
 fi
-MYSQL_PREFIX="${SENS_PORTAL_MYSQL_PREFIX:-/usr/local/opt/mysql@8.4}"
+MYSQL_PREFIX="${SENS_PORTAL_MYSQL_PREFIX:-/opt/homebrew/opt/mysql@8.4}"
 MYSQL_DIR="${SENS_PORTAL_MYSQL_DIR:-$ROOT_DIR/.local-mysql84}"
 DATA_DIR="$MYSQL_DIR/data"
 RUN_DIR="$MYSQL_DIR/run"

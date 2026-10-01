@@ -4,7 +4,7 @@
 
 ## 当前版本
 
-- `v0.17.0`
+- `v0.17.5`
 - 建立日期：`2026-07-15`
 - 版本规则：
   - `MAJOR`：记录体系、目录结构或长期协作方式发生不兼容调整。
@@ -50,7 +50,7 @@
 
 - 路径：[`google-cloud/`](google-cloud/)
 - 范围：Google Cloud 项目级资源索引、控制台检查、访问/费用/变更规则。
-- 当前状态：`2026-09-17` 已在 Chrome 控制台核实 `cambodian-express` 项目与 Compute Engine 基础资源；其他产品及治理配置待盘点，动态数量见[资源快照](google-cloud/RESOURCE_INVENTORY.md)。
+- 当前状态：已核实 `cambodian-express` 项目与 Compute Engine 基础资源；`2026-09-28` 只读审查发现共享 Cloud SQL `tms-db` 磁盘约 94.7% 已用，优先治理接口日志。详见[容量审查](google-cloud/TMS_DB_CAPACITY_REVIEW_2026-09-28.md)。
 
 ### google-otwms
 
@@ -62,7 +62,7 @@
 
 - 路径：[`otwms-ce-lb/`](otwms-ce-lb/)
 - 范围：GCP `ce-lb`、`dev-lb`、`wms-db` 和 `wms-server` 的入口、源码/构建平台、应用部署与风险管理。
-- 当前状态：已建立基础设施链路图；`job` 经 GCP `dev-lb` 落到 `wms-db` 的 XXL-JOB，Bitbucket/Jenkins 同机运行，CEWMS 部署在 `wms-server`。官网证书与 Cron PATH 已恢复；`cp` 在 `wms-server` 扩容后恢复，其他旧证书及 WMS 历史大文件仍需处理。
+- 当前状态：官网证书、Cron PATH 与 `cp` 已恢复；`2026-09-30` 官网超时通过保留隔离日志积压、补齐获批的采集写入权限及日志资源限额恢复，云端日志/指标验收通过。其他旧证书、WMS 历史大文件及低内存风险仍待治理。详见 [日志事故](otwms-ce-lb/INCIDENT_2026-09-30_LOGGING_PRESSURE.md)。
 
 ### otwms-wms-server
 
@@ -80,7 +80,7 @@
 
 - 路径：[`tms-server/`](tms-server/)
 - 范围：`tms.cambodianexpress.com` 的 GCP 入口、Tomcat 实例、Bitbucket/Jenkins 发布链路和服务故障定位。
-- 当前状态：`2026-09-18` Jenkins #456 发布后登录入口已恢复；先前 Java 因 OOM 被杀，内存增长根因与 Franchise/Courier App 全流程恢复尚待验证。[事故记录](tms-server/INCIDENT_2026-09-17_OOM_AND_RECOVERY.md)。
+- 当前状态：`2026-10-01` 再次捕捉 TMS 本机 HTTP 阻塞和 LB backend_timeout，根因未确认；FD 软/硬上限均为 4096，用户授权的软上限试验因硬上限及管理员访问障碍尚未执行。详见 [间歇超时记录](tms-server/INCIDENT_2026-09-30_INTERMITTENT_TIMEOUT.md)；历史 OOM 风险仍待治理。
 
 ### ssl
 

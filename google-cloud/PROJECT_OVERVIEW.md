@@ -1,12 +1,13 @@
 # Google Cloud 项目总览
 
-更新日期：`2026-09-17`。本子项目用于管理 Google Cloud 控制台层面的项目、资源、访问、成本与变更记录。
+更新日期：`2026-09-28`。本子项目用于管理 Google Cloud 控制台层面的项目、资源、访问、成本与变更记录。
 
 ## 当前范围
 
 - 已通过 Chrome 控制台核实：当前可见项目 `Cambodian Express`，项目 ID `cambodian-express`，项目编号 `614236115553`；项目选择器的“All”列表仅显示这一项目。
 - 已初步盘点 Compute Engine 的 VM、实例组、磁盘、快照和映像数量。详见 [RESOURCE_INVENTORY.md](RESOURCE_INVENTORY.md)。
 - IAM、账单结构与预算、VPC/防火墙、负载均衡、Cloud Storage、GKE、监控及日志尚未逐项核实，不能仅凭控制台快捷入口推断其配置或使用情况。
+- `tms-db` 已完成一次只读容量审查：Cloud Monitoring 显示磁盘约 94.7% 已用，最大表空间为约 714 GiB 的接口审计表。见 [审查记录](TMS_DB_CAPACITY_REVIEW_2026-09-28.md)。
 
 ## 管理目标
 
@@ -19,5 +20,6 @@
 1. 盘点 `otwms-group` 和 `tms-group` 的目标规模、自动扩缩容关闭原因及其业务预期；当前仅确认控制台状态，未作配置变更。
 2. 核实 IAM/服务账号、账单预算、VPC/防火墙、存储与备份、监控告警的真实配置，并补充资源所有者和用途。
 3. 处理具体服务问题时，先查对应子项目：[`google-otwms/`](../google-otwms/)、[`otwms-ce-lb/`](../otwms-ce-lb/)、[`otwms-wms-server/`](../otwms-wms-server/)。
+4. 为 `tms-db` 建立容量告警，确认接口日志保留期并在克隆环境验证表空间回收方案。
 
 风险：Compute Engine 列表中的 `wms-server` 显示运行，但同日服务运维记录显示 SSH 与端口不可达。项目级巡检应保留这一状态差异，不将 `Running` 写作“服务正常”。

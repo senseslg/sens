@@ -24,6 +24,8 @@
 | XXL-JOB 执行器 | OTWMS 应用进程，端口 `9999` |
 | 业务数据库 | Cloud SQL `tms-db`；相关 schema 为 `tms_uat` |
 
+共享数据库的 2026-09-28 容量审查见 [`google-cloud` 记录](../google-cloud/TMS_DB_CAPACITY_REVIEW_2026-09-28.md)；OTWMS 接口日志的完整请求/响应与鉴权字段需要脱敏和保留期评审。
+
 完整证据和当前 Git/JAR 快照见 [SOURCE_DEPLOYMENT_MAP.md](SOURCE_DEPLOYMENT_MAP.md)。实例名可能随实例组替换而变化，定位时应以执行器内网地址反查当前实例，不能永久依赖本次名称。
 
 ## 当前问题

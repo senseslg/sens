@@ -55,6 +55,16 @@ APFS 的共享空间、系统卷和快照会使不同命令显示的容量略有
 
 Flutter 与 Dart 的版本来自已安装 SDK 的 `flutter.version.json`。在当前受限执行环境直接运行版本命令时，Flutter 尝试更新 SDK cache 下的 `engine.stamp` 并被权限阻止；这不等于本机正常终端中的 Flutter 不可用。
 
+## Apple Silicon Homebrew
+
+迁移日期：`2026-09-30`
+
+- 默认前缀：`/opt/homebrew`；登录 shell 通过 `~/.bash_profile` 加载 `brew shellenv`。
+- 原生环境已迁移原有 15 个直接 formula 和 Flutter cask；D2、Go、Git、MySQL 等均验证为 `arm64`。
+- 原 Intel Homebrew 暂留在 `/usr/local` 作为短期回退，不再位于默认 PATH 前端。
+- `brew doctor` 仅提示 Command Line Tools 可更新至 `26.6`，以及 `/usr/local/include/node/` 存在非 Homebrew 管理的旧头文件。
+- 本仓库的 MySQL 8.4 默认路径已切换为 `/opt/homebrew/opt/mysql@8.4`；`.local-mysql84` 数据目录保持原位。
+
 ## 常用检查
 
 ```bash
