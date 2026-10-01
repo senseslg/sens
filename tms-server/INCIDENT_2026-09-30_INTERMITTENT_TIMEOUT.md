@@ -20,6 +20,16 @@
 - 只提高软上限不可超过现有硬上限。若继续临时试验，须经管理员执行、明确同时提高硬上限的范围，并记录 FD 数与 HTTP 前后对照；无效则恢复原来的 **4096/4096**，不写持久配置。
 - 云端确有 Tomcat access log，可作为只读证据入口；本次非 access 的异常查询仅匹配系统采集/OSConfig 日志，不能据此声称应用无异常。根因仍未确认；下一步优先取得管理员诊断访问及故障线程栈。
 
+## 2026-10-01 源码与云端日志补查
+
+- 已在本项目 `TMS-source` 拉取 TMS 仓库，并检出 `master`。本地 HEAD 为 `6e323c6b892f3614cee4608001c30de9679a43d4`，与 [SOURCE_DEPLOYMENT_MAP.md](./SOURCE_DEPLOYMENT_MAP.md) 所记 Jenkins 历史构建 #456 的提交一致；这只能说明历史构建映射一致，尚未校验线上当前 WAR 与该提交一致。
+- 在 Google Cloud Logging 只读查询实例 `7172103416077211360` 的 `09:00–09:30`（ICT）访问日志时，`textPayload:" 500 "` 匹配 979 条记录，约 95% 为重复/相似项，常见路径是 `/api/public/code/generate?rule=TMS_TRACKING_EVENT.TRACKING_EVENT_CODE`。样本在 `09:27–09:30` 仍持续出现该接口 500，且 `09:29` 附近 `/login` 也有 500。此证据表明该半小时窗口内存在持续的应用级请求失败；但访问日志未记录请求耗时或异常栈，不能把这些 500 直接认定为 `09:09–09:14` LB `backend_timeout` 的同一触发原因。
+- 同实例、同时间范围的 `severity>=ERROR` 查询返回 33 条，内容为 Google Guest Attributes / OSConfig Agent 写 guest inventory 时收到 403（guest attributes endpoint disabled）；未在该查询中看到 TMS Java 异常栈。故只能说明云日志当前没有提供可关联的应用错误详情，不能据此推断应用无异常。
+- 源码风险点：`ShipmentScanController.scanUpdateApp` 调用事件处理器；`AbstractEventProcessor.process` 在该请求流程中依次执行业务处理、持久化，以及 `afterEventProcess` 和 `ExtraEventHandler`；多个事件处理器会同步调用 `FeignClients` 中的 OTWMS 操作。`FeignClients.init()` 使用 `Feign.builder()`，源码未配置显式连接/读取超时。若扫描请求碰到慢依赖，这种同步调用可能延长占用 Servlet 请求线程；这是需要通过故障现场线程栈和依赖指标验证的放大风险，不是已证实根因。
+- 对应代码：[ShipmentScanController.java](./TMS-source/TmsParent/tms-business/src/main/java/com/ce/tms/shipment/event/controllers/ShipmentScanController.java)、[AbstractEventProcessor.java](./TMS-source/TmsParent/tms-business/src/main/java/com/ce/tms/shipment/event/components/AbstractEventProcessor.java)、[FeignClients.java](./TMS-source/TmsParent/tms-basic/src/main/java/com/ce/tms/basic/feign/components/FeignClients.java)。
+- 综合结论不变：机器 CPU、内存和磁盘数据不支持简单的主机资源耗尽解释；TCP-only 健康检查、单个 TMS 后端使 LB 无法可靠感知应用层卡顿。单纯扩容 LB 不会增加 TMS 应用容量。快速恢复已由重启实现，但间歇性业务故障的触发因素仍需下一次故障时采集连续 Java thread dump、GC/safepoint、Tomcat 异常日志、数据库/Redis 连接池等待和 OTWMS 对应调用日志后才能定论。
+- 后续整改候选（尚未执行）：给 TMS→OTWMS Feign 调用设有限连接/读取超时并评估熔断；将非关键通知移出请求同步路径；评估至少两个 TMS 后端及 HTTP 应用级健康检查/自动替换。基础设施改动需另行评估共享资源影响、发布与回滚，不能仅调整负载均衡器规格。
+
 ## Redis 与 SQL（2026-09-30）
 
 - TMS 使用独立 `tms-redis`，实例 READY，1 GiB、Redis 5.0；本窗口未见重启。

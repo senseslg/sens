@@ -26,12 +26,16 @@ Bitbucket OTWMS/otwms-backend (master)
 
 ## 本地源码 checkout
 
-| 用途 | 本地目录 | 远程仓库 | 2026-08-17 当前提交 |
-|---|---|---|---|
-| 后端 | `otwms-server/otwms-backend/` | `ssh://git@code.cambodianexpress.com:9200/otwms/otwms-backend.git` | `00a94febfdb50dca1175ac1940f576c4a29493dd` |
-| 前端 | `otwms-server/otwms-frontend/` | `ssh://git@code.cambodianexpress.com:9200/otwms/otwms-frontend.git` | `5cda7fb19565687cf9931fd1481d71f76520a913` |
+| 用途 | 本地目录 | 远程仓库 | 2026-08-17 提交 | 2026-10-01 `master` |
+|---|---|---|---|---|
+| 后端 | `otwms-server/otwms-backend/` | `ssh://git@code.cambodianexpress.com:9200/otwms/otwms-backend.git` | `00a94febfdb50dca1175ac1940f576c4a29493dd` | `5ba65f13f95b9eeda644046f2b43ce62e729a81a`（PR #3026，2026-09-22） |
+| 前端 | `otwms-server/otwms-frontend/` | `ssh://git@code.cambodianexpress.com:9200/otwms/otwms-frontend.git` | `5cda7fb19565687cf9931fd1481d71f76520a913` | `4ec71efe69a42db417e2cdee10003f0321d142ef`（PR #593，2026-09-22） |
 
 两个 checkout 当前均为 `master` 并跟踪 `origin/master`。源码目录由父仓库忽略，提交与分支操作应在各自目录内执行。
+
+- 2026-08-17 生产提交 `00a94febf` 之后，后端 `master` 新增约 40 个提交，其中包括分批查询修复（PR #2976 合并 `a77eb6e71`）；前端新增 6 个提交。
+- 当前生产 `/root/BladeX.jar` 对应哪个提交**未重新核对**；下次需按下方流程重新比对 SHA-256。
+- 源码结构与风险见 [SOURCE_CODE_GUIDE.md](SOURCE_CODE_GUIDE.md)。
 
 校验值只证明该时间点两端产物一致；每次发布后必须重新核对。
 

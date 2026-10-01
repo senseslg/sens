@@ -55,6 +55,17 @@ git -C /Users/lingang/sens/otwms-server/otwms-frontend pull --ff-only
 
 公司 Bitbucket SSH 当前只提供旧版 `ssh-rsa`。两个仓库已在各自 `.git/config` 设置兼容参数；不要把该设置扩大到全局 SSH 配置。
 
+Windows 工作机（`D:\sens_apps\sens`，Git Bash，2026-10-01 验证）：
+
+```bash
+git -C /d/sens_apps/sens/otwms-server/otwms-backend pull --ff-only
+git -C /d/sens_apps/sens/otwms-server/otwms-frontend pull --ff-only
+```
+
+- 该 Bitbucket 不接受 ED25519 公钥（提示 “You must enter a valid public key”），需使用 RSA。
+- 本机专用密钥为 `~/.ssh/id_rsa_otwms`，已注册到有 OTWMS 权限的账号；两个仓库的 `core.sshCommand` 固定使用该密钥并加上 `IdentitiesOnly=yes`。
+- 本机默认的 `id_rsa` 能通过 Bitbucket 认证，但它所属的账号没有 OTWMS 仓库权限；如果不指定密钥，会报 “repository does not exist”。
+
 生产 Jenkins 工作区：
 
 ```text

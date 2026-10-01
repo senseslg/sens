@@ -12,7 +12,7 @@
 |---|---|
 | 调度后台 | `wms-db` 上的 `xxl-job-admin`；只负责调度 |
 | 源码仓库 | `OTWMS/otwms-backend` |
-| 本地后端 | `otwms-server/otwms-backend/` |
+| 本地后端 | `otwms-server/otwms-backend/`（导读见 [SOURCE_CODE_GUIDE.md](SOURCE_CODE_GUIDE.md)） |
 | 本地前端 | `otwms-server/otwms-frontend/` |
 | UAT 前端 Jenkins Job | `otwms / uat / otwms-frontend-uat` |
 | UAT 前端存储桶 | `gs://otwms-frontend-uat/` |
@@ -46,7 +46,13 @@
 - 分批修改应覆盖相同职责的重载方法或抽取共享私有方法，避免另一入口重复出现同类问题。
 - 提高 MySQL optimizer 内存或语句超时时间仅作为受控应急方案，不替代代码修复。
 
-分批查询已在 `codex/fix-daily-bill-revenue-cost-batching` 实现并通过 Java 8/Maven 单元测试，提交 `a77eb6e71` 已推送远程；尚未部署生产或重跑生产任务。
+分批查询已在 `codex/fix-daily-bill-revenue-cost-batching` 实现并通过 Java 8/Maven 单元测试，提交 `a77eb6e71` 已于 2026-08-17 经 PR #2976 合并到 `master`（按 500 个分批）。生产 JAR 是否包含该提交未核对，任务 13 尚未重跑。
+
+## 源码现状（2026-10-01）
+
+- 前后端源码已拉取到本目录，`master` 停在 2026-09-22（后端 `5ba65f13f`，前端 `4ec71efe6`）。结构与风险见 [SOURCE_CODE_GUIDE.md](SOURCE_CODE_GUIDE.md)。
+- 09-21 事故的两项代码根因在 `master` 中**仍未修复**：`JobConfig` 仍为 `setLogRetentionDays(1)`，`ExportController` 仍未调用 `dispose()`。
+- `application*.yml` 中有明文凭据，需要移出仓库并轮换。
 
 ## 风险与边界
 
@@ -64,6 +70,9 @@
 - [ ] 调整生产日志级别和启动输出方式，再配置轮转、压缩、保留期及容量/inode 告警。
 - [ ] 通过新实例模板持久扩容 50 GB 启动盘，避免实例重建回到旧规格。
 - [x] 在功能分支实现并测试分批查询，提交并推送远程。
+- [x] 分批查询修复合并到 `master`（PR #2976，2026-08-17）。
+- [ ] 核对当前生产 `/root/BladeX.jar` 对应的提交，确认是否已包含 PR #2976。
+- [ ] 评估将 `application*.yml` 中的明文凭据迁到环境变量或 Secret Manager，并轮换已暴露的凭据。
 - [ ] 核对 `2026-08-15` 是否存在部分账单或残留明细。
 - [ ] 验证 500～1,000 条批次持续使用 `range` 计划。
 - [ ] 经 Jenkins 构建、受控部署和校验后重跑任务 13。
@@ -73,4 +82,4 @@
 - [ ] 如需重新启用 Lifecycle，使用明确前缀/后缀和保留期，先在清单上验证命中范围。
 - [ ] 如需审计 Lifecycle 自动删除，评估为该桶配置 Cloud Storage usage logs。
 
-最近更新：`2026-09-21`
+最近更新：`2026-10-01`

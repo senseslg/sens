@@ -8,3 +8,6 @@ __pycache__/
 secrets/
 .local-mysql*/
 .local-portal/
+
+# Locally cloned source repository; keep its independent Git history out of this repo.
+/tms-server/TMS-source/
