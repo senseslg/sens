@@ -49,6 +49,12 @@ OTWMS 是基于 **BladeX 2.0.7（SpringBlade 商业版）** 二次开发的单�
 | POI 临时文件 | `common/export/controller/ExportController.java` | **未修复**：两处 `new SXSSFWorkbook()` 均无 `dispose()` |
 | Daily Bill 任务 | `modules/biz/job/DailyBillJob.java` | `rerun` 先删后跑，重跑前需确认幂等 |
 
+### 2026-10-03 修复分支补充
+
+`codex/fix-disk-pressure-retention` 从当时最新 `origin/master` `5ba65f13f` 创建，增加一个提交 `a5cc1f94e`，已推送、未合并/部署。修改 `JobConfig` 保留期、公共导出的 workbook 生命周期和并发许可、生产 Logback 轮转配置；不只是日志变更。上表仍描述原 `master` 快照，不代表修复分支现状或生产运行版本。
+
+准确影响及验证边界见 [10-03 事故记录](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)，上线回归见 [Runbook](RUNBOOK.md)。订单/运单/账单计算和打印业务逻辑未修改，但共享后端仍需业务冒烟验收。
+
 ## 前端 `otwms-frontend`
 
 | 项 | 事实 |

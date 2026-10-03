@@ -4,7 +4,7 @@
 
 ## 当前版本
 
-- `v0.17.6`
+- `v0.18.1`
 - 建立日期：`2026-07-15`
 - 版本规则：
   - `MAJOR`：记录体系、目录结构或长期协作方式发生不兼容调整。
@@ -64,6 +64,13 @@
 - 范围：GCP `ce-lb`、`dev-lb`、`wms-db` 和 `wms-server` 的入口、源码/构建平台、应用部署与风险管理。
 - 当前状态：官网证书、Cron PATH 与 `cp` 已恢复；`2026-09-30` 官网超时通过保留隔离日志积压、补齐获批的采集写入权限及日志资源限额恢复，云端日志/指标验收通过。其他旧证书、WMS 历史大文件及低内存风险仍待治理。详见 [日志事故](otwms-ce-lb/INCIDENT_2026-09-30_LOGGING_PRESSURE.md)。
 
+### wms-db
+
+- 路径：[`wms-db/`](wms-db/)
+- 范围：GCP `wms-db` 共享平台的入口路由、运行基线、Jira、Bitbucket、Jenkins、XXL-JOB、YApi、Nexus、数据库和 SQL 审核组件。
+- 当前状态：`2026-10-03` 实例和主要容器均在运行，500 GB 根盘使用约 56%、内存可用约 12 GB；`issue`、`code`、`yapi`、`jenkins` 域名链路已核实。主要风险是多项关键服务集中、CentOS 7、无 Swap、旧容器镜像及备份恢复清单不完整。
+- Jira 接入：[本机需求服务 0.3.0](wms-db/jira-service/PROJECT_OVERVIEW.md) 已验证 API 建单、查询与 CSV；关闭/不做提交和后台全域格式对齐待验证，未部署服务器。
+
 ### otwms-wms-server
 
 - 路径：[`otwms-wms-server/`](otwms-wms-server/)
@@ -74,7 +81,7 @@
 
 - 路径：[`otwms-server/`](otwms-server/)
 - 范围：OTWMS Java 后端的 Bitbucket 源码、Jenkins 构建、生产 `BladeX.jar` 部署、XXL-JOB 执行链路和数据库查询故障定位。
-- 当前状态：`2026-09-21` 已通过保留证据并原位截断 42.2 GB 日志，将生产根盘容量/inode 从 100% 恢复到 22%/2%，导出打印业务恢复；XXL-JOB 保留期、POI 临时文件释放、日志轮转和模板扩容仍待受控发布。任务 13 的分批查询修复已合并 `master`，生产部署待核对、尚未重跑。`2026-10-01` 已在本机拉取前后端源码并完成初读，见 [源码导读](otwms-server/SOURCE_CODE_GUIDE.md)。
+- 当前状态：`2026-10-03` 替换后的 50 GB 实例再次满载，获批保留尾部并截断约 38.9 GiB 日志，根盘/inode 恢复至 22%/1.4%，业务验收待确认。本地已准备 XXL-JOB/POI/轮转修复并通过专项回归，完整构建、部署和模板固化仍待完成，见 [复发记录](otwms-server/INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。任务 13 分批修复已合并，生产部署待核对、尚未重跑。
 
 ### tms-server
 
@@ -150,6 +157,7 @@
 - `google-otwms/`：OTWMS / GCP 运维子项目。
 - `google-cloud/`：Google Cloud 项目级管理子项目。
 - `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享平台、源码/构建与应用服务器运维子项目。
+- `wms-db/`：GCP `wms-db` 共享平台、域名入口、容器服务、源码与构建基础设施子项目。
 - `otwms-wms-server/`：GCP `wms-server` 的独立基线和故障恢复子项目。
 - `otwms-server/`：OTWMS Java 后端源码、构建、生产部署和任务执行故障子项目。
 - `tms-server/`：TMS 域名入口、Java/Tomcat、源码发布与故障恢复子项目。

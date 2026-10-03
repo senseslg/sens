@@ -14,19 +14,23 @@ OTWMS 后端、前端、构建发布、XXL-JOB 和相关 Google Cloud 资源的�
 8. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码、构建产物和 Cloud Storage 的安全核对方法。
 9. [reference/README.md](reference/README.md)：可复用诊断参考。
 
+本次事件：[2026-10-03 磁盘满载复发](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
+
 ## 当前重点
 
-- 生产根盘已从容量/inode 100% 紧急恢复到 22%/2%，导出与打印业务恢复；截至 `master` `5ba65f13f`（2026-09-22），XXL-JOB 保留期与 POI `dispose()` 仍未修复，日志轮转和实例模板容量也待处理。
+- 2026-10-03 再次止血：根盘/inode 恢复到 22%/1.4%，写入和本机 HTTP 通过，导出/打印待业务验收。永久修复在本地独立分支，尚未构建上线；生产 DEBUG、无界 stdout 和旧模板仍有复发风险。
 - 日账单查询分批修复已于 2026-08-17 经 PR #2976 合并到 `master`；生产 JAR 是否包含该提交未核对，任务 13 尚未重跑。
 - 修改前确认 `2026-08-15` 日账单是否存在部分结果，以及任务重跑是否幂等。
 - 通过 Bitbucket 提交、Jenkins 构建和受控生产发布完成修复，不直接修改 Jenkins 工作区或生产 JAR。
 - `otwms-frontend-uat/i18n/` 已从 7 天软删除保护中恢复；桶级 90 天 Lifecycle 已移除，重新配置前必须限定前缀并评估业务保留期。
 
+分支并非只影响日志：还修复公共 Excel 导出的资源释放与并发许可。基线、影响范围和测试限制见 [本次记录](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)，上线前按 [Runbook](RUNBOOK.md) 验收。
+
 ## 本地源码
 
-| 仓库 | 本地目录 | 当前分支 | 2026-10-01 HEAD |
+| 仓库 | 本地目录 | 最近核对分支 | HEAD 快照 |
 |---|---|---|---|
-| `OTWMS/otwms-backend` | `otwms-server/otwms-backend/` | `master` | `5ba65f13f` |
+| `OTWMS/otwms-backend` | `otwms-server/otwms-backend/` | `codex/fix-disk-pressure-retention` | `a5cc1f94e`，2026-10-03 已推送、未部署 |
 | `OTWMS/otwms-frontend` | `otwms-server/otwms-frontend/` | `master` | `4ec71efe6` |
 
 两个目录是独立 Git 仓库，并由本目录 `.gitignore` 排除，不进入父级 `sens` 文档仓库。

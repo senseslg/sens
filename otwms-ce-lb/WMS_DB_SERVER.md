@@ -1,5 +1,7 @@
 # WMS DB Server
 
+> 本文件保留 `2026-08-17` 历史基线。`2026-10-03` 起，当前状态与运维方法由独立子项目 [`wms-db/`](../wms-db/) 维护。
+
 ## 当前结论
 
 `wms-db` 不只是数据库服务器，而是 CE/WMS 的共享工具与数据平台：它同时承载 GCP `dev-lb` 默认后端、Nginx、XXL-JOB、Bitbucket、Jenkins、Jira、Nexus、YApi、数据库和监控。源码、构建、任务调度与多项基础服务集中在单机，存在较大的故障影响面。

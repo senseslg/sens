@@ -19,7 +19,7 @@
 | 生产分支 | `master` |
 | Jenkins Job | `otwms / prod / otwms-backend` |
 | Jenkins 工作区 | `/home/daniel/containers/jenkins/jenkins/workspace/otwms/prod/otwms-backend` |
-| 生产实例 | `otwms-group-1ktm`，`asia-southeast1-a`（实例组成员会变化） |
+| 生产实例 | `otwms-group-1h76`，`asia-southeast1-a`（2026-10-03 快照，实例组成员会变化） |
 | 生产产物 | `/root/BladeX.jar` |
 | XXL-JOB 执行器 | OTWMS 应用进程，端口 `9999` |
 | 业务数据库 | Cloud SQL `tms-db`；相关 schema 为 `tms_uat` |
@@ -29,6 +29,8 @@
 完整证据和当前 Git/JAR 快照见 [SOURCE_DEPLOYMENT_MAP.md](SOURCE_DEPLOYMENT_MAP.md)。实例名可能随实例组替换而变化，定位时应以执行器内网地址反查当前实例，不能永久依赖本次名称。
 
 ## 当前问题
+
+2026-10-03 在替换后的 50 GB 实例再次满载，约 38.9 GiB 无界日志为主因。获批原位截断后根盘/inode 为 22%/1.4%，写入与本机 HTTP 通过；业务验收待确认。分支 `codex/fix-disk-pressure-retention` 已实现保留期/POI/轮转修复并通过专项回归，提交 `a5cc1f94e` 已推送公司仓库；完整构建、合并、生产配置固化和部署仍未完成。详见 [复发记录](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
 
 2026-09-21，生产根分区和 inode 均达到 100%，导致 Daily Report 导出与 Order Print 失效。保留证据并原位截断 42.2 GB 应用日志后，容量/inode 恢复到 22%/2%，服务和业务恢复。根因还包括 XXL-JOB 的 1 天配置实际关闭清理，以及 POI workbook 未 `dispose()`；长期修复尚未发布。详见 [INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md](INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md)。
 
@@ -53,6 +55,8 @@
 - 前后端源码已拉取到本目录，`master` 停在 2026-09-22（后端 `5ba65f13f`，前端 `4ec71efe6`）。结构与风险见 [SOURCE_CODE_GUIDE.md](SOURCE_CODE_GUIDE.md)。
 - 09-21 事故的两项代码根因在 `master` 中**仍未修复**：`JobConfig` 仍为 `setLogRetentionDays(1)`，`ExportController` 仍未调用 `dispose()`。
 - `application*.yml` 中有明文凭据，需要移出仓库并轮换。
+
+磁盘治理修复并非只影响日志，还涉及公共 Excel 导出的生命周期及原有 10 并发限制；业务计算/状态/打印逻辑未修改，但共享后端不能承诺零影响。准确范围见 [本次事故](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)，上线前完成 [Runbook 回归清单](RUNBOOK.md)。
 
 ## 风险与边界
 
@@ -82,4 +86,4 @@
 - [ ] 如需重新启用 Lifecycle，使用明确前缀/后缀和保留期，先在清单上验证命中范围。
 - [ ] 如需审计 Lifecycle 自动删除，评估为该桶配置 Cloud Storage usage logs。
 
-最近更新：`2026-10-01`
+最近更新：`2026-10-03`

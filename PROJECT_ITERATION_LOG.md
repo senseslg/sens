@@ -4,6 +4,12 @@
 
 ---
 
+- 2026-10-03 — 补齐 OTWMS 磁盘修复分支的最新源码基线、日志/导出/并发影响及上线验收边界；沿用现有巡检与专项回归脚本，不新增重复 Skill 或自动删除任务
+- 2026-10-03 — Jira 服务 0.3.0 新增按解决日期的周报/月报 8 列 CSV，核对原生导出字段与用户名格式、统一 UTC+7 时间；通过 API 导出 2026 年九月 152 条，新增可复用 export_report.py、18 项测试通过，暂不生成独立 Skill；见 [报表操作](wms-db/jira-service/RUNBOOK.md)
+- 2026-10-03 — Jira 接入与本机服务 0.2.0：验证 Server 7.12.0 认证、API 创建 CE-2629 分配 sens、查询和全部 API 字段 CSV；14 项测试及关闭/不做真实预检查通过，尚未取消需求或部署生产。整理服务概览/Runbook，同步 wms-db 边界；真实转换与后台全域 CSV 对齐待验证，见 [评估记录](wms-db/jira-service/PROJECT_OVERVIEW.md)
+- **v0.18.1** 2026-10-03 — 确认 `jenkins.cambodianexpress.com` 经 `dev-lb` 落到 `wms-db` Nginx 与 Jenkins 容器；记录 Jenkins 2.503、数据卷、403 在线响应及未登录检查边界
+- **v0.18.0** 2026-10-03 — 新增 `wms-db` 独立子项目；核实 `issue`/`code`/`yapi` 经 `dev-lb` 落到本机 Nginx 和 Jira/Bitbucket/YApi 容器，并建立当前基线、服务清单与只读 Runbook
+- **v0.17.7** 2026-10-03 — OTWMS 50 GB 新实例再次满载，获批保留尾部并截断 38.9 GiB 日志恢复至 22%；保留期/POI/轮转修复通过专项回归，获批提交 `a5cc1f94e` 并推送独立公司分支，生产部署与配置固化尚未完成
 - **v0.17.6** 2026-10-01 — 在 Windows 工作机拉取 OTWMS 前后端源码并新增源码导读；更正分批查询修复已合并 `master`（PR #2976），确认 09-21 的 XXL-JOB 保留期与 POI 两项根因仍未修复，记录明文凭据风险和 Bitbucket 需用 RSA 密钥
 - **v0.17.5** 2026-10-01 — 补齐 TMS 服务器基础信息与事件索引，记录 CPU Idle 和本地密码判断边界；保留未确认根因及管理员访问障碍，不宣称修复
 - **v0.17.4** 2026-10-01 — 再次捕捉 TMS 本机 HTTP 阻塞与 LB backend_timeout；确认 Java FD 软/硬上限均为 4096，记录软上限试验未执行的权限与硬上限障碍，未宣称修复

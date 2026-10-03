@@ -28,6 +28,26 @@ python3 /Users/lingang/sens/otwms-server/scripts/check_disk_pressure.py \
 
 退出码和治理边界见 [reference/disk-capacity-triage.md](reference/disk-capacity-triage.md)。脚本不清理文件；任何周期删除都必须单独确认保留期、打开文件、回滚和验收。
 
+## 磁盘修复专项回归（本地）
+
+```bash
+python3 otwms-server/scripts/verify_disk_fixes.py
+```
+
+需要本地后端修复分支、支持 `--release 8` 的 JDK 和 Maven 缓存中的 POI 4.1.0/Logback 1.2.3 等依赖。不加载 Spring、不连接数据库、不运行 SSH；仅证明资源清理和日志 XML 专项通过，不替代完整 Maven 构建、部署及业务验收。当前完整构建受私有依赖缺失阻碍。
+
+## 磁盘治理分支上线前验收
+
+本次基线、提交和影响范围以 [10-03 事故记录](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md) 为主。测试环境完成以下检查后，再另行授权生产发布：
+
+- 在有私有依赖的公司环境完整构建；确认目标分支、产物 hash、旧 JAR 和启动配置回退点。
+- 公共 `/export`：正常及大数据量导出内容一致；模拟异常、取消/断连后临时文件释放。尤其检查 EasyPOI 返回 workbook 前失败的路径。
+- 持续占用 10 个导出许可的受控并发测试：多余请求拒绝，结束后许可恢复，拒绝请求不扩大并发上限；不要在生产压测。
+- 核对任务日志保留期与日期目录内容，实际观察超期日志清理；核对日志配置生效、采集路径、轮转与归档上限，确认 stdout 不再无界增长。
+- 登录、订单查询、Daily Report、Order Print 和执行器注册冒烟通过；检查容量/inode/POI 文件趋势，不能仅以首页 200 验收。
+
+回退只覆盖代码与配置，不能恢复已删旧日志。脚本不做业务集成测试、生产部署或自动删除。
+
 ## 任务日志
 
 生产执行器的任务日志按日期和日志 ID 保存：

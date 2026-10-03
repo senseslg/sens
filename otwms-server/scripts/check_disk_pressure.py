@@ -16,6 +16,7 @@ import json
 import os
 import socket
 import stat
+import time
 import urllib.request
 
 
@@ -102,6 +103,19 @@ def java_processes():
             open_poi_files = 0
             deleted_tmp_files = 0
             deleted_tmp_physical_bytes = 0
+            stdout_log = None
+            stdout_path = os.path.join(base, "fd", "1")
+            try:
+                stdout_target = os.readlink(stdout_path)
+            except OSError:
+                stdout_target = None
+            if stdout_target == "/root/otwms-backend.log":
+                with open(os.path.join(base, "fdinfo", "1")) as handle:
+                    info = dict(line.strip().split(":", 1) for line in handle if ":" in line)
+                stdout_log = {
+                    "position": int(info["pos"].strip()),
+                    "append": bool(int(info["flags"].strip(), 8) & os.O_APPEND),
+                }
             for fd in os.listdir(os.path.join(base, "fd")):
                 fd_path = os.path.join(base, "fd", fd)
                 try:
@@ -125,6 +139,7 @@ def java_processes():
                 "open_poi_files": open_poi_files,
                 "deleted_tmp_files": deleted_tmp_files,
                 "deleted_tmp_physical_bytes": deleted_tmp_physical_bytes,
+                "stdout_application_log": stdout_log,
             })
         except (OSError, ValueError):
             continue
@@ -158,6 +173,8 @@ def local_http(url):
         return {"url": url, "status": None, "error": type(exc).__name__}
 
 
+log_before = file_usage("/root/otwms-backend.log")
+sample_started = time.monotonic()
 data = {
     "collected_at": datetime.datetime.now().astimezone().isoformat(),
     "hostname": socket.gethostname(),
@@ -169,6 +186,16 @@ data = {
     "java_processes": java_processes(),
     "local_http": local_http("http://127.0.0.1:8080/"),
 }
+time.sleep(2)
+log_after = file_usage("/root/otwms-backend.log")
+if log_before and log_after:
+    data["application_log_growth"] = {
+        "sample_seconds": round(time.monotonic() - sample_started, 2),
+        "logical_bytes_per_second": round(
+            max(0, log_after["logical_bytes"] - log_before["logical_bytes"])
+            / (time.monotonic() - sample_started), 1),
+    }
+data["application_log"] = log_after
 print(json.dumps(data, separators=(",", ":")))
 '''
 
@@ -234,6 +261,10 @@ def assess(data: dict[str, Any], args: argparse.Namespace) -> tuple[int, list[st
         warnings.append(f"WARNING application log physical size {human_bytes(log['physical_bytes'])}")
     if data["tmp"]["files"] >= args.tmp_file_warning:
         warnings.append(f"WARNING /tmp file count {data['tmp']['files']}")
+    for process in data.get("java_processes", []):
+        stdout = process.get("stdout_application_log")
+        if stdout and not stdout["append"]:
+            warnings.append("WARNING application stdout is not append-mode; truncation leaves a sparse gap")
     return (2 if critical else 1 if warnings else 0), warnings
 
 

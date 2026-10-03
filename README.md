@@ -22,6 +22,7 @@
 - `google-otwms/`：OTWMS 在 Google Cloud 上的运维子项目记录。
 - `google-cloud/`：Google Cloud 项目级资源、访问、费用与管理规则记录。
 - `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享服务、源码/构建平台和应用服务器记录。
+- `wms-db/`：GCP `wms-db` 的共享工具、数据平台、域名路由和容器服务记录。
 - `otwms-wms-server/`：GCP `wms-server` 的独立运行基线、访问和故障记录。
 - `otwms-server/`：OTWMS Java 后端的源码、Jenkins 构建、生产部署、XXL-JOB 执行与故障定位记录。
 - `tms-server/`：`tms.cambodianexpress.com` 的路由、Tomcat、源码与 Jenkins 发布映射及 OOM 事故记录。
@@ -48,6 +49,6 @@
 
 ## 当前状态
 
-- 记录体系版本：`v0.17.6`
+- 记录体系版本：`v0.18.1`
 - 建立日期：`2026-07-15`
 - 当前阶段：基础记录框架已建立，正在沉淀技术运维、业务对接与财务管理子项目。
