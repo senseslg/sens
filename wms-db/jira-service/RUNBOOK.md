@@ -37,6 +37,8 @@ python3 run.py
 
 ### 创建请求
 
+用户输入以 [创建需求的信息清单](../JIRA_REQUIREMENTS.md) 为准：项目平台、类型、模块（可多选）、标题、描述、到期日。模块通过 `extra_fields.components` 传 ID 数组，到期日通过 `extra_fields.duedate` 传 `YYYY-MM-DD`；均先核对目标项目元数据。经办人按已记录分工确定，已知问题描述保持简洁。
+
 以下为 CCSL 任务示例（2026-10-03 的字段快照）；使用前查询 metadata 获取真实类型及必填项，不预设任务或故事。描述建议包含背景、路径、目标行为、验收条件和范围。
 
 ```json
@@ -51,6 +53,8 @@ python3 run.py
   "dry_run": true
 }
 ```
+
+人员选择依据 [跨项目人员分工](../JIRA_REQUIREMENTS.md)；API 的 `assignee` 填 Jira 用户名，不填显示名。用户指定负责人优先，目标项目的可分配权限仍需确认。
 
 支持 `assignee`（用户名）、`priority_id` 和自定义字段 `extra_fields`。预检查只校验字段存在性和必填项，实际值及权限由 Jira 提交时校验。
 
