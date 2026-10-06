@@ -54,6 +54,8 @@
 
 ## 尚需独立授权与验收
 
+2026-10-06 已通过 `/Users/lingang/Anytype MCP/anytype_mcp.py` 在 Anytype `sens` 空间创建 Task「OTWMS 磁盘满载复发：修复发布与长期治理（CE-2629）」，对象 ID `bafyreihraweivtjegm2lcmswzzlm4ya3f5yncy26c7r5hawt5s2nxvv27m`，回读确认类型 `task`、未完成且正文完整。计划副本见 [FOLLOW_UP_PLAN.md](FOLLOW_UP_PLAN.md)。这只是计划归档，未执行后续部署或数据库清理。
+
 跟踪任务：[CE-2629 — OTWMS服务器日志满盘复发治理](https://issue.cambodianexpress.com/browse/CE-2629)，2026-10-03 经 API 创建，经办人 `sens`，状态开放；关联已解决的 CE-2626，跟踪长期治理与发布固化。本任务创建不代表生产变更获授权。
 
 1. 修复分支已提交推送；下一步在公司构建环境完整构建与测试、评审合并。不直接编辑生产 JAR 或 Jenkins 工作区。

@@ -60,7 +60,8 @@ Flutter 与 Dart 的版本来自已安装 SDK 的 `flutter.version.json`。在�
 迁移日期：`2026-09-30`
 
 - 默认前缀：`/opt/homebrew`；登录 shell 通过 `~/.bash_profile` 加载 `brew shellenv`。
-- 原生环境已迁移原有 15 个直接 formula 和 Flutter cask；D2、Go、Git、MySQL 等均验证为 `arm64`。
+- 原生环境已迁移原有 15 个直接 formula 和 Flutter cask；Go、Git、MySQL 等均验证为 `arm64`。
+- D2 已于 `2026-10-06` 从 `/opt/homebrew` 和 `/usr/local` 两套 Homebrew 中卸载（试用后不再使用）；同时卸载 `/usr/local` 中作为依赖安装的重复 Go，仅保留 `/opt/homebrew` 的 Go。
 - 原 Intel Homebrew 暂留在 `/usr/local` 作为短期回退，不再位于默认 PATH 前端。
 - `brew doctor` 仅提示 Command Line Tools 可更新至 `26.6`，以及 `/usr/local/include/node/` 存在非 Homebrew 管理的旧头文件。
 - 本仓库的 MySQL 8.4 默认路径已切换为 `/opt/homebrew/opt/mysql@8.4`；`.local-mysql84` 数据目录保持原位。
