@@ -19,7 +19,7 @@
 | 生产分支 | `master` |
 | Jenkins Job | `otwms / prod / otwms-backend` |
 | Jenkins 工作区 | `/home/daniel/containers/jenkins/jenkins/workspace/otwms/prod/otwms-backend` |
-| 生产实例 | `otwms-group-1h76`，`asia-southeast1-a`（2026-10-03 快照，实例组成员会变化） |
+| 生产实例 | `otwms-group-1h76`，`asia-southeast1-a`（2026-10-16 快照，实例组成员会变化） |
 | 生产产物 | `/root/BladeX.jar` |
 | XXL-JOB 执行器 | OTWMS 应用进程，端口 `9999` |
 | 业务数据库 | Cloud SQL `tms-db`；相关 schema 为 `tms_uat` |
@@ -29,6 +29,8 @@
 完整证据和当前 Git/JAR 快照见 [SOURCE_DEPLOYMENT_MAP.md](SOURCE_DEPLOYMENT_MAP.md)。实例名可能随实例组替换而变化，定位时应以执行器内网地址反查当前实例，不能永久依赖本次名称。
 
 ## 当前问题
+
+2026-10-16 同一实例再次满载：stdout 日志实际约 39.9 GiB，保留尾部后原位截断恢复根盘至 19.8%，临时写入与 HTTP 通过；未重启或删除临时文件。当前仍有 Spring DEBUG 启动覆盖，生产 JAR 未检测到前次修复标记，无界 stdout 与旧模板未治理；导出/打印待用户验收。详见 [10-16 记录](INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)。
 
 2026-10-03 在替换后的 50 GB 实例再次满载，约 38.9 GiB 无界日志为主因。获批原位截断后根盘/inode 为 22%/1.4%，写入与本机 HTTP 通过；业务验收待确认。分支 `codex/fix-disk-pressure-retention` 已实现保留期/POI/轮转修复并通过专项回归，提交 `a5cc1f94e` 已推送公司仓库；完整构建、合并、生产配置固化和部署仍未完成。详见 [复发记录](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
 
@@ -86,4 +88,4 @@
 - [ ] 如需重新启用 Lifecycle，使用明确前缀/后缀和保留期，先在清单上验证命中范围。
 - [ ] 如需审计 Lifecycle 自动删除，评估为该桶配置 Cloud Storage usage logs。
 
-最近更新：`2026-10-03`
+最近更新：`2026-10-16`

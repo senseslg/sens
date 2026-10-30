@@ -47,6 +47,7 @@
 
 ## SSL 状态
 
+- **2026-10-19 static：** GoDaddy注册/Cloudflare DNS，static经阿里云CDN→OSS，不经过ce-lb。ce-lb自动DNS续期已配置、staging通过；CAS上传、CDN绑定与公网TLS已用正式证书完成验收。首次真实计划续期待观察，见 [专项记录](STATIC_OSS_SSL.md)。
 - **2026-09-17 已恢复：** 根域名、`www`、`cp` 的 Let's Encrypt 证书已续期至 `2026-12-16`；公网官网 TLS 验证通过，`www` 返回 HTTP 200。
 - root Cron 已补充 Nginx 所在目录的 PATH，官网证书 dry-run 通过；其他历史证书的失败项尚待处理。
 - 8 月的 GoDaddy 停放事故为历史事件，见 [INCIDENT_2026-08-16_DOMAIN_PARKING.md](INCIDENT_2026-08-16_DOMAIN_PARKING.md)；详细证书状态见 [SSL_INVENTORY.md](SSL_INVENTORY.md)。
@@ -70,10 +71,12 @@
 
 - 默认仅执行只读检查；本次证书续期及 Cron PATH 变更已获用户授权并完成备份与验收。
 - 重启、升级、端口调整、日志清理和数据库操作必须先确认影响、回滚与验收方式。
-- 仓库不保存公网地址、密码、私钥、数据库连接串或业务数据。
+- 版本库不保存公网地址、密码、私钥、数据库连接串或业务数据；获批导出的本机证书副本仅放 Git 忽略且权限受限的 `secrets/`。
 
 ## 下一步
 
+- [x] static 的 Cloudflare Token 已验证并部署，ce-lb自动DNS续期staging通过、独立Cron启用；记录首次CAA失败与后续通过，保留回滚备份。
+- [ ] 观察首次真实续期后的CAS上传/CDN自动同步及失败告警；复核 `power-application-user` RAM策略是否满足最小权限。凭据索引见独立Cloudflare/阿里云目录。
 - [ ] 在明确备份、负责人和回滚后处理 `wms-server` 的超大日志、历史 SQL 备份和高 inode 文件目录，并完成 CEWMS 恢复验证。
 - [ ] 建立 `wms-db` Bitbucket/Jenkins/XXL-JOB/数据库的备份与恢复清单，确认源码到部署的映射。
 - [ ] 按 [wms-server 故障记录](../otwms-wms-server/INCIDENT_2026-09-17_UNRESPONSIVE.md) 跟进容量与内存风险，并清理或修复旧证书续期项。
@@ -84,4 +87,4 @@
 - [ ] 评估扩容、Swap 策略和 CentOS 7 迁移方案；形成方案后再决定是否变更。
 - [ ] 建立关键服务、HTTP、磁盘、内存和 CPU 的重复巡检脚本。
 
-最近更新：`2026-09-30`
+最近更新：`2026-10-19`

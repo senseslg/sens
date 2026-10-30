@@ -28,6 +28,17 @@ python3 /Users/lingang/sens/otwms-server/scripts/check_disk_pressure.py \
 
 退出码和治理边界见 [reference/disk-capacity-triage.md](reference/disk-capacity-triage.md)。脚本不清理文件；任何周期删除都必须单独确认保留期、打开文件、回滚和验收。
 
+## 超大 stdout 日志手动止血
+
+仅适用确认 `/root/otwms-backend.log` 实际占用超过 10 GiB 的同类事故。先查询当前实例、运行只读巡检；默认不修改：
+
+```bash
+python3 otwms-server/scripts/recover_application_log.py \
+  --project cambodian-express --zone asia-southeast1-a --instance <current-instance>
+```
+
+明确接受旧日志丢失后加 `--execute`：核对主机、日志 inode 与 Java stdout，先在独立 `/run` 压缩/验证尾部 50 MiB，再原位截断，最后将证据存到 `/root/`（600）。不重启、不删业务/临时文件；失败后如已截断，证据可能仍在 `/run`，必须检查输出。之后重跑巡检和临时写入验收，并安排 Jenkins 永久治理；禁止当作定时截断任务使用。详见 [10-16 事故](INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)。
+
 ## 磁盘修复专项回归（本地）
 
 ```bash

@@ -22,6 +22,8 @@
 
 Jira Server 7.12.0 的现有 REST API 已可用于需求管理。本机服务 0.3.0 已实际创建 CE-2629，支持查询、CSV 和关闭/不做预检查；没有部署服务器或取消真实需求。评估与待办见 [服务概览](jira-service/PROJECT_OVERVIEW.md)，不将本机开发进度计入服务器部署状态。
 
+2026-10-23：Bitbucket 4.0.2 已改用金边 JVM 时区，公网状态/登录页和 Git SSH 验证通过；配置备份、持久化及回滚见 [时区记录](BITBUCKET_TIMEZONE.md)。
+
 ## 当前风险与下一步
 
 - [ ] 建立 Bitbucket、Jenkins、Jira、YApi、XXL-JOB、Nexus 和数据库的数据卷、备份、保留期与恢复验证清单；Jenkins 当前数据卷已定位，备份状态待核实。

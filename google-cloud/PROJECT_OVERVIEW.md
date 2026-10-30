@@ -1,13 +1,14 @@
 # Google Cloud 项目总览
 
-更新日期：`2026-09-28`。本子项目用于管理 Google Cloud 控制台层面的项目、资源、访问、成本与变更记录。
+更新日期：`2026-10-24`。本子项目用于管理 Google Cloud 控制台层面的项目、资源、访问、成本与变更记录。
 
 ## 当前范围
 
 - 已通过 Chrome 控制台核实：当前可见项目 `Cambodian Express`，项目 ID `cambodian-express`，项目编号 `614236115553`；项目选择器的“All”列表仅显示这一项目。
 - 已初步盘点 Compute Engine 的 VM、实例组、磁盘、快照和映像数量。详见 [RESOURCE_INVENTORY.md](RESOURCE_INVENTORY.md)。
-- IAM、账单结构与预算、VPC/防火墙、负载均衡、Cloud Storage、GKE、监控及日志尚未逐项核实，不能仅凭控制台快捷入口推断其配置或使用情况。
-- `tms-db` 已完成一次只读容量审查：Cloud Monitoring 显示磁盘约 94.7% 已用，最大表空间为约 714 GiB 的接口审计表。见 [审查记录](TMS_DB_CAPACITY_REVIEW_2026-09-28.md)。
+- 已重新核实 9 月税后 `$4,075.25`，目标税后 `$2,000`；[完整优化清单](COST_OPTIMIZATION_CHECKLIST_2026-10-24.md) 含 28 项待办、控制台入口、负载证据和估价条件，未调整资源。
+- 当前 9 台运行 VM、2 SQL、3 Redis、1 个节点组为 0 的 GKE、10 块磁盘、45 个快照、3 镜像、19 地址（16 全局/3 区域）、33 条转发规则、17 bucket；IAM、VPC/防火墙及逐 key 业务归属仍需核实。
+- `tms-db` 当前约 95.4% 磁盘已用，接口日志物理约 716 GiB；旧日志尚未清完。`ce-tms` 两年前对象版本约 829 万个/2,537 GiB，须先确认引用和保留要求；见完整清单和 [历史清理计划](TMS_INBOUND_LOG_CLEANUP_PLAN.md)。
 
 ## 管理目标
 
@@ -17,9 +18,9 @@
 
 ## 当前重点
 
-1. 盘点 `otwms-group` 和 `tms-group` 的目标规模、自动扩缩容关闭原因及其业务预期；当前仅确认控制台状态，未作配置变更。
-2. 核实 IAM/服务账号、账单预算、VPC/防火墙、存储与备份、监控告警的真实配置，并补充资源所有者和用途。
-3. 处理具体服务问题时，先查对应子项目：[`google-otwms/`](../google-otwms/)、[`otwms-ce-lb/`](../otwms-ce-lb/)、[`otwms-wms-server/`](../otwms-wms-server/)。
-4. 为 `tms-db` 建立容量告警，确认接口日志保留期并在克隆环境验证表空间回收方案。
+1. 核实 `tms-uat`、`otwms-uat`、`toucha-uat` 最近 30 天使用证据，形成首批停用清单。
+2. 将 Geocoding、Translate、Cloud SQL、Compute Engine 和负载均衡分别压到降本计划的费用上限。
+3. 为 `tms-db` 建立容量与性能基线，确认接口日志保留期并在克隆环境验证表空间回收和降配方案。
+4. 核实 IAM/服务账号、预算、VPC/防火墙、逐 bucket 用量及资源所有者。
 
-风险：Compute Engine 列表中的 `wms-server` 显示运行，但同日服务运维记录显示 SSH 与端口不可达。项目级巡检应保留这一状态差异，不将 `Running` 写作“服务正常”。
+风险：Compute Engine 的 `Running` 只代表虚拟机状态，不代表业务健康。`wms-server` 当前仍运行，但 `cewms.service` 已停止且公网 WMS 返回 502，只有 `cp.service` 继续提供服务；不得据 VM 状态写作“WMS 正常”。

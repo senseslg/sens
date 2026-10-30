@@ -14,3 +14,5 @@ GCP `wms-db` 的独立运维子项目。该实例是 CE/WMS 的共享平台，�
 `2026-10-03`：实例、Nginx 和主要容器均在运行；`issue`、`code`、`yapi`、`jenkins` 的入口均已核实。500 GB 根盘使用约 56%，内存余量约 12 GB。当前主要风险是服务高度集中、CentOS 7 生命周期、无 Swap、旧版或 `latest` 容器镜像，以及备份恢复体系尚未完整确认。
 
 Jira 本体实测为 Server 7.12.0。本机 `jira-service` 已验证 API 建单、查询及 CSV；关闭/不做尚未实测提交，后台全域 CSV 格式仍待对齐。该服务未部署到 GCP，未改变共享服务器基线。
+
+2026-10-23：[Bitbucket 时区](BITBUCKET_TIMEZONE.md) 已调整为金边，完成重启及公网 HTTP/Git SSH 验证。

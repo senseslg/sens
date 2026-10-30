@@ -38,6 +38,14 @@ sudo netstat -ltn
 
 服务在本机启动，不需要 SSH 到 `wms-db` 安装。凭据放入本机 Git 忽略配置，不输出到日志或文档。需求创建/状态变更授权不包含 Jira 升级、容器操作或数据库修改。
 
+## Jira 时区
+
+后台默认/账号展示时区与 JVM 时区分开核对。REST 返回 UTC 不代表金边设置失效；先比较带偏移时间代表的同一时刻，不为改变返回格式而直接重启。当前结论及业务影响见 [Jira 时区评估](JIRA_TIMEZONE_ASSESSMENT.md)。
+
+## Bitbucket 时区
+
+2026-10-23 已按授权将 Bitbucket 4.0.2 的 JVM 时区改为 `Asia/Phnom_Penh` 并重启验证；启动脚本已同步持久化。配置、备份和回滚方法见 [Bitbucket 时区记录](BITBUCKET_TIMEZONE.md)。核对运行中 `user.timezone`，不以容器 `date` 或 HTTP `Date` 头判断应用时区。
+
 ## 操作边界
 
 - 容器重启、镜像升级、Nginx 修改、数据库操作、数据卷清理、端口或防火墙变更均需明确授权和回滚方案。

@@ -17,6 +17,7 @@ CE/WMS 在 GCP 上的入口、共享服务、源码/构建平台和管理后台�
 
 ## 当前重点
 
+- `2026-10-19` static 的续期后CAS/CDN自动同步已接入ce-lb并以当前正式证书完成上传、绑定和公网TLS验收；首次真实计划续期及实际文件访问仍待验收，见 [专项记录](STATIC_OSS_SSL.md)。
 - `2026-09-30` 官网已恢复：保留隔离旧缓存、补齐获批的采集权限并限制日志资源；官网、云端日志及指标验收通过，见 [事故记录](INCIDENT_2026-09-30_LOGGING_PRESSURE.md)。TMS/App 故障仍需独立排查。
 - `wms-server` 已扩至 600 GB 并恢复服务；需确认 `/home/daniel` 历史大文件的保留要求，并建立容量告警。
 - 明确 Bitbucket 仓库、Jenkins Job 与 CEWMS/OTWMS 部署目标的映射。

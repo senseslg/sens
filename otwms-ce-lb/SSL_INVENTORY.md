@@ -2,6 +2,8 @@
 
 ## 当前结论
 
+**2026-10-19 static：** 独立证书有效至 `2027-01-17`；ce-lb 自动DNS续期已配置并通过staging，CAS上传、CDN绑定和公网TLS已完成正式证书验收，首次真实计划续期待观察。根路径403/实际文件另验收，见 [专项记录](STATIC_OSS_SSL.md)。官网任务未改；原有Certbot列表未发现 `*.cambodianexpress.com`。
+
 **2026-09-17：官网 HTTPS 已恢复。** `cambodianexpress.com`、`www.cambodianexpress.com`、`cp.cambodianexpress.com` 三张证书已重新签发并加载，有效至 `2026-12-16`。公网标准 TLS 验证通过，根域名返回 301，`www` 返回完整 WordPress 页面（HTTP 200）。Certbot Cron 的 Nginx 路径问题已修复，官网证书在模拟 Cron 环境下 dry-run 通过；其他历史证书的续期失败仍待清理。
 
 ## 2026-09-17 恢复验收
@@ -60,4 +62,4 @@
 - [ ] 为 Certbot 失败增加告警，避免 `--quiet` 长期无人发现。
 - [ ] 评估升级 Certbot、Nginx、OpenSSL 和操作系统，先在替代环境验证，不直接原地升级生产实例。
 
-本次未读取或复制私钥内容，也未处理无关的历史证书。
+2026-09-17 恢复未读取或复制私钥内容，也未处理无关历史证书。2026-10-19 经用户申请/上传要求，将新 static 证书的配套私钥通过 SSH 导出到 Git 忽略的受限目录，未在输出或文档记录其内容。

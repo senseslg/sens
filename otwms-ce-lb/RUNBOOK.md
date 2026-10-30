@@ -83,6 +83,7 @@ sudo env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
 ## 当前环境注意事项
 
+- static 使用独立 `/etc/letsencrypt-oss-static/`；manual auth/cleanup hook已通过staging。Cron为`/etc/cron.d/static-ssl-renewal`，执行器`/usr/local/sbin/renew-static-ssl`默认dry-run（会临时写DNS），显式`--apply`才检查正式续期并调用`/usr/local/libexec/static-ssl/sync_static_cdn_certificate.py --apply`同步CAS/CDN。同步脚本dry-run可单独检查；命令/续期回滚见 [续期Runbook](/Users/lingang/cloudflare_cambodianexpress_com/RENEWAL_RUNBOOK.md)，CDN证书回滚ID及验收见 [专项记录](STATIC_OSS_SSL.md)。
 - Ops Agent 异常时，先核对上传 403、实际 FD 上限和缓存；不能只提高 FD 后一次性处理旧缓存。已验证的风险、保留位置文件的隔离方式及专用资源限额见 [日志事故记录](INCIDENT_2026-09-30_LOGGING_PRESSURE.md)。
 - CentOS 7 的 `systemctl show` 不支持 `--value`；用 `systemctl show <unit> -p MainPID | cut -d= -f2` 获取 PID。变更前始终重新核实 PID 和二进制路径。
 

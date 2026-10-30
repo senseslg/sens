@@ -20,6 +20,7 @@
 - `records/daily/`：需要跨天保留的日常工作记录。
 - `records/meetings/`：会议结论、负责人和后续行动。
 - `google-otwms/`：OTWMS 在 Google Cloud 上的运维子项目记录。
+- `gcp-cost-optimization/`：本次 Google Cloud 降本的目标确认、28 项执行清单、实施记录与结果审核。
 - `google-cloud/`：Google Cloud 项目级资源、访问、费用与管理规则记录。
 - `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享服务、源码/构建平台和应用服务器记录。
 - `wms-db/`：GCP `wms-db` 的共享工具、数据平台、域名路由和容器服务记录。

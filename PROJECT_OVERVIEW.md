@@ -46,11 +46,17 @@
 
 ## 当前子项目
 
+### gcp-cost-optimization
+
+- 路径：[`gcp-cost-optimization/`](gcp-cost-optimization/README.md)。
+- 范围：以 Anytype sens 空间 Task「Google Cloud 成本优化清单」为目标，记录本轮目标确认、28 项实施与最终审核；云资源主记录继续在 `google-cloud/`。
+- 当前状态：`2026-10-26` 完成来源读取、工作清单与约束；目标月费税后 ≤ USD 2,000，稳定后两个完整账期审核。尚未执行本轮云变更，下一步复核费用/TMS 容量基线。
+
 ### google-cloud
 
 - 路径：[`google-cloud/`](google-cloud/)
 - 范围：Google Cloud 项目级资源索引、控制台检查、访问/费用/变更规则。
-- 当前状态：已核实 `cambodian-express` 项目与 Compute Engine 基础资源；`2026-09-28` 只读审查发现共享 Cloud SQL `tms-db` 磁盘约 94.7% 已用，优先治理接口日志。详见[容量审查](google-cloud/TMS_DB_CAPACITY_REVIEW_2026-09-28.md)。
+- 当前状态：`2026-10-24` 完成账单、30 天监控与旧数据审查，形成含控制台入口的 [28 项优化清单](google-cloud/COST_OPTIMIZATION_CHECKLIST_2026-10-24.md)；9 月税后 `$4,075.25`，目标 `$2,000`。SQL 磁盘约 95.4% 已用；ce-tms 两年前对象约 2,537 GiB，生产降配和数据清理均待验证与授权。
 
 ### google-otwms
 
@@ -62,6 +68,7 @@
 
 - 路径：[`otwms-ce-lb/`](otwms-ce-lb/)
 - 范围：GCP `ce-lb`、`dev-lb`、`wms-db` 和 `wms-server` 的入口、源码/构建平台、应用部署与风险管理。
+- 新增状态：`2026-10-19` static在ce-lb自动DNS续期已配置、staging通过；续期后CAS上传、CDN绑定与公网TLS已完成正式证书验收，首次真实计划续期待观察，见 [专项记录](otwms-ce-lb/STATIC_OSS_SSL.md)。
 - 当前状态：官网证书、Cron PATH 与 `cp` 已恢复；`2026-09-30` 官网超时通过保留隔离日志积压、补齐获批的采集写入权限及日志资源限额恢复，云端日志/指标验收通过。其他旧证书、WMS 历史大文件及低内存风险仍待治理。详见 [日志事故](otwms-ce-lb/INCIDENT_2026-09-30_LOGGING_PRESSURE.md)。
 
 ### wms-db
@@ -81,7 +88,7 @@
 
 - 路径：[`otwms-server/`](otwms-server/)
 - 范围：OTWMS Java 后端的 Bitbucket 源码、Jenkins 构建、生产 `BladeX.jar` 部署、XXL-JOB 执行链路和数据库查询故障定位。
-- 当前状态：`2026-10-03` 替换后的 50 GB 实例再次满载，获批保留尾部并截断约 38.9 GiB 日志，根盘/inode 恢复至 22%/1.4%，业务验收待确认。本地已准备 XXL-JOB/POI/轮转修复并通过专项回归，完整构建、部署和模板固化仍待完成，见 [复发记录](otwms-server/INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。任务 13 分批修复已合并，生产部署待核对、尚未重跑。
+- 当前状态：`2026-10-16` 同一 50 GB 实例被约 39.9 GiB stdout 日志再次撑满；保留尾部后截断恢复至 19.8%，写入/HTTP 通过，导出打印待验收。生产仍为 DEBUG，JAR 无前次修复标记；Jenkins 发布、有效日志轮转和模板固化待完成，见 [最新事故](otwms-server/INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)。任务 13 分批修复已合并，生产部署待核对、尚未重跑。
 
 ### tms-server
 

@@ -30,7 +30,9 @@ Jira 地址为 [issue.cambodianexpress.com](https://issue.cambodianexpress.com/)
 
 经办人按下方人员分工与用户指定确定，不作为额外必填的用户输入；报告人等 Jira 必填字段从当前认证身份及项目元数据补齐。缺少信息时先结合上下文判断，只询问无法可靠确定的部分；不擅自编造描述或完成日期。模块可多选，但单个 Jira 问题的经办人仍需明确，跨模块负责人不自动拆单或随机分配。
 
-## 跨项目人员分工（2026-10-05）
+## 人员分工（更新于 2026-10-07）
+
+### 跨项目职责
 
 用户确认以下人员支持全项目平台，按技术职责分配需求，不局限于代购商城或 CCSL。Jira 用户名与显示名已通过 API 核对，账号当前均为启用状态。
 
@@ -46,6 +48,58 @@ Jira 地址为 [issue.cambodianexpress.com](https://issue.cambodianexpress.com/)
 
 人员跨项目支持是团队职责约定，不代表 Jira 已授权全部项目；提交前仍核对目标项目的模块、创建字段及经办人可分配性。API 使用用户名，尤其 `HENG HONGTHAI → BRIAN`、`milinfang → milf`，不能将显示名直接作为用户名。
 
+### 代购商城主要开发人员
+
+2026-10-07 用户补充：谭赛文和 mark 主要负责代购商城的后端开发；“主要负责”不视为仅支持该项目。Jira 账号已通过 API 核对，均为启用状态。
+
+| 同事／显示名 | Jira 用户名（API 经办人） | 项目与模块职责 |
+|---|---|---|
+| 谭赛文 | `tsw` | 主要负责代购商城（CELSHOP）后端开发 |
+| mark | `mark` | 主要负责代购商城（CELSHOP）后端开发 |
+
+创建代购商城后端需求时优先结合谭赛文、mark 的项目归属及已有需求归属确定经办人；两人之间的具体业务分工尚未指定，无法确定时询问，不随机分配。YUTH、胡志武的跨项目后端职责仍保留，用户明确指定负责人时优先采用该指示。
+
+## 任务与代码分支关联（可选，2026-10-23）
+
+关联分支**不是必需步骤**。以下情况可以不关联、不绑定分支：
+
+- Jira 项目没有对应的代码库（例如纯运营、配置类需求）；
+- 一个任务涉及多个仓库或多条分支，逐一关联意义不大；
+- 用户没有要求关联。
+
+### 关联方式
+
+Jira 与公司 Bitbucket（`code.cambodianexpress.com`）已建立应用链接（2026-10-23 通过 Jira 只读接口核实，应用链接中有 Bitbucket Server）。不需要额外配置，任务号出现在以下位置就会自动显示在任务的「开发」面板：
+
+| 任务号出现在 | 开发面板显示 |
+|---|---|
+| 分支名，如 `fix/CCSL-2757-region-async` | 分支 |
+| 提交信息，如 `fix: xxx (CCSL-2757)` | 提交 |
+| PR 标题或 PR 源分支名 | PR |
+
+实测（2026-10-23）：
+
+- CCSL-2757：分支名带任务号，推送后关联 1 个分支。
+- CCSL-2726：分支名不带任务号（分支数 0），但提交信息带 `CCSL-2726`，仍关联到 11 条提交记录和 7 个 PR。
+
+### 推荐顺序（需要关联时）
+
+1. 先用 jira-service 建任务，拿到任务号；
+2. 用带任务号的名字开分支，如 `feature/CCSL-xxxx-简述`、`fix/CCSL-xxxx-简述`；
+3. 提交信息和 PR 标题带上任务号。
+
+Jira 任务页「开发」面板一般也提供「创建分支」入口，会跳转到 Bitbucket 并带上任务号；该入口尚未在页面上实际验证。
+
+### 分支先开好、任务后建
+
+已有分支名里没有任务号时，可以：
+
+1. 之后的提交信息带上任务号（最省事）；没有新代码时可推一个空提交：`git commit --allow-empty -m "CCSL-xxxx 关联任务"`；
+2. 提 PR 时在标题带上任务号；
+3. 需要分支本身显示在 Jira 时，用带任务号的新名字再推一份：`git push origin <旧分支>:<带任务号的新分支>`，之后在新分支上开发；旧分支有进行中的 PR 时，等 PR 处理完再删。
+
+不要为了补任务号改写已推送的提交信息（需要强制推送，会影响已拉取该分支的人）。
+
 ## 认证与旧工具
 
 7.12.0 当前使用用户名/密码 Basic Auth，私有配置位置见服务 Runbook。原生 PAT 从 8.14 起提供；本轮没有升级 Jira、安装 Token 插件、更改密码或许可证。版本升级与费用评估需另行核实许可、兼容性、备份恢复和维护窗口，不能为使用现有 API 而直接升级共享主机。
@@ -53,3 +107,11 @@ Jira 地址为 [issue.cambodianexpress.com](https://issue.cambodianexpress.com/)
 依据：[Basic Auth](https://developer.atlassian.com/server/jira/platform/basic-authentication/)、[PAT 版本要求](https://confluence.atlassian.com/enterprise/using-personal-access-tokens-1026032365.html)、[Jira REST 示例](https://developer.atlassian.com/server/jira/platform/jira-rest-api-examples/)。
 
 早期 [jira_requirements.py](scripts/jira_requirements.py) 支持探测、创建和 JSON 分页导出，仅 `info` 已实测；不作为经过完整认证验证的日常工具。其 JSON 导出限制不代表新服务没有 CSV 功能。
+
+## 用户创建审计
+
+2026-10-21 只读追溯 GUD7XY、rschauditqrnht2is：创建时间已确认，证据支持匿名自助注册，具体个人未知；见 [审计记录](JIRA_USER_CREATION_AUDIT_2026-10-21.md)。
+
+## 时区与业务日期
+
+2026-10-23 已验证账号生效时区与金边一致；Jira 服务返回 UTC 是正常表示，不是延迟生效，无需因此重启或手工修改历史时间。筛选日界线、通知与定时任务的影响见 [时区评估](JIRA_TIMEZONE_ASSESSMENT.md)。

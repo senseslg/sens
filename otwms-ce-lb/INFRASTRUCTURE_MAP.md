@@ -9,6 +9,7 @@
 | 目标 | 首个检查位置 | 最终处理位置 | 记录 |
 |---|---|---|---|
 | `cambodianexpress.com` / `www` | DNS → `ce-lb` Nginx | `ce-lb` 本机 WordPress/PHP-FPM | [SERVICE_INVENTORY.md](SERVICE_INVENTORY.md) |
+| `static.cambodianexpress.com` | Cloudflare DNS CNAME → 阿里云 CDN | OSS 静态资源；ce-lb 仅为本次证书签发位置，非流量入口 | [static CDN/OSS 与证书](STATIC_OSS_SSL.md) |
 | `job.cambodianexpress.com` | GCP `dev-lb` | `wms-db` Nginx → `xxl-job-admin` 容器 | [WMS_DB_SERVER.md](WMS_DB_SERVER.md) |
 | `code.cambodianexpress.com` | `wms-db` Nginx | `wms-db` Bitbucket 容器 | [WMS_DB_SERVER.md](WMS_DB_SERVER.md) |
 | Jenkins 构建 | `wms-db` | Jenkins 容器；存在 `otwms`、`TMS`、`APP` 等任务 | [WMS_DB_SERVER.md](WMS_DB_SERVER.md) |
@@ -48,4 +49,4 @@ gcloud compute ssh wms-server --zone asia-southeast1-a --project cambodian-expre
 
 `wms-db` 与 `wms-server` 没有外部 IP，GCloud CLI 会使用 IAP tunnel。所有服务器默认先做只读检查。
 
-最近验证：`2026-08-17`。
+验证时间：static CDN/DNS/证书为 `2026-10-19`；其他条目沿用 `2026-08-17` 快照，不代表当前持续健康。

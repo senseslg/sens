@@ -12,6 +12,8 @@
 4. 分别核对应用日志、`/tmp/YYYY-MM-DD/` XXL-JOB 日志和 `/tmp/poifiles/` POI 临时文件。
 5. 释放空间后复核容量、inode、Java 进程、端口和本机 HTTP；业务导出/打印仍需业务账号验收。
 
+同类超大 stdout 的手动恢复见 [Runbook](../RUNBOOK.md)：`scripts/recover_application_log.py` 默认 dry-run，仅在明确接受旧日志丢失后执行，先核对归属并验证尾部证据再截断；不安装自动截断任务。
+
 ## 自动巡检
 
 ```bash
@@ -33,4 +35,4 @@ python3 otwms-server/scripts/check_disk_pressure.py \
 
 巡检新增 stdout append/旧偏移与日志增长采样；无 append 时截断仍会形成稀疏文件，不自动清理。XFS inode 总数随可用空间变化，恢复后百分比下降不代表临时文件已删除。
 
-事故见 [2026-09-21 记录](../INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md) 和 [2026-10-03 复发](../INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。修复专项验证使用 `scripts/verify_disk_fixes.py`，不替代整应用构建和生产验收。
+事故见 [2026-09-21 记录](../INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md)、[2026-10-03 复发](../INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md) 和 [2026-10-16 再次满盘](../INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)。修复专项验证使用 `scripts/verify_disk_fixes.py`，不替代整应用构建和生产验收。

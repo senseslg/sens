@@ -5,7 +5,7 @@
 | 域名 | 业务 | 本机上游 | 当前验证 |
 |---|---|---:|---|
 | `issue.cambodianexpress.com` | Jira 问题管理 | `127.0.0.1:8080` | 2026-10-03 公网 HTTP 200 |
-| `code.cambodianexpress.com` | Bitbucket 源码管理 | `127.0.0.1:7990` | 2026-10-03 公网 HTTP 302，符合登录跳转 |
+| `code.cambodianexpress.com` | Bitbucket 源码管理 | `127.0.0.1:7990` | 2026-10-23 状态接口 HTTP 200 / RUNNING，登录页 200；Git SSH 9200 正常响应 |
 | `yapi.cambodianexpress.com` | YApi 接口文档 | `127.0.0.1:40001` | 2026-10-03 公网 HTTP 200 |
 | `jenkins.cambodianexpress.com` | Jenkins 构建与发布 | `127.0.0.1:8081` | 2026-10-03 公网及本机 HTTP 403；未授权访问被拒绝，服务在线 |
 | `job.cambodianexpress.com` | XXL-JOB 管理后台 | `127.0.0.1:8087` | 路由已确认；本轮未登录业务页面 |
@@ -17,7 +17,7 @@
 | 容器 | 镜像 | 宿主机端口 | 作用 |
 |---|---|---:|---|
 | `jira` | `jira/jira` | `8080` | 问题与项目管理；REST serverInfo 实测 Server 7.12.0 |
-| `bitbucket` | `bitbucket/bitbucket` | `7990` / `7999` | Web/HTTP Git 与 Git SSH |
+| `bitbucket` | `bitbucket/bitbucket` | `7990` / `7999` | 版本 4.0.2；Web/HTTP Git 与 Git SSH；2026-10-23 JVM 改为 Asia/Phnom_Penh，详见 [时区记录](BITBUCKET_TIMEZONE.md) |
 | `jenkins` | `jenkins/jenkins:latest` | `8081` / `50000` | 构建与发布；响应头显示 Jenkins 2.503、Jetty 12.0.18，容器已运行约两年 |
 | `xxl-job-admin` | `xuxueli/xxl-job-admin:2.3.1` | `8087` | 任务调度管理后台 |
 | `nexus` | `nexus/nexus:latest` | `8082` | 制品仓库 |

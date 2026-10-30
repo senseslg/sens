@@ -2,6 +2,18 @@
 
 本文件仅记录 `2026-09-17` 已在 Chrome 控制台核实的入口和只读步骤。页面显示会变化，操作前先确认右上角项目为 `Cambodian Express` / `cambodian-express`。
 
+## 2026-10-24 成本只读复核
+
+更多控制台入口见 [成本清单](COST_OPTIMIZATION_CHECKLIST_2026-10-24.md#2-入口索引)。已验证的复查命令：
+
+```bash
+python3 google-cloud/scripts/cloud_cost_audit.py --project cambodian-express --days 30 --output /private/tmp/gcp-cost-audit.json
+```
+
+需已有 gcloud 登录与读取资源/监控权限。脚本只读，凭据不落盘；使用 certifi 或系统受信任 CA，保持 TLS 校验。退出 0=完成，2=部分失败，1=执行失败；输出 JSON 内每项错误须检查。CPU *_peak 用小时采样最大值，其余利用率用小时均值；缺失内存/旧实例覆盖不完整时，不据低 CPU 自动降配。
+
+对象年龄汇总使用现有 Insights 数据集的 [只读 SQL](scripts/storage_age_summary.sql)，运行前核对数据集和冻结日期，并做 BigQuery dry-run/设置 maximum_bytes_billed；不扫描文件内容或创建删除任务。2026-10-24 实际查询计费扫描约 542 MiB（SELECT），不是 dry-run 所示约 49.6 GB 上界。
+
 ## 已核实入口
 
 | 目的 | 控制台入口 |

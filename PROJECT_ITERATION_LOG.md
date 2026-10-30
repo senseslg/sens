@@ -4,6 +4,24 @@
 
 ---
 
+- 2026-10-26 — 核验用户追加到 Anytype 原 Task 底部的 28 项工作清单，记录后续按块同步的授权与范围，保留折叠结构及原始需求，见 [同步规则](gcp-cost-optimization/WORKING_RULES.md)。
+
+- 2026-10-26 — 读取 Anytype sens「Google Cloud 成本优化清单」Task，建立独立[降本实施子项目](gcp-cost-optimization/README.md)，整理全部 28 项、执行约束、复用需求与两个账期审核标准；未执行本轮云变更。
+
+- 2026-10-24 — 完成 Google Cloud 全面成本审查与 28 项待办/入口：核实 TMS VM 低 CPU、SQL 峰值/内存风险及 ce-tms 两年前约 2,537 GiB；保存脱敏证据和只读采集流程，未调整云资源或删除数据，见 [清单](google-cloud/COST_OPTIMIZATION_CHECKLIST_2026-10-24.md)
+- 2026-10-24 — 核实 TMS 生产两条转发规则及 Cloud Armor 两规则/CDN：入口和防护固定约税后 $23.76/月，变量尚未按资源归属；WMS 迁移不能取消该共享入口，见 [补充估算](otwms-wms-server/MIGRATION_COST_ESTIMATE_2026-10-24.md)
+- 2026-10-24 — 登录账单并核实 WMS 资源，全部迁走且释放 E2 small/600 GB 标准盘预计省税后约 $45–47/月；共享入口和保留快照不计入，未迁移或删除资源，见 [估算](otwms-wms-server/MIGRATION_COST_ESTIMATE_2026-10-24.md)
+- 2026-10-23 — 按授权将 Bitbucket 4.0.2 JVM 时区改为 Asia/Phnom_Penh，备份并同步持久启动脚本；仅重启 Bitbucket，公网状态/登录页与 Git SSH 验证通过，见 [配置与回滚](wms-db/BITBUCKET_TIMEZONE.md)
+
+- 2026-10-19 — static 自动同步接通：ce-lb正式续期入口串接CAS上传及CDN绑定；V3 API上传/部署权限与公网TLS用相同正式证书验收，CDN当前绑定611941、原611857保留回滚；首次真实续期待观察，见 [专项记录](otwms-ce-lb/STATIC_OSS_SSL.md)
+- 2026-10-19 — Cloudflare Token/API通过，ce-lb部署经16项测试的DNS hook并完成staging续期、独立Cron启用；首次CAA SERVFAIL经一次重试通过，原TXT/CNAME/正式证书/官网任务未变；当时CDN自动部署仍待阿里云凭据
+- 2026-10-19 — 按用户要求独立创建 cloudflare_cambodianexpress_com 私有资料、0600 Token 空模板、Agent Skill 与通过 10 项离线测试的只读预检；阿里云凭据索引/预检统一引用新路径，实际 Token 和 ce-lb 自动续期仍未配置
+- 2026-10-19 — 创建用户指定的 internationl_ali_cloud 私有资料入口、无密钥 Markdown、Agent Skill 和通过 8 项离线测试的凭据预检；明确优先在 ce-lb 接通 static 自动 DNS 续期，再接 CDN，实际 Token/AccessKey 仍未取得
+- 2026-10-19 — static 独立证书签发至 2027-01-17；用户配置 CDN CNAME 并上传后公网同证书 TLS 验证通过。固化 GoDaddy/Cloudflare/CDN/OSS 职责，将自动部署目标更正为 CDN；根路径 403、实际文件及自动续期仍待验收，见 [专项记录](otwms-ce-lb/STATIC_OSS_SSL.md)
+- 2026-10-17 — 完成 Google Cloud 账单与资源只读降本审查：9 月税后 `$4,075.25`，目标税后 `$2,000`；确认 Cloud SQL、Compute、Geocoding、Translate 和 Networking 为主要费用，形成 UAT 停用、API 限额、数据库回收/降配及负载均衡清理路线，未变更云资源，见 [降本计划](google-cloud/COST_REDUCTION_PLAN_2026-10-17.md)
+- 2026-10-17 — 按用户要求停止 `wms-server` 的 `cewms.service`，确认 80 停止监听、公网 WMS 502；cp 仍运行，实例/磁盘继续计费，开机自启未关闭，见 [当前状态](otwms-wms-server/PROJECT_OVERVIEW.md)
+- 2026-10-17 — 只读核实 `wms.cambodianexpress.com` 经 `tms-lb`、`wms-backend` 与 NEG 落到 `wms-server:80`，补齐 [WMS 域名映射](otwms-wms-server/SERVICE_INVENTORY.md)
+- 2026-10-16 — OTWMS 同一实例再次满盘：39.9 GiB stdout 保留尾部后截断，根盘恢复至 19.8%，写入/HTTP 通过；生产仍为 DEBUG 且 JAR 无前次修复标记，新增默认只读的手动止血脚本，未部署或安装自动清理，见 [事故记录](otwms-server/INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)
 - 2026-10-03 — 补齐 OTWMS 磁盘修复分支的最新源码基线、日志/导出/并发影响及上线验收边界；沿用现有巡检与专项回归脚本，不新增重复 Skill 或自动删除任务
 - 2026-10-03 — Jira 服务 0.3.0 新增按解决日期的周报/月报 8 列 CSV，核对原生导出字段与用户名格式、统一 UTC+7 时间；通过 API 导出 2026 年九月 152 条，新增可复用 export_report.py、18 项测试通过，暂不生成独立 Skill；见 [报表操作](wms-db/jira-service/RUNBOOK.md)
 - 2026-10-03 — Jira 接入与本机服务 0.2.0：验证 Server 7.12.0 认证、API 创建 CE-2629 分配 sens、查询和全部 API 字段 CSV；14 项测试及关闭/不做真实预检查通过，尚未取消需求或部署生产。整理服务概览/Runbook，同步 wms-db 边界；真实转换与后台全域 CSV 对齐待验证，见 [评估记录](wms-db/jira-service/PROJECT_OVERVIEW.md)

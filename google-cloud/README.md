@@ -4,6 +4,8 @@ Google Cloud 控制台管理子项目：保存项目级资源索引、管理边�
 
 ## 阅读顺序
 
+成本优化先看 [2026-10-24 完整清单](COST_OPTIMIZATION_CHECKLIST_2026-10-24.md)：含待办、估价条件、控制台入口和两年前数据证据。
+
 1. [PROJECT_READ_FIRST.md](PROJECT_READ_FIRST.md)：开始和结束任务的规则。
 2. [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)：范围、状态和重点。
 3. [RESOURCE_INVENTORY.md](RESOURCE_INVENTORY.md)：带日期的控制台资源快照。

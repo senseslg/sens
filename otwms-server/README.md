@@ -14,11 +14,11 @@ OTWMS 后端、前端、构建发布、XXL-JOB 和相关 Google Cloud 资源的�
 8. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码、构建产物和 Cloud Storage 的安全核对方法。
 9. [reference/README.md](reference/README.md)：可复用诊断参考。
 
-本次事件：[2026-10-03 磁盘满载复发](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
+本次事件：[2026-10-16 磁盘再次满载](INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)；前次修复与分支见 [10-03 记录](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
 
 ## 当前重点
 
-- 2026-10-03 再次止血：根盘/inode 恢复到 22%/1.4%，写入和本机 HTTP 通过，导出/打印待业务验收。永久修复在本地独立分支，尚未构建上线；生产 DEBUG、无界 stdout 和旧模板仍有复发风险。
+- 2026-10-16 再次止血：保留尾部并截断约 39.9 GiB 日志，根盘/inode 恢复到 19.8%/1.3%，写入和本机 HTTP 通过，导出/打印待业务验收。生产 JAR 未检测到修复标记；DEBUG、无界 stdout 和旧模板仍需通过 Jenkins/模板治理。
 - 日账单查询分批修复已于 2026-08-17 经 PR #2976 合并到 `master`；生产 JAR 是否包含该提交未核对，任务 13 尚未重跑。
 - 修改前确认 `2026-08-15` 日账单是否存在部分结果，以及任务重跑是否幂等。
 - 通过 Bitbucket 提交、Jenkins 构建和受控生产发布完成修复，不直接修改 Jenkins 工作区或生产 JAR。

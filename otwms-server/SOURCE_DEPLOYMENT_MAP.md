@@ -2,7 +2,11 @@
 
 ## 当前结论
 
-生产任务 13 运行的 `/root/BladeX.jar` 已与 Jenkins `otwms / prod / otwms-backend` 的构建产物通过 SHA-256 精确匹配；对应源码仓库为 `OTWMS/otwms-backend` 的 `master`。
+2026-10-16：生产 `otwms-group-1h76:/root/BladeX.jar` 与 Jenkins 生产工作区产物 SHA-256 一致：`d3a630f4f6fb90cdace66e67a53966a32cb87c59e592b0e2f419741ff9a7441f`。该 Job 配置构建 `*/master`，当前可读取的最近构建为 `#193`，2026-09-22 21:47:11（UTC+7）启动、结果 `SUCCESS`。构建 XML 未提取到 Git SHA，不将其推定为某个确切提交。
+
+10-03 磁盘治理提交 `a5cc1f94e` 仍只在远程 `codex/fix-disk-pressure-retention`，未进入最新 `origin/master` `5b5af4ae2`（10-16 PR #3034）。最新 master 仍为 `setLogRetentionDays(1)`；当前生产 JAR 无新增清理类/保留期标记。**已确认修复未进入当前生产，不是修复上线后失效。** 本次只 fetch 与核对文件，未构建、合并或发布。
+
+下方链路及 08-17 提交/哈希均为历史快照，不代表当前实例或运行提交。
 
 ```text
 Bitbucket OTWMS/otwms-backend (master)
