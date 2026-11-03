@@ -88,7 +88,7 @@
 
 - 路径：[`otwms-server/`](otwms-server/)
 - 范围：OTWMS Java 后端的 Bitbucket 源码、Jenkins 构建、生产 `BladeX.jar` 部署、XXL-JOB 执行链路和数据库查询故障定位。
-- 当前状态：`2026-10-16` 同一 50 GB 实例被约 39.9 GiB stdout 日志再次撑满；保留尾部后截断恢复至 19.8%，写入/HTTP 通过，导出打印待验收。生产仍为 DEBUG，JAR 无前次修复标记；Jenkins 发布、有效日志轮转和模板固化待完成，见 [最新事故](otwms-server/INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)。任务 13 分批修复已合并，生产部署待核对、尚未重跑。
+- 当前状态：`2026-10-31` 新实例 `otwms-group-fql0` 满盘后获批保留尾部并截断 34.6 GiB stdout，恢复至 30.6%，写入/HTTP 通过，未重启；POI 约 6.65 GiB 未动，导出/打印待验收。修复仍未合并最新 master；需代码、启动配置及模板联合治理，见 [恢复记录](otwms-server/INCIDENT_2026-10-31_DISK_FULL_CHECK.md)。任务 13 分批修复已合并，生产部署待核对、尚未重跑。
 
 ### tms-server
 

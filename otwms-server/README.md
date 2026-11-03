@@ -14,10 +14,11 @@ OTWMS 后端、前端、构建发布、XXL-JOB 和相关 Google Cloud 资源的�
 8. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码、构建产物和 Cloud Storage 的安全核对方法。
 9. [reference/README.md](reference/README.md)：可复用诊断参考。
 
-本次事件：[2026-10-16 磁盘再次满载](INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)；前次修复与分支见 [10-03 记录](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
+最新事件：[2026-10-31 新实例磁盘满载与恢复](INCIDENT_2026-10-31_DISK_FULL_CHECK.md)，获批截断日志后恢复空间。前次止血见 [10-16](INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)，修复分支见 [10-03](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
 
 ## 当前重点
 
+- 2026-10-31 新实例 `otwms-group-fql0` 根盘/inode 再次满载，获批截断应用日志后恢复至 30.6%/1.4%，写入/HTTP 通过，未重启。POI 临时文件约 6.65 GiB 未动；修复仍未合并最新 master，下一步需代码回归及启动配置/模板一并治理。
 - 2026-10-16 再次止血：保留尾部并截断约 39.9 GiB 日志，根盘/inode 恢复到 19.8%/1.3%，写入和本机 HTTP 通过，导出/打印待业务验收。生产 JAR 未检测到修复标记；DEBUG、无界 stdout 和旧模板仍需通过 Jenkins/模板治理。
 - 日账单查询分批修复已于 2026-08-17 经 PR #2976 合并到 `master`；生产 JAR 是否包含该提交未核对，任务 13 尚未重跑。
 - 修改前确认 `2026-08-15` 日账单是否存在部分结果，以及任务重跑是否幂等。

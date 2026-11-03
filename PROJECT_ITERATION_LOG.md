@@ -4,6 +4,7 @@
 
 ---
 
+- 2026-10-31 — OTWMS 新实例满盘后获批保留尾部并截断 34.6 GiB stdout，恢复至 30.6%，写入/HTTP 通过，未重启或动 POI；修复仍未合并最新 master，核实 Jenkins 已至 #195，补充代码/启动配置/模板联合治理顺序，见 [恢复记录](otwms-server/INCIDENT_2026-10-31_DISK_FULL_CHECK.md)
 - 2026-10-26 — 核验用户追加到 Anytype 原 Task 底部的 28 项工作清单，记录后续按块同步的授权与范围，保留折叠结构及原始需求，见 [同步规则](gcp-cost-optimization/WORKING_RULES.md)。
 
 - 2026-10-26 — 读取 Anytype sens「Google Cloud 成本优化清单」Task，建立独立[降本实施子项目](gcp-cost-optimization/README.md)，整理全部 28 项、执行约束、复用需求与两个账期审核标准；未执行本轮云变更。
