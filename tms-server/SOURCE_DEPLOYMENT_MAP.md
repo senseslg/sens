@@ -39,3 +39,7 @@ Jenkins 控制台证明构建、上传、调用部署脚本以及报告 PID；�
 - `tms-lb` 也承载 `wms.cambodianexpress.com`，但其 `path-matcher-1` 指向独立的 `wms-backend`；TMS 故障不等于 WMS 后端故障。
 - `otwms.cambodianexpress.com` 运行在独立的 OTWMS 后端；OTWMS 某些业务流程会调用 TMS。2026-09-17 曾观察到 OTWMS 向 `/api/public/tms/shipment/scan-update-app` 发起调用并收到 502。
 - `wms-db` 承载 Jenkins、Bitbucket 和 XXL-JOB 管理后台，不是 `tms.cambodianexpress.com` 的 Tomcat 实例。
+
+## 2026-11-02 分支与部署补查
+
+当前 master 已推进到 `d4883e04…`，与 `feature/ccsl-tms-otwms` 同指向；qa `6dc34972…` 已通过 UAT #868 部署。生产最新 Jenkins #458（10-15）检出 `4efc6424…`，比当前 master 少 40 个提交。UAT 使用独立 `packages/uat/ROOT.war` 与 `-P uat`。完整差异、业务风险和验证限制见 [合并排查](BRANCH_MERGE_REVIEW_2026-11-02.md)。

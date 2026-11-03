@@ -24,7 +24,7 @@ TMS 再次出现间歇性超时，已复现本机登录页与静态资源无响�
 | 后端 | `tms-neg-backend` → `tms-neg`，`asia-southeast1-a` |
 | 实例 | `tms-instance-template-20251103-082933`，当次内网端点 `10.148.0.116:8080` |
 | 应用 | `/home/daniel/apache-tomcat-8.5.50` 中的 Java/Tomcat；生产 WAR 由部署脚本处理 |
-| 源码 | Bitbucket `TMS/tms-server` 的 `master`；本子项目未克隆源码 |
+| 源码 | Bitbucket `TMS/tms-server` 的 `master`；当前本机无源码 checkout，服务端 Git 可只读核对 |
 | 构建发布 | `wms-db` 上 Jenkins `TMS / prod / tms-prod` |
 | 部署包中转 | `gs://cambodian-express/ROOT.war` |
 
@@ -39,3 +39,7 @@ TMS 再次出现间歇性超时，已复现本机登录页与静态资源无响�
 - [ ] 复核 JVM `-Xms24g -Xmx24g` 与约 32 GB、无 swap 的实例容量，并建立内存告警与有依据的回滚方案；不要仅靠反复部署掩盖 OOM。
 
 最近更新：`2026-10-01`
+
+## 2026-11-02 分支排查
+
+[master/qa 合并排查](BRANCH_MERGE_REVIEW_2026-11-02.md)：未发现 QA 整条覆盖，UAT 已部署当前 qa；当前 master 与功能分支同指向，下一次生产构建将带入 40 个新增提交，需确认发布范围及取件重复回传风险。本次只读，未修改分支或发布。

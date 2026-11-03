@@ -34,3 +34,7 @@ Jenkins 中另有名为 `restart-tms` 的任务，但其目标实例和实际脚
 4. OOM 复发时先保留日志/诊断并查明增长来源；修改 JVM 堆、实例规格、健康检查或部署脚本都属于独立生产变更，需授权、回滚和验收。
 
 参考 [HTTP 就绪与 TCP 健康检查](reference/http-readiness-vs-tcp-health.md)；本次详细证据见 [事故记录](INCIDENT_2026-09-17_OOM_AND_RECOVERY.md)。
+
+## 分支合并影响排查
+
+先固定 master/qa/功能分支提交，核对双亲、祖先关系与相对第一父提交的差异；再检查 Jenkins 实际检出 SHA、触发人、环境 profile、产物路径及目标。不要把提交图标签、累计 ahead 数量或 SUCCESS 当作覆盖、发布或业务正常的证据。已验证示例见 [2026-11-02 排查](BRANCH_MERGE_REVIEW_2026-11-02.md)。
