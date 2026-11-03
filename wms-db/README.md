@@ -16,3 +16,5 @@ GCP `wms-db` 的独立运维子项目。该实例是 CE/WMS 的共享平台，�
 Jira 本体实测为 Server 7.12.0。本机 `jira-service` 已验证 API 建单、查询及 CSV；关闭/不做尚未实测提交，后台全域 CSV 格式仍待对齐。该服务未部署到 GCP，未改变共享服务器基线。
 
 2026-10-23：[Bitbucket 时区](BITBUCKET_TIMEZONE.md) 已调整为金边，完成重启及公网 HTTP/Git SSH 验证。
+
+2026-11-02：[CCSL 提交作者核对](BITBUCKET_AUTHOR_IDENTITY_2026-11-02.md) 区分 `SiGentIsHere` Git 作者名与 Bitbucket 登录用户，关联 PR 由 YUTH 创建并合并；实际推送账号未直接确认。
