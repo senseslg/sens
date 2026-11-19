@@ -19,7 +19,7 @@
 | 生产分支 | `master` |
 | Jenkins Job | `otwms / prod / otwms-backend` |
 | Jenkins 工作区 | `/home/daniel/containers/jenkins/jenkins/workspace/otwms/prod/otwms-backend` |
-| 生产实例 | `otwms-group-fql0`，`asia-southeast1-a`（2026-10-31 快照，实例组成员会变化） |
+| 生产实例 | `otwms-group-1qmh`，`asia-southeast1-a`（2026-11-17 快照，实例组成员会变化） |
 | 生产产物 | `/root/BladeX.jar` |
 | XXL-JOB 执行器 | OTWMS 应用进程，端口 `9999` |
 | 业务数据库 | Cloud SQL `tms-db`；相关 schema 为 `tms_uat` |
@@ -29,6 +29,12 @@
 完整证据和当前 Git/JAR 快照见 [SOURCE_DEPLOYMENT_MAP.md](SOURCE_DEPLOYMENT_MAP.md)。实例名可能随实例组替换而变化，定位时应以执行器内网地址反查当前实例，不能永久依赖本次名称。
 
 ## 当前问题
+
+2026-11-17 快递员 App 间歇性卡顿集中在佣金接口；同窗慢 SQL 有大量扫描、锁等待很低。OTWMS 磁盘另因 stdout 累积升至 96.6%，获批清理后恢复至 16.7%，未重启。详见 [本次排查](INCIDENT_2026-11-17_COURIER_LATENCY_AND_DISK.md)。
+
+2026-11-04 按 Anytype“集运系统-本土物流”目标审查 PR #3064，另发现 8 项风险，包括新增回调鉴权、批量扫描误判、失败响应/重试、金额及区域/包裹模型不一致。部分已有只读样本佐证，未实施修复或主动业务探测；详见 [本土物流发布审查](REVIEW_2026-11-04_LOCAL_PARCEL_RELEASE.md)。这不改变前次 UAT 路由事件的无业务影响结案判定。
+
+2026-11-04 CCSL UAT 路由事件已结案，用户确认线上测试期内无业务影响，测试数据无需处理、无需补写生产。配置问题尚未修正，正式启用该业务前应核对目标地址与鉴权；证据及结案决定见 [CCSL UAT 路由事件](INCIDENT_2026-11-04_CCSL_UAT_ROUTING.md)。
 
 2026-10-31 新实例再次满盘后，获批保留尾部并截断约 34.6 GiB stdout，根盘恢复至 30.6%、inode 1.4%，写入/HTTP 通过，未重启；POI 约 6.65 GiB 未清理，业务导出/打印待验收。修复仍未合并最新 master `7f8b78df7`；生产仍有 DEBUG、无界 stdout 与旧模板风险。Jenkins 最近可读生产构建为 10-20 的 #195；未比较本次产物哈希。详见 [10-31 记录](INCIDENT_2026-10-31_DISK_FULL_CHECK.md)。
 
@@ -89,5 +95,6 @@
 - [ ] 在 `2026-08-27` 硬删除前确认 `WOEvidence/` 的 5 个软删除对象和 `test.jpg` 是否需要恢复。
 - [ ] 如需重新启用 Lifecycle，使用明确前缀/后缀和保留期，先在清单上验证命中范围。
 - [ ] 如需审计 Lifecycle 自动删除，评估为该桶配置 Cloud Storage usage logs。
+- [ ] （2026-11-19 新增）`tms_uat.tms_tracking_event`（约 6,500 万行）只有 `IDX_OBJECT(OBJECT_TYPE, OBJECT_NO)` 索引，只按 `OBJECT_NO` 查会全表扫描（当天 CCSL 排查时一条只读查询因此在生产 `tms-db` 超时，已中止）。待办：在 OTWMS/TMS 源码里排查只按 `OBJECT_NO` 查轨迹的 SQL 和 Mapper，评估是否改为带 `OBJECT_TYPE='SHIPMENT'` 或单独为 `OBJECT_NO` 建索引（大表 DDL 需低峰与单独授权）；排查人工/工具查询的使用说明。
 
-最近更新：`2026-10-31`
+最近更新：`2026-11-19`
