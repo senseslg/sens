@@ -19,6 +19,16 @@ python3 run.py
 - 所有业务接口需要 `X-API-Key`，仅健康与接口说明无需认证。仅监听本机，暂不对外发布。
 - 可用同名环境变量覆盖文件配置；`JIRA_SERVICE_PORT` 可调整端口。
 
+### 用完即停（2026-11-18 起，强制）
+
+服务是按需临时启动的，**本次建单/关闭/导出做完后必须停掉，释放端口**，不要留常驻进程（此前遗留进程长期占用端口）。
+
+1. 启动前看端口：`lsof -nP -iTCP:8765 -sTCP:LISTEN`。已是本服务（`/health` 返回 `jira_configured`）就直接用；被别的程序占用时用 `JIRA_SERVICE_PORT=8766` 换端口，不要停别人的进程。
+2. 在后台启动并记下 PID：`JIRA_SERVICE_PORT=<端口> python3 run.py &`，`echo $!`。
+3. 操作完成、核对结果后停止：`kill <PID>`；无 PID 时只停本服务的进程：
+   `lsof -t -iTCP:<端口> -sTCP:LISTEN | xargs ps -o pid=,command= -p | grep 'run.py' | awk '{print $1}' | xargs kill`。
+4. 再次执行 `lsof` 确认端口已释放，在交付说明里写明「服务已停止」。
+
 ## 接口
 
 | 方法与路径 | 用途 |

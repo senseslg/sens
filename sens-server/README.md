@@ -7,9 +7,7 @@ Shared, local-only connection and operations helpers for servers maintained by `
 - [`cs-online/`](cs-online/) - Toucha's self-hosted Chatwoot production server.
 - [`mallgogo/`](mallgogo/) - Mallgogo production and UAT application server.
 - [`new-ccsl/`](new-ccsl/) - New CCSL Java production and UAT server.
-- [`d-mall-sever/`](d-mall-sever/) - D-Mall / `ce-ssr-app` production server.
-
-The `d-mall-sever` directory name follows the requested local path spelling.
+- [`d-mall-server/`](d-mall-server/) - D-Mall / `ce-ssr-app` production server.
 
 ## Rules
 

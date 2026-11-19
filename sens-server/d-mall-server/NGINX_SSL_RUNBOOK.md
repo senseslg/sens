@@ -142,6 +142,8 @@ openssl s_client \
 
 ## 日常更新与证书维护
 
+2026-11-19 增补：D-Mall 的 acme.sh RSA lineage 已接入国际站 CDN 同步及 Telegram 失败/恢复通知，详细维护见 [CDN 通知维护手册](CDN_TELEGRAM_RUNBOOK.md)。Nginx reload 与 CDN 边缘更新是不同链路；本文历史证书日期不能代表当前有效期，不要将中国站 Certbot 流程混入本机。
+
 应用代码日常更新使用：
 
 ```bash

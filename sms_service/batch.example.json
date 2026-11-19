@@ -1,0 +1,6 @@
+{
+  "globals": {"sender": "SMS Info"},
+  "messages": [
+    {"to": ["85512345678", "85597123456"], "content": "Hello from REST API"}
+  ]
+}

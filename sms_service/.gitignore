@@ -1,0 +1,3 @@
+config.local.json
+*.response.json
+__pycache__/

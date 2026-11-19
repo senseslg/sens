@@ -46,6 +46,18 @@
 
 ## 当前子项目
 
+### telegram-CCSL-Service
+
+- 路径：[telegram-CCSL-Service](telegram-CCSL-Service/README.md)。
+- 范围：复用 CCSL Telegram Bot，提供 Python helper 和命令行入口；凭据保存在子项目私有配置中。
+- 当前状态：2026-11-19 已复制生产凭据，配置与权限检查通过；已获授权完成单条测试，Telegram 返回成功。共用机器人与默认会话，调用说明见 [Runbook](telegram-CCSL-Service/RUNBOOK.md)。
+
+### sms_service
+
+- 路径：[`sms_service/`](sms_service/README.md)。
+- 范围：PlasGate REST 单发/批发接口记录、凭据本地配置及默认预览的 Python 调用脚本。
+- 当前状态：`2026-11-19` 官方文档、5 项离线测试及两种预览通过；配置凭据后获授权测试，接口返回 `403 Untrusted Token`，待核对认证配置，见目录说明。
+
 ### gcp-cost-optimization
 
 - 路径：[`gcp-cost-optimization/`](gcp-cost-optimization/README.md)。
@@ -95,6 +107,12 @@
 - 路径：[`tms-server/`](tms-server/)
 - 范围：`tms.cambodianexpress.com` 的 GCP 入口、Tomcat 实例、Bitbucket/Jenkins 发布链路和服务故障定位。
 - 当前状态：`2026-10-01` 再次捕捉 TMS 本机 HTTP 阻塞和 LB backend_timeout，根因未确认；FD 软/硬上限均为 4096，用户授权的软上限试验因硬上限及管理员访问障碍尚未执行。详见 [间歇超时记录](tms-server/INCIDENT_2026-09-30_INTERMITTENT_TIMEOUT.md)；历史 OOM 风险仍待治理。
+
+### d-mall-server
+
+- 路径：[`sens-server/d-mall-server/`](sens-server/d-mall-server/README.md)。
+- 范围：D-Mall / `ce-ssr-app` 生产服务器基础信息与 SSH 登录入口。
+- 当前状态：2026-11-18 更正原目录拼写并同步本地引用；服务器基线仍为 2026-08-01 核验记录，未实时连接服务器。
 
 ### ssl
 

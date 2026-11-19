@@ -38,7 +38,7 @@ SERVICE_ORDER = [
     "cs-online",
     "mallgogo",
     "new-ccsl",
-    "d-mall-sever",
+    "d-mall-server",
     "new-ccsl-mixed-backup-20260731-01",
 ]
 
@@ -46,6 +46,6 @@ SERVICE_LABELS = {
     "cs-online": "Chatwoot / cs-online",
     "mallgogo": "Mallgogo",
     "new-ccsl": "CCSL 管理后台",
-    "d-mall-sever": "D-Mall / ce-ssr-app",
+    "d-mall-server": "D-Mall / ce-ssr-app",
     "new-ccsl-mixed-backup-20260731-01": "CCSL 历史混合备份",
 }

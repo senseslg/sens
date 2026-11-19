@@ -23,7 +23,7 @@ ssh -i /Users/lingang/.ssh/id_ed25519_d_mall sens@47.83.1.157
 推荐通过统一入口登录：
 
 ```bash
-/Users/lingang/sens/sens-server/d-mall-sever/connect.sh
+/Users/lingang/sens/sens-server/d-mall-server/connect.sh
 ```
 
 ## 服务器基线
@@ -75,7 +75,11 @@ ssh -i /Users/lingang/.ssh/id_ed25519_d_mall sens@47.83.1.157
 证书。2026-08-01 已验证 HTTP 301、HTTPS 登录页、健康接口和证书主机名均正常。
 新增域名与 SSL 的标准步骤及故障排查见 `NGINX_SSL_RUNBOOK.md`。
 
-## 部署与回滚
+## 2026-11-19 增量：CDN 证书通知
+
+已接入国际站 `static.ceccsl.com` RSA 证书部署钩子及服务端 Telegram 告警，每小时只读检查；原 acme.sh 续期/Nginx reload 和应用部署方式不变。服务端测试消息 3437 已由用户确认收到，部署后应用入口 200。路径、告警频率、权限及回退统一见 [CDN 通知维护手册](CDN_TELEGRAM_RUNBOOK.md)。此项不代表上文 2026-08-01 的应用版本和资源基线已重新核验。
+
+## 应用部署与回滚
 
 服务端部署脚本：
 
@@ -87,7 +91,7 @@ bash ./deploy.sh <commit-sha>
 本地安全入口：
 
 ```bash
-/Users/lingang/sens/sens-server/d-mall-sever/deploy.sh <commit-sha>
+/Users/lingang/sens/sens-server/d-mall-server/deploy.sh <commit-sha>
 ```
 
 服务端脚本会在 `.deploy_rollback_ref` 保存部署前提交。2026-07-31 核验时的
@@ -100,7 +104,7 @@ e81a77013380f61a5694d4e5ad7f350908984aed
 该值会随部署变化，回滚前必须重新读取，不要依赖本文中的历史值：
 
 ```bash
-/Users/lingang/sens/sens-server/d-mall-sever/connect.sh \
+/Users/lingang/sens/sens-server/d-mall-server/connect.sh \
   'cd /home/sens/ce-ssr-app && cat .deploy_rollback_ref'
 ```
 

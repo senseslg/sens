@@ -4,6 +4,19 @@
 
 ---
 
+- 2026-11-19 — 新增 [jenkins-service](jenkins-service/README.md)：Jenkins 位于 `wms-db` 容器，记录 CCSL 任务路径与 IAP 只读查询脚本 `jenkins_builds.py`（jobs/list/log 已实测）；定位后端 UAT #2345 失败为 CCSL-2859 测试编译歧义。
+
+- 2026-11-19 — [telegram-CCSL-Service](telegram-CCSL-Service/README.md) 升至 0.1.1：自动加载 macOS 系统 CA，统一 CLI/Python 调用；6 项离线测试与只读 HTTPS 验证通过。
+
+- 2026-11-19 — [telegram-CCSL-Service](telegram-CCSL-Service/PROJECT_OVERVIEW.md) 首次获授权单条测试发送成功；记录 Python 使用系统 CA 的 TLS 验证方式。
+
+- 2026-11-19 — 新增 [telegram-CCSL-Service](telegram-CCSL-Service/README.md)，复制私密凭据并提供跨项目调用脚本；配置、权限及子项目文档校验通过，未发送通知。
+
+- 2026-11-19 — [sms_service](sms_service/README.md) 首次获授权单条测试返回 HTTP 403 / `Untrusted Token`；未获受理，保留私有响应并记录 Python TLS 信任问题。
+- 2026-11-19 — 新增 [sms_service](sms_service/README.md)：整理 PlasGate REST 单发/批发规范，提供默认预览、凭据脱敏的 Python 脚本；5 项离线测试通过，未实际发送短信。
+- 2026-11-18 — [jira-service Runbook](wms-db/jira-service/RUNBOOK.md#用完即停2026-11-18-起强制) 增加「用完即停」规则：按需启动、操作后停止本服务进程并确认端口释放，8765 被他人占用时换端口而不停别人的进程。
+- 2026-11-18 — 将 D-Mall 原运维目录更名为 [sens-server/d-mall-server](sens-server/d-mall-server/README.md)，同步文档与本地后台引用，移除根目录重复资料；未连接或变更服务器。
+
 - 2026-10-31 — OTWMS 新实例满盘后获批保留尾部并截断 34.6 GiB stdout，恢复至 30.6%，写入/HTTP 通过，未重启或动 POI；修复仍未合并最新 master，核实 Jenkins 已至 #195，补充代码/启动配置/模板联合治理顺序，见 [恢复记录](otwms-server/INCIDENT_2026-10-31_DISK_FULL_CHECK.md)
 - 2026-10-26 — 核验用户追加到 Anytype 原 Task 底部的 28 项工作清单，记录后续按块同步的授权与范围，保留折叠结构及原始需求，见 [同步规则](gcp-cost-optimization/WORKING_RULES.md)。
 

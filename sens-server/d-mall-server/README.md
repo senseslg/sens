@@ -8,29 +8,30 @@
 
 ```bash
 # 交互式登录
-/Users/lingang/sens/sens-server/d-mall-sever/connect.sh
+/Users/lingang/sens/sens-server/d-mall-server/connect.sh
 
 # 执行一条只读远程命令
-/Users/lingang/sens/sens-server/d-mall-sever/connect.sh 'hostname && uptime'
+/Users/lingang/sens/sens-server/d-mall-server/connect.sh 'hostname && uptime'
 
 # 查看服务器、资源、项目和进程状态（只读）
-/Users/lingang/sens/sens-server/d-mall-sever/status.sh
+/Users/lingang/sens/sens-server/d-mall-server/status.sh
 
 # 标准健康检查，正常退出码为 0，异常为 2（只读）
-/Users/lingang/sens/sens-server/d-mall-sever/health-check.sh
+/Users/lingang/sens/sens-server/d-mall-server/health-check.sh
 
 # 日常巡检：状态 + 健康检查（只读）
-/Users/lingang/sens/sens-server/d-mall-sever/daily-check.sh
+/Users/lingang/sens/sens-server/d-mall-server/daily-check.sh
 
 # 查看最近日志（只读）
-/Users/lingang/sens/sens-server/d-mall-sever/logs.sh both 80
+/Users/lingang/sens/sens-server/d-mall-server/logs.sh both 80
 
 # 明确指定 Git commit 后部署（有变更，会二次确认）
-/Users/lingang/sens/sens-server/d-mall-sever/deploy.sh <commit-sha>
+/Users/lingang/sens/sens-server/d-mall-server/deploy.sh <commit-sha>
 ```
 
 ## 文件说明
 
+- `CDN_TELEGRAM_RUNBOOK.md`：static.ceccsl.com 证书同步、服务端 Telegram 通知、定时只读检查及回退（2026-11-19 启用）。
 - `SERVER_INFO.md`：经实际连接核验的服务器、应用、端口、版本和维护边界。
 - `NGINX_SSL_RUNBOOK.md`：新增域名、复用通配符证书、安装 Nginx 站点及排查
   错误证书的标准流程。
@@ -57,7 +58,7 @@ DMALL_PROJECT_DIR=/home/sens/ce-ssr-app
 
 ```bash
 DISK_WARN_PERCENT=90 MEMORY_WARN_PERCENT=8 \
-  /Users/lingang/sens/sens-server/d-mall-sever/health-check.sh
+  /Users/lingang/sens/sens-server/d-mall-server/health-check.sh
 ```
 
 ## 安全边界

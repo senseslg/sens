@@ -11,7 +11,7 @@
 | `sens-server/cs-online/` | Toucha 自建 Chatwoot 生产服务器；包含登录、快速状态、健康检查、磁盘/日志增长和日检留档脚本 | 只读 |
 | `sens-server/mallgogo/` | Mallgogo 生产/UAT 应用服务器连接及健康检查 | 只读 |
 | `sens-server/new-ccsl/` | New CCSL Java 生产/UAT 服务器连接、基线和健康检查 | 只读 |
-| `sens-server/d-mall-sever/` | D-Mall / `ce-ssr-app` 生产服务器运维入口 | 状态/健康/日志脚本只读；`deploy.sh` 会修改生产环境 |
+| `sens-server/d-mall-server/` | D-Mall / `ce-ssr-app` 生产服务器运维入口 | 状态/健康/日志脚本只读；`deploy.sh` 会修改生产环境 |
 | `sens-server/new-ccsl-mixed-backup-20260731-01/` | 历史混合资料备份，同时保留 CCSL 与 CE SSR App 旧入口 | 仅用于追溯，不作为日常默认入口 |
 
 各服务器目录中的 `README.md` 和 `SERVER_INFO.md` 是具体使用方式、服务器事实及风险边界的来源。
@@ -50,14 +50,14 @@ cd /Users/lingang/sens/sens-server/new-ccsl
 ### D-Mall / ce-ssr-app
 
 ```bash
-cd /Users/lingang/sens/sens-server/d-mall-sever
+cd /Users/lingang/sens/sens-server/d-mall-server
 ./connect.sh
 ./status.sh
 ./health-check.sh
 ./daily-check.sh
 ```
 
-`d-mall-sever/deploy.sh` 是生产变更脚本，只有在目标 commit、备份、回滚和验收方式均明确且获得授权后才能执行。
+`d-mall-server/deploy.sh` 是生产变更脚本，只有在目标 commit、备份、回滚和验收方式均明确且获得授权后才能执行。
 
 ## 安全与维护规则
 

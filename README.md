@@ -16,6 +16,10 @@
 
 ## 目录说明
 
+- [telegram-CCSL-Service](telegram-CCSL-Service/README.md)：CCSL Telegram 通知调用工具与私密配置，供其他业务复用；默认检查，显式发送。
+
+- [jenkins-service](jenkins-service/README.md)：公司 Jenkins（`wms-db` 容器）的位置、CCSL 任务路径与只读构建/日志查询脚本。
+- `sms_service/`：PlasGate 短信接口说明、私有凭据配置与单发/批发调用脚本。
 - `records/projects/`：项目记录，一项长期工作一个文件。
 - `records/daily/`：需要跨天保留的日常工作记录。
 - `records/meetings/`：会议结论、负责人和后续行动。
