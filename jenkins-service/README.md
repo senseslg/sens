@@ -40,6 +40,11 @@ python3 jenkins_builds.py log  --job ccsl/uat/ccsl-backend-uat --build 2345   # 
 python3 jenkins_builds.py log  --job ccsl/uat/ccsl-backend-uat --build 2345 --tail 80
 ```
 
+- Windows（2026-11-19 适配）：脚本自动查找 `gcloud.cmd`（也可设环境变量 `GCLOUD_BIN` 指向它），输出按 UTF-8 解码；
+  在 `D:\sens_apps\sens\jenkins-service\scripts` 下用 `python jenkins_builds.py …`。前提是本机已安装 Google Cloud SDK，
+  并已执行 `gcloud auth login`；首次 `gcloud compute ssh` 会生成密钥（Windows 默认用 PuTTY/plink），需用户本人完成。
+  2026-11-19 已用 scoop 安装 gcloud 594.0.0 并登录，默认项目 cambodian-express；wms-db 主机密钥已缓存到 plink
+  （GCP 无 hostkeys 访客属性，经 IAP 读取服务器 ed25519 指纹 `SHA256:6a9AGkBV…tZ5s` 核对后缓存）。
 - 脚本经 `gcloud compute ssh wms-db --tunnel-through-iap` 登录，用 `sudo -n` 读文件；不调用 Jenkins API，不触发或取消构建。
 - 关键行包括触发人、检出提交、提交说明、`[ERROR]`、`BUILD SUCCESS/FAILURE`、`Finished:`。
 - 输出会去掉 Jenkins 注解（`ha://…`）和颜色码，含 password/token/secret 等字样的行替换为 `[已隐藏疑似敏感行]`。

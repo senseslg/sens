@@ -12,13 +12,28 @@
 退出码：0 成功；1 远端命令失败；2 参数错误。
 """
 import argparse
+import os
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 
-GCLOUD = ['gcloud', 'compute', 'ssh', 'wms-db',
-          '--project=cambodian-express', '--zone=asia-southeast1-a', '--tunnel-through-iap']
+
+def gcloud_bin():
+    """macOS/Linux 为 gcloud；Windows 为 gcloud.cmd（subprocess 不会自动补扩展名）。可用 GCLOUD_BIN 指定。"""
+    explicit = os.environ.get('GCLOUD_BIN')
+    if explicit:
+        return explicit
+    found = shutil.which('gcloud.cmd' if os.name == 'nt' else 'gcloud') or shutil.which('gcloud')
+    if not found:
+        print('未找到 gcloud：请安装 Google Cloud SDK 并执行 gcloud auth login，或设置 GCLOUD_BIN', file=sys.stderr)
+        sys.exit(1)
+    return found
+
+
+GCLOUD_ARGS = ['compute', 'ssh', 'wms-db',
+               '--project=cambodian-express', '--zone=asia-southeast1-a', '--tunnel-through-iap']
 JENKINS_JOBS = '/home/daniel/containers/jenkins/jenkins/jobs'
 JOB_RE = re.compile(r'^[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)*$')
 # 构建日志关键行：触发人、检出提交、Maven/npm 错误、构建结果
@@ -37,7 +52,9 @@ def job_dir(job):
 
 
 def run_remote(cmd):
-    p = subprocess.run(GCLOUD + ['--command', cmd], capture_output=True, text=True, timeout=240)
+    # Windows 默认按系统代码页解码，日志为 UTF-8，显式指定避免乱码或解码异常
+    p = subprocess.run([gcloud_bin()] + GCLOUD_ARGS + ['--command', cmd], capture_output=True,
+                       text=True, encoding='utf-8', errors='replace', timeout=240)
     lines = []
     for raw in (p.stdout + p.stderr).splitlines():
         line = ANSI.sub('', ANNOTATION.sub('', raw)).rstrip()
