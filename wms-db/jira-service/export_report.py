@@ -12,6 +12,7 @@ import urllib.error
 import urllib.request
 
 from reporting import REPORT_COLUMNS, REPORT_NAMES
+from private_config import load_private_config
 
 ROOT = Path(__file__).resolve().parent
 DEFAULT_EXPORT_DIR = Path.home() / "Downloads"
@@ -64,10 +65,7 @@ def main(argv=None):
             raise ValueError("输出文件已存在，请指定新的 --output")
         key = os.environ.get("JIRA_SERVICE_API_KEY")
         if not key:
-            config_path = ROOT / ".local" / "config.json"
-            if config_path.stat().st_mode & 0o077:
-                raise ValueError("配置权限过宽，应为 600")
-            key = json.loads(config_path.read_text()).get("JIRA_SERVICE_API_KEY")
+            key = load_private_config().get("JIRA_SERVICE_API_KEY")
         if not key:
             raise ValueError("尚未配置本地服务密钥，请先运行 setup_local.py")
         port = int(os.environ.get("JIRA_SERVICE_PORT", "8765"))

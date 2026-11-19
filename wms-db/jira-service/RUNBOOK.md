@@ -2,6 +2,8 @@
 
 适用于本机服务 0.3.0。当前能力与验证边界见 [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md)。
 
+Windows 本机调用另见 [WINDOWS.md](WINDOWS.md)；下列 macOS 步骤保持原样。
+
 ## 启动与认证
 
 ```bash

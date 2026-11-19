@@ -6,6 +6,14 @@
 
 服务版本 0.3.0，位于 `/Users/lingang/sens/wms-db/jira-service`，运行在用户本机 Mac；Jira 本体在 GCP `wms-db`。当前只是本机终端进程，未配置常驻服务或服务器部署。已有功能适合本机受控使用，不能据此认定已具备共享生产服务的运维条件。
 
+## Windows适配（2026-11-19）
+
+Windows checkout为`D:\sens_apps\sens\wms-db\jira-service`，已复用原服务启动，保持仅监听本机。
+配置加载改为Windows验证NTFS ACL、macOS/Linux验证POSIX权限；支持UTF-8 BOM与`JIRA_SERVICE_CONFIG`，
+导出共用配置加载，Windows增加`tzdata`依赖。23项隔离测试通过，真实认证账号`sens`已验证，
+经授权创建并读回核对[CCSL-2859](https://issue.cambodianexpress.com/browse/CCSL-2859)，经办人`sens`。
+未改写现有配置、密码或访问控制；未部署至共享服务器。启动与调用步骤见Runbook。
+
 ## 能力与验证评估
 
 | 能力 | 当前实现及证据 | 判断与边界 |

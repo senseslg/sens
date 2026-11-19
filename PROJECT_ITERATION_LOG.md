@@ -4,6 +4,8 @@
 
 ---
 
+- 2026-11-20 — 提交 Jira 服务 Windows 适配：共用私有配置加载、NTFS ACL 检查、UTF-8 BOM 与时区依赖，补充独立 Windows 操作说明；保留 macOS 流程与本机凭据隔离，见 [说明](wms-db/jira-service/WINDOWS.md)。
+
 - 2026-11-19 — 新增 [jenkins-service](jenkins-service/README.md)：Jenkins 位于 `wms-db` 容器，记录 CCSL 任务路径与 IAP 只读查询脚本 `jenkins_builds.py`（jobs/list/log 已实测）；定位后端 UAT #2345 失败为 CCSL-2859 测试编译歧义。
 
 - 2026-11-19 — [telegram-CCSL-Service](telegram-CCSL-Service/README.md) 升至 0.1.1：自动加载 macOS 系统 CA，统一 CLI/Python 调用；6 项离线测试与只读 HTTPS 验证通过。

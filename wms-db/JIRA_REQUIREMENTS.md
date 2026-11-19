@@ -6,6 +6,8 @@ Jira 地址为 [issue.cambodianexpress.com](https://issue.cambodianexpress.com/)
 
 主工具为 [jira-service 0.3.0](jira-service/README.md)。真实 API 已创建 CE-2629；CCSL-2679 是此前通过 Chrome 创建的需求，已用 API 查询与导出。关闭/不做功能已开发并通过真实预检查，未实际取消需求。完整证据、评估和待办见 [服务项目概览](jira-service/PROJECT_OVERVIEW.md)，操作见 [服务 Runbook](jira-service/RUNBOOK.md)。
 
+2026-11-19 Windows 本机调用另见 [独立 Windows 说明](jira-service/WINDOWS.md)；原 macOS 路径与步骤保留。
+
 ## 接入约定
 
 - 优先 API，无法规范操作时再用 Chrome；不直接向 Jira 数据库插入或修改需求。
