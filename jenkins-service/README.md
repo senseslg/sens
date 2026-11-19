@@ -32,6 +32,19 @@
 
 ## 只读查询
 
+同一个脚本 `scripts/jenkins_builds.py` 在 macOS 和 Windows 上都能直接调用，子命令和输出完全相同；
+系统差异只在脚本顶部的 `PLATFORM_PROFILES`（每个系统一项，互不影响）和下面各系统小节里。
+先在本机跑 `jenkins_builds.py platform` 确认识别的系统和 gcloud 路径（不连远端）。
+
+| 子命令 | 用途 |
+|---|---|
+| `jobs [--folder ccsl]` | CCSL 任务列表 |
+| `list --job ccsl/uat/ccsl-backend-uat -n 5` | 最近构建结果与时间 |
+| `log --job ccsl/uat/ccsl-backend-uat --build 2345` | 关键行（加 `--tail 80` 看最后 80 行，`--all` 看全文，均脱敏） |
+| `platform` | 只显示本机系统、gcloud 路径、解码方式 |
+
+### macOS
+
 ```bash
 cd ~/sens/jenkins-service/scripts
 python3 jenkins_builds.py jobs                                          # CCSL 任务列表
@@ -40,11 +53,29 @@ python3 jenkins_builds.py log  --job ccsl/uat/ccsl-backend-uat --build 2345   # 
 python3 jenkins_builds.py log  --job ccsl/uat/ccsl-backend-uat --build 2345 --tail 80
 ```
 
-- Windows（2026-11-19 适配）：脚本自动查找 `gcloud.cmd`（也可设环境变量 `GCLOUD_BIN` 指向它），输出按 UTF-8 解码；
-  在 `D:\sens_apps\sens\jenkins-service\scripts` 下用 `python jenkins_builds.py …`。前提是本机已安装 Google Cloud SDK，
-  并已执行 `gcloud auth login`；首次 `gcloud compute ssh` 会生成密钥（Windows 默认用 PuTTY/plink），需用户本人完成。
-  2026-11-19 已用 scoop 安装 gcloud 594.0.0 并登录，默认项目 cambodian-express；wms-db 主机密钥已缓存到 plink
-  （GCP 无 hostkeys 访客属性，经 IAP 读取服务器 ed25519 指纹 `SHA256:6a9AGkBV…tZ5s` 核对后缓存）。
+- gcloud：PATH 中的 `gcloud`；输出按系统默认编码（UTF-8）解码。SSH 用系统 OpenSSH。
+
+### Windows
+
+```bash
+# Git Bash；PowerShell 下路径写 D:\sens_apps\sens\jenkins-service\scripts
+cd /d/sens_apps/sens/jenkins-service/scripts
+export PYTHONIOENCODING=utf-8            # 让中文输出在终端正常显示
+python jenkins_builds.py platform
+python jenkins_builds.py list --job ccsl/uat/ccsl-backend-uat -n 5
+python jenkins_builds.py log  --job ccsl/uat/ccsl-backend-uat --build 2345
+```
+
+- gcloud：按顺序找 `gcloud.cmd`、`gcloud`（`subprocess` 不会自动补 `.cmd`），也可用环境变量 `GCLOUD_BIN` 指定；
+  远端输出强制按 UTF-8 解码。
+- 首次准备（用户本人完成）：安装 Google Cloud SDK（本机 2026-11-19 用 `scoop install extras/gcloud`，594.0.0）→
+  `gcloud auth login` → `gcloud config set project cambodian-express` → 跑一次 `gcloud compute ssh` 生成
+  `~/.ssh/google_compute_engine`。Windows 的 gcloud 用 PuTTY/plink，主机密钥存在 plink 缓存里，不在 `known_hosts`。
+- wms-db 主机密钥：GCP 没有 hostkeys 访客属性，2026-11-19 经 IAP 读取服务器 ed25519 指纹
+  `SHA256:6a9AGkBV…tZ5s` 与 plink 提示一致后缓存。指纹变化时停止，不要自动接受。
+
+### 两个系统共同
+
 - 脚本经 `gcloud compute ssh wms-db --tunnel-through-iap` 登录，用 `sudo -n` 读文件；不调用 Jenkins API，不触发或取消构建。
 - 关键行包括触发人、检出提交、提交说明、`[ERROR]`、`BUILD SUCCESS/FAILURE`、`Finished:`。
 - 输出会去掉 Jenkins 注解（`ha://…`）和颜色码，含 password/token/secret 等字样的行替换为 `[已隐藏疑似敏感行]`。

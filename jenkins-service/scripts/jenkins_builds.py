@@ -4,12 +4,12 @@
 通过 gcloud IAP SSH 登录 wms-db，读取 Jenkins 数据卷中的文件；不调用 Jenkins API，
 不触发、取消或修改任何构建。
 
-用法：
-  python3 jenkins_builds.py jobs [--folder ccsl]
-  python3 jenkins_builds.py list --job ccsl/uat/ccsl-backend-uat [-n 5]
-  python3 jenkins_builds.py log  --job ccsl/uat/ccsl-backend-uat --build 2345 [--all] [--tail 80]
+用法（同一个脚本，macOS 与 Windows 都可直接调用，系统差异见 PLATFORM_PROFILES 与 README）：
+  macOS：  python3 jenkins_builds.py list --job ccsl/uat/ccsl-backend-uat [-n 5]
+  Windows：python  jenkins_builds.py list --job ccsl/uat/ccsl-backend-uat [-n 5]
+  其它子命令：jobs [--folder ccsl]；log --job … --build 2345 [--all] [--tail 80]；platform（只显示本机配置）
 
-退出码：0 成功；1 远端命令失败；2 参数错误。
+退出码：0 成功；1 远端命令失败或缺 gcloud；2 参数错误。
 """
 import argparse
 import os
@@ -19,17 +19,30 @@ import shutil
 import subprocess
 import sys
 
+# ── 按系统分开的配置（新增系统时只加一项，不改其它系统）──────────────────────
+# gcloud：按顺序查找的可执行文件名（Windows 的 subprocess 不会自动补 .cmd）。
+# encoding：解码远端输出用的编码；None 表示沿用系统默认（macOS 原有行为，默认就是 UTF-8）。
+PLATFORM_PROFILES = {
+    'mac': {'gcloud': ['gcloud'], 'encoding': None},
+    'windows': {'gcloud': ['gcloud.cmd', 'gcloud'], 'encoding': 'utf-8'},
+}
 
-def gcloud_bin():
-    """macOS/Linux 为 gcloud；Windows 为 gcloud.cmd（subprocess 不会自动补扩展名）。可用 GCLOUD_BIN 指定。"""
+
+def platform_name():
+    return 'windows' if os.name == 'nt' else 'mac'
+
+
+def gcloud_bin(profile):
+    """可用环境变量 GCLOUD_BIN 指定 gcloud 路径（任意系统）。"""
     explicit = os.environ.get('GCLOUD_BIN')
     if explicit:
         return explicit
-    found = shutil.which('gcloud.cmd' if os.name == 'nt' else 'gcloud') or shutil.which('gcloud')
-    if not found:
-        print('未找到 gcloud：请安装 Google Cloud SDK 并执行 gcloud auth login，或设置 GCLOUD_BIN', file=sys.stderr)
-        sys.exit(1)
-    return found
+    for name in profile['gcloud']:
+        found = shutil.which(name)
+        if found:
+            return found
+    print('未找到 gcloud：请安装 Google Cloud SDK 并执行 gcloud auth login，或设置 GCLOUD_BIN', file=sys.stderr)
+    sys.exit(1)
 
 
 GCLOUD_ARGS = ['compute', 'ssh', 'wms-db',
@@ -52,9 +65,12 @@ def job_dir(job):
 
 
 def run_remote(cmd):
-    # Windows 默认按系统代码页解码，日志为 UTF-8，显式指定避免乱码或解码异常
-    p = subprocess.run([gcloud_bin()] + GCLOUD_ARGS + ['--command', cmd], capture_output=True,
-                       text=True, encoding='utf-8', errors='replace', timeout=240)
+    profile = PLATFORM_PROFILES[platform_name()]
+    kwargs = {'capture_output': True, 'text': True, 'timeout': 240}
+    if profile['encoding']:
+        # Windows 默认按系统代码页解码，日志为 UTF-8，显式指定避免乱码或解码异常
+        kwargs.update(encoding=profile['encoding'], errors='replace')
+    p = subprocess.run([gcloud_bin(profile)] + GCLOUD_ARGS + ['--command', cmd], **kwargs)
     lines = []
     for raw in (p.stdout + p.stderr).splitlines():
         line = ANSI.sub('', ANNOTATION.sub('', raw)).rstrip()
@@ -78,8 +94,16 @@ def main():
     g.add_argument('--build', type=int, required=True)
     g.add_argument('--all', action='store_true', help='输出完整日志（仍做脱敏）')
     g.add_argument('--tail', type=int, default=0, help='只看最后 N 行')
+    sub.add_parser('platform', help='只显示本机识别的系统、gcloud 路径和解码方式，不连远端')
     a = ap.parse_args()
 
+    if a.cmd == 'platform':
+        name = platform_name()
+        profile = PLATFORM_PROFILES[name]
+        explicit = os.environ.get('GCLOUD_BIN')
+        found = explicit or next((shutil.which(n) for n in profile['gcloud'] if shutil.which(n)), None)
+        print(f"platform={name} gcloud={found or '未找到'} encoding={profile['encoding'] or '系统默认'}")
+        return 0 if found else 1
     if a.cmd == 'jobs':
         base = job_dir(a.folder)
         cmd = (f"sudo -n find {shlex.quote(base)} -maxdepth 6 -name builds -type d "
