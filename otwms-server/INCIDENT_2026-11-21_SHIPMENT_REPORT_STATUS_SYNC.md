@@ -39,7 +39,9 @@ TMS 已签收（`tms_shipment.SHIPMENT_STATUS=60`）的运单，在 `otwms.shipm
 
 ## 下一步
 
-- [ ] 用户确认后提交并推送分支，按 [开发验证流程](RUNBOOK.md#开发验证流程本地不编译) 合并 `qa` → Jenkins `otwms/uat/otwms-backend-uat` 部署 UAT 检查 → 生产发布。
+- [x] 提交 `77bfff787` 推送；PR #3094 合入 `qa`；Jenkins UAT #496 检出该合并并 BUILD SUCCESS（完整编译通过）。
+- [ ] UAT 业务验证受阻：UAT 同步任务未运行（水位停在 08-31，宽表最后变化 10-23，而 UAT TMS 当天有更新），且 UAT 无超长备注样本。需用户在 UAT XXL-JOB 启用/手动触发 `syncShipmentJobHandler`；如需复现，再经授权在 UAT 造一条超长备注样本。
+- [ ] 验收通过后按 [工作流](DEV_RELEASE_WORKFLOW.md) 合并功能分支到 `master`、生产部署，并做 24 h/48 h 复查。
 - [ ] 发布后看任务日志：无整批 `Error sync`，逐条失败（如有）有运单号和原因。
 - [ ] 发布后按日期参数重跑同步（需授权）或等补偿段自动刷新，复核 TMS=60 而宽表非 Y 归零（含剩余 322 单）。
 - [ ] 可选：`getShipmentRemark` / `setExceptionInfo` 的 `Collectors.toMap` 遇空值会 NPE，目前未发现数据触发，未纳入本次改动。

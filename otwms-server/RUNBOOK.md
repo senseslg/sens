@@ -115,14 +115,7 @@ git --git-dir=<workspace>/.git --work-tree=<workspace> log -1 --format='%ci%n%s'
 
 ## 开发验证流程（本地不编译）
 
-本机无法安装完整编译所需依赖（私有包及部分 Spring 依赖缺失），**不以本地 Maven 构建作为验证手段**。开发完成后：
-
-1. 功能分支（命名带 Jira 号，如 `fix/CE-xxxx-简述`）推送到 Bitbucket `OTWMS/otwms-backend`。
-2. 经 Bitbucket 合并到 `qa`。
-3. Jenkins `otwms/uat/otwms-backend-uat` 构建部署到 UAT，用 `jenkins-service/scripts/jenkins_builds.py list/log` 只读确认构建结果与检出提交。
-4. 在 UAT 检查功能与日志；通过后再走 `master` → `otwms/prod/otwms-backend` 生产发布。
-
-本地只做不依赖 Spring 的针对性验证（独立单测、javadoc/API 核对），交付说明须写明“未完整编译，待 UAT 构建验证”。
+本机缺编译依赖，不做完整构建；开发后经 Bitbucket 合并 `qa`、Jenkins 部署 UAT 验证。完整步骤见 [开发上线工作流](DEV_RELEASE_WORKFLOW.md)。
 
 ## 构建产物核对
 

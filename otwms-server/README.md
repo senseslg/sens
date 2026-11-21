@@ -11,8 +11,9 @@ OTWMS 后端、前端、构建发布、XXL-JOB 和相关 Google Cloud 资源的�
 5. [INCIDENT_2026-08-22_UAT_I18N_LIFECYCLE_DELETE.md](INCIDENT_2026-08-22_UAT_I18N_LIFECYCLE_DELETE.md)：UAT 前端 i18n 被 Lifecycle 删除及软删除恢复。
 6. [INCIDENT_2026-09-17_TMS_OUTAGE.md](INCIDENT_2026-09-17_TMS_OUTAGE.md)：OTWMS 受 TMS 中断影响；TMS 故障主记录见 [`tms-server`](../tms-server/README.md)。
 7. [INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md](INCIDENT_2026-09-21_EXPORT_PRINT_DISK_FULL.md)：Daily Report 导出与 Order Print 因磁盘/inode 满载失效。
-8. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码、构建产物和 Cloud Storage 的安全核对方法。
-9. [reference/README.md](reference/README.md)：可复用诊断参考。
+8. [DEV_RELEASE_WORKFLOW.md](DEV_RELEASE_WORKFLOW.md)：开发、UAT 验收到生产发布与复查的工作流。
+9. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码、构建产物和 Cloud Storage 的安全核对方法。
+10. [reference/README.md](reference/README.md)：可复用诊断参考。
 
 最新事件：[2026-10-31 新实例磁盘满载与恢复](INCIDENT_2026-10-31_DISK_FULL_CHECK.md)，获批截断日志后恢复空间。前次止血见 [10-16](INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)，修复分支见 [10-03](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
 
