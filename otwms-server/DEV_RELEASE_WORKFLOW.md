@@ -28,8 +28,8 @@
 
 ## 环境要点
 
-- **数据库**：UAT 用 `application-test.yml`，生产用 `application-prod.yml`（共享 Cloud SQL `tms-db`，schema `otwms` 与 `tms_uat`；`tms_uat` 名字不代表 UAT）。连接后先确认主机/库，再操作；只读会话加 `max_execution_time`，大表先看索引和 `EXPLAIN`。
+- **数据库**：UAT 应用实际连 Cloud SQL `tms-uat-db`（由 `gs://cambodian-express/scripts/uat/startup.sh` 的 `-Dspring.datasource.url` 指定），`application-test.yml` 指向同一实例的另一 IP，可用于只读查询；生产用 `application-prod.yml`（共享 Cloud SQL `tms-db`，schema `otwms` 与 `tms_uat`；`tms_uat` 名字不代表 UAT）。连接后先确认主机/库，再操作；只读会话加 `max_execution_time`，大表先看索引和 `EXPLAIN`。
 - **生产写库**：事务内执行，条件限定当前值，校验影响行数与预期一致才提交，否则回滚；先导出变更前的值到临时目录。
-- **服务器**：生产实例 `otwms-group-*`（名称会变，`gcloud compute instances list` 确认），任务日志 `/tmp/<日期>/<log-id>.log`，见 [Runbook](RUNBOOK.md#任务日志)。`otwms-uat` 当前账号 SSH 被拒（publickey），UAT 进程/日志需用户提供或授权。
-- **XXL-JOB 任务**：UAT 与生产任务启停状态可能不同。2026-11-21 发现 UAT `syncShipmentJobHandler` 未运行（同步水位停在 08-31），测试依赖定时任务时先确认 UAT 任务已启用或请用户手动触发。
+- **服务器**：生产实例 `otwms-group-*`（名称会变，`gcloud compute instances list` 确认），任务日志 `/tmp/<日期>/<log-id>.log`，见 [Runbook](RUNBOOK.md#任务日志)。`otwms-uat`（CentOS 8）SSH 被拒：项目级密钥已登记、未屏蔽；2026-11-21 试过追加实例级密钥，60 秒内仍被拒（已恢复原元数据），确认访客代理的账户/密钥同步不工作（启动脚本部分正常），与账号权限无关。修复需重启实例（UAT 应用中断数分钟，且启动脚本会重新从 GCS 拉 jar），须用户另行确认；VM Manager 未启用。UAT 应用 stdout 经启动脚本进入串口，可用 `gcloud compute instances get-serial-port-output otwms-uat` 只读查看（含完整 SQL 与个人信息，输出需脱敏，不保存）。
+- **XXL-JOB 任务**：UAT 数据稀疏，定时任务行为可能与生产不同。2026-11-21：UAT `syncShipmentJobHandler` 在运行，但增量水位停在 08-31（1 天窗口内无新更新即永不前进），只有非终态补偿生效；测试依赖增量同步时需先处理。
 - **Jenkins**：`otwms/uat/otwms-backend-uat`、`otwms/prod/otwms-backend`，前端 `otwms-frontend-uat`、`otwms-frontend-prod`；只读脚本 `jenkins-service/scripts/jenkins_builds.py`。
