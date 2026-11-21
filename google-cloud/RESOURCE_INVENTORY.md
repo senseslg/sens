@@ -1,8 +1,12 @@
 # Google Cloud 资源快照
 
-首次采集：`2026-09-17`；最近只读复核：`2026-10-24`。来源为 Google Cloud CLI 与 Chrome 控制台，项目 `cambodian-express`。
+首次采集：`2026-09-17`；最近只读复核：`2026-11-21`。来源为 Google Cloud CLI 与 Chrome 控制台，项目 `cambodian-express`。
 
-## 2026-10-24 当前快照
+## 2026-11-21 当前快照
+
+9 台 VM 运行，规格未变；OTWMS 当前实例 `otwms-group-223w`，30 天内换过 5 个实例。`tms-db` 配额自动扩到 1,303 GB，已用 1,250.7 GiB；`ce-tms` 4,624 GiB（+108 GiB/月）；未挂载的 `nacos` 盘仍在。`toucha-backend` 的 `sda2` 监控显示 100%，待登录确认。证据见 [cost-audit-2026-11-21.json](records/cost-audit-2026-11-21.json)，分析见 [降 50% 方案评估](../gcp-cost-optimization/SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。
+
+## 2026-10-24 快照
 
 9 台 VM 运行，OTWMS 当前实例 `otwms-group-fql0`；10 磁盘、45 快照、3 镜像；3 个托管实例组，目标数分别 OTWMS=1、TMS=0、GKE=0。19 地址（16 全局/3 区域）均有引用；33 条转发规则，2 SQL、3 Redis、17 bucket。`tms-db` 约 1,195.5/1,253 GiB 已用，存储主要为 `ce-tms`/`ce-fileserver`。详细规格、负载和证据见 [完整成本清单](COST_OPTIMIZATION_CHECKLIST_2026-10-24.md)。
 

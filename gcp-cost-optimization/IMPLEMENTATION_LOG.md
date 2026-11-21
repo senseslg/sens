@@ -2,6 +2,31 @@
 
 只记录有价值的决定、行动、结果和证据。最新记录在前；目前没有本轮云端变更，新增节省未验证。
 
+## 2026-11-21：用户决定 TMS/OTWMS 不迁移
+
+- 用户决定：TMS/OTWMS 不迁到阿里云，本土业务将在另一个系统上重新开发；新系统接手后 TMS/OTWMS 退役。方案 B 取消。
+- 调整方向：退役前只做可快速回本、可回退的优化，约降 24–27%；存储缩容等视退役时间决定；不买承诺折扣。退役后 GCP SQL+Compute 预计降 79–84%。见 [方案评估](SQL_COMPUTE_50PCT_PLAN_2026-11-21.md) 第 4 节。
+- 补充依赖：Jira/Bitbucket/Jenkins/YApi/XXL-JOB/Nexus 都在 `wms-db`；`wms-server` 只剩 `cp`。退役时要处理 XXL-JOB 的 OTWMS 任务和 Jenkins 的 TMS/OTWMS 发布任务。
+- 待确认：新系统上线和退役时间、新系统部署位置。
+- 已按块更新 Anytype Page「谷歌云服务器费用优化方案（2026-11）」：替换结论和第三至七节，保留第二节表格；`fix-spacers` 清空 6 个新占位，读回无旧方案 B 内容。
+- 用户要求：迁移议题到此结束，后续完全不再考虑把 TMS/OTWMS 直接迁移。
+
+## 2026-11-21：SQL+Compute 降 50% 评估
+
+- 用户目标：SQL+Compute 降到当前的 50%；考虑把 TMS/OTWMS 迁到阿里云。用户决定：`wms-db` 保留在 GCP。
+- 只读采集 30 天数据，退出码 0：[证据](../google-cloud/records/cost-audit-2026-11-21.json)；分析见 [方案评估](SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。
+- 新发现：
+  - `tms-db` 自动扩容到 1,303 GB，已用 1,250.7 GiB。
+  - `tms-db` CPU 小时峰值的 P95 为 88%。
+  - OTWMS 30 天内换过 5 个实例。
+  - `toucha-backend` 的 `sda2` 显示 100%。
+  - Geocoding 30 天调用 15.5 万次。
+- 补读 10 月账单（Chrome，只读）：税前合计 $3,446.41；SQL $1,143.78，Compute $1,040.21；Translate 已降到 $0。明细见 [billing-2026-10](../google-cloud/records/billing-2026-10.md)。
+- 结论（按 10 月 SKU 拆分）：TMS/OTWMS 约 $1,731，占 SQL+Compute 的 79%。只在 GCP 降配约省 33–36%，迁移是达到 50% 的主要途径。
+- 未完成：阿里云报价待取得。未变更任何云资源。
+- 按用户要求发布 Anytype sens 空间 Page「谷歌云服务器费用优化方案（2026-11）」，ID `bafyreigjcve3czrf37kvf5ngiac3zn4klinkh2smixq5cnoqtygblgxcn4`，读回校验通过；本地源文件 `/Users/lingang/Anytype MCP/projects/gcp-cost-optimization/google-cloud-server-cost-plan-2026-11.md`，后续修改需按块更新。
+- 复用评估：继续使用现有 `cloud_cost_audit.py`，不新增脚本或 Skill。
+
 ## 2026-10-26：确认 Anytype 底部清单与同步方式
 
 - 用户已将工作清单追加至同一 Task 底部，授权后续按块更新。

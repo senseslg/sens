@@ -8,6 +8,8 @@
 
 2026-10-24 只读复核状态一致；全部迁移并释放实例及磁盘后，预计减少税后约 $45–47/月（不含阿里云新增费用），见 [迁移费用估算](MIGRATION_COST_ESTIMATE_2026-10-24.md)。
 
+2026-11-21：10 月费用约 $42（e2-small $15 + 600 GB 标准盘 $26）；30 天 CPU 均值 2.5%。实例只剩 `cp` 后端；降本方案计划迁走 `cp` 后整台释放（需先确认依赖并快照），见 [降本方案](../gcp-cost-optimization/SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。
+
 按用户降本计划，已执行 `sudo systemctl stop cewms.service`：状态 `inactive/dead`、MainPID 为 0、80 端口不再监听，公网 WMS 返回 HTTP 502。`cp.service` 仍为 `active/running`，90 端口继续监听。实例与磁盘继续保留计费；本次仅停止应用，未关闭开机自启（仍为 enabled，重启可能恢复）。恢复命令：`sudo systemctl start cewms.service`。单次标准停服不新增脚本或 Skill。
 
 ## 资源基线（2026-09-18，容量优化后）

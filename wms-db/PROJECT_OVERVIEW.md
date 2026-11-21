@@ -22,6 +22,8 @@
 
 Jira Server 7.12.0 的现有 REST API 已可用于需求管理。本机服务 0.3.0 已实际创建 CE-2629，支持查询、CSV 和关闭/不做预检查；没有部署服务器或取消真实需求。评估与待办见 [服务概览](jira-service/PROJECT_OVERVIEW.md)，不将本机开发进度计入服务器部署状态。
 
+2026-11-21：10 月本机计算费加 500 GB 盘约 $188/月；用户决定**继续保留在 GCP**。30 天 CPU 均值 13%、峰值约 100%，内存约 50%。TMS/OTWMS 将由新系统取代并退役，届时需清理 XXL-JOB 中的 OTWMS 任务和 Jenkins 中的 `TMS`/`otwms`/`restart-tms` 等发布任务，见 [降本方案](../gcp-cost-optimization/SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。
+
 2026-10-23：Bitbucket 4.0.2 已改用金边 JVM 时区，公网状态/登录页和 Git SSH 验证通过；配置备份、持久化及回滚见 [时区记录](BITBUCKET_TIMEZONE.md)。
 
 ## 当前风险与下一步

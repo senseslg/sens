@@ -62,7 +62,7 @@
 
 - 路径：[`gcp-cost-optimization/`](gcp-cost-optimization/README.md)。
 - 范围：以 Anytype sens 空间 Task「Google Cloud 成本优化清单」为目标，记录本轮目标确认、28 项实施与最终审核；云资源主记录继续在 `google-cloud/`。
-- 当前状态：`2026-10-26` 完成来源读取、工作清单与约束；目标月费税后 ≤ USD 2,000，稳定后两个完整账期审核。尚未执行本轮云变更，下一步复核费用/TMS 容量基线。
+- 当前状态：`2026-11-21` 新增目标 SQL+Compute 降 50%。实测 TMS/OTWMS 约占这两项的 79%；10 月 SQL+Compute 税前 $2,184；用户决定 TMS/OTWMS 不迁移、由新系统重做后退役，`wms-db` 保留在 GCP；退役前低风险优化约降 24–27%，退役后约降 79–84%。未变更云资源，见 [方案评估](gcp-cost-optimization/SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。
 
 ### google-cloud
 
