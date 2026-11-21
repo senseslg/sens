@@ -1,5 +1,7 @@
 # 项目迭代记录
 
+- 2026-11-21 — 运单宽表签收状态未同步：修复 38 单（首单+近 30 天 37 单），全量仍有 322 单待定；根因确认为 remark 超长致整批写入失败，已建 CE-2644 与修复分支（未推送），见 [事件记录](INCIDENT_2026-11-21_SHIPMENT_REPORT_STATUS_SYNC.md)。
+
 - 2026-11-19 — 新增待办：`tms_tracking_event` 只按 `OBJECT_NO` 查询会全表扫描约 6,500 万行，需排查源码与查询说明，见 [下一步](PROJECT_OVERVIEW.md#下一步)。
 
 - 2026-11-17 — 实现佣金 SQL 汇总本地分支，MyBatis 隔离验证及独立 UAT 五组只读金额对照通过；全量构建缺私有依赖，未推送或部署，见 [实现与核对](INCIDENT_2026-11-17_COURIER_LATENCY_AND_DISK.md#实现与公司-uat-只读核对)。
