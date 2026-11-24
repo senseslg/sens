@@ -37,14 +37,17 @@ TMS 已签收（`tms_shipment.SHIPMENT_STATUS=60`）的运单，在 `otwms.shipm
 - 改动一（`77bfff787`，已推送）：`build()` 末尾按列长截断文本字段（按 code point）；`build()` 纳入异常处理；批量失败回退逐条写入并记录运单号与根因消息；补偿段改为按状态逐个、以运单号游标分页。
 - 改动二（`8683492d3`，已推送）：增量水位在窗口内无晚于水位的更新时，跳到 `min(LAST_UPDATE_DATE) > 水位`（`TmsShipmentMapper.getNextUpdateTime`，走 `IDX_UPDATE_TIME`，EXPLAIN 为 optimized away）；不依赖应用与库的时钟/时区，不会跳过任何更新。
 - 验证：截断逻辑独立单测通过；MP 3.1.x 链式 `gt(boolean,…)`/`last` 经 javadoc 核对存在。完整 Maven 编译仍缺私有/外部依赖，需 Jenkins 或 UAT 构建验证。
+- 编译修复（`4c1cb9616`，2026-11-24）：改动二用 `tmsShipmentService.getBaseMapper()`（类型为泛型 `BaseMapper<TmsShipment>`）调自定义方法，UAT #497 编译失败；改为注入 `TmsShipmentMapper`。合入 qa `0b96a8640` 后 UAT #498 成功。教训：本地不能编译时，调用 mapper 自定义方法要确认声明类型。
 
 ## 下一步
 
 - [x] 提交 `77bfff787` 推送；PR #3094 合入 `qa`；Jenkins UAT #496 检出该合并并 BUILD SUCCESS（完整编译通过）。
 - [x] UAT 业务验证（改动一，用户授权造样本）：在 N 状态第一页选两单，A 的最新 99 事件描述改为 260 字（含中文）标记，B 的宽表备注改为过期标记；20:20 任务后 A 宽表备注 = 标记前 200 字，B 恢复为 TMS 值，即含超长备注的批次整批写入成功。随后恢复 A 的事件描述，20:25 宽表复原。变更前值备份在会话临时目录。（更正：先前“UAT 任务未运行”判断有误，任务在运行。）
-- [ ] 待办（等用户安排时间）：重启 `otwms-uat` 修复 SSH。重启前只读核对 `gs://cambodian-express/packages/uat/BladeX.jar` 更新时间与最新 UAT 构建一致；重启后验证密钥同步与 SSH 登录、应用启动及同步任务恢复；不行再经启动时修复访客代理（另行确认）。
-- [ ] 改动二（增量水位卡死）：已推送 → 用户合入 `qa` → Jenkins UAT → 核对 UAT 水位从 `2026-08-31 13:43:30` 开始前进。生产若 TMS 停更超 1 天同样会卡死。
-- [ ] 验收通过后按 [工作流](DEV_RELEASE_WORKFLOW.md) 合并功能分支到 `master`、生产部署，并做 24 h/48 h 复查。
+- [ ] 待办（等用户安排时间）：重启 `otwms-uat` 修复 SSH。注意：2026-11-24 15:10 实例已随 Jenkins UAT #498 部署 stop/start 一次，SSH 是否因此恢复未验证，先只读试连再决定。重启前只读核对 `gs://cambodian-express/packages/uat/BladeX.jar` 更新时间与最新 UAT 构建一致；重启后验证密钥同步与 SSH 登录、应用启动及同步任务恢复；不行再经启动时修复访客代理（另行确认）。
+- [x] 改动二：PR #3095 合入 `qa`；编译修复后 UAT #498 成功。
+- [ ] 核对 UAT 水位已从 `2026-08-31 13:43:30` 开始前进（#498 部署后未核对）。生产若 TMS 停更超 1 天同样会卡死。
+- [x] 用户决定与 CE-2641 一起上线：2026-11-24 合入 master `02f3315ed`（与 UAT #498 的 qa 版本文件一致）。
+- [ ] 用户 Jenkins 部署 `otwms/prod/otwms-backend` 后核对检出提交，并做 24 h/48 h 复查。
 - [ ] 发布后看任务日志：无整批 `Error sync`，逐条失败（如有）有运单号和原因。
 - [ ] 发布后按日期参数重跑同步（需授权）或等补偿段自动刷新，复核 TMS=60 而宽表非 Y 归零（含剩余 322 单）。
 - [ ] 可选：`getShipmentRemark` / `setExceptionInfo` 的 `Collectors.toMap` 遇空值会 NPE，目前未发现数据触发，未纳入本次改动。

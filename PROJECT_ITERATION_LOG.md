@@ -4,6 +4,8 @@
 
 ---
 
+- 2026-11-24 — OTWMS CE-2641（WHJT02 推 J&T 规则）UAT 验收通过，与 CE-2644 一起合入 master，待生产部署；补充 UAT 浏览器测试要点，见 [记录](otwms-server/FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
+
 - 2026-11-21 — 用户决定 TMS/OTWMS 不迁阿里云，本土业务在新系统重做后退役；降本方案改为退役前低风险优化（约 -24–27%）加退役后释放（约 -79–84%），补充 `wms-db`/`wms-server` 服务归属与退役依赖，见 [方案评估](gcp-cost-optimization/SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。
 
 - 2026-11-21 — 评估 SQL+Compute 降 50%：只读采集 30 天数据，发现 `tms-db` 自动扩至 1,303 GB、OTWMS 30 天换过 5 个实例、`toucha-backend` 磁盘显示 100%；TMS/OTWMS 约占 79%，补读 10 月账单（税前 $3,446.41），形成留在 GCP（降 33–36%）与迁阿里云（降 79–84%）两方案（待决定），`wms-db` 保留在 GCP，见 [方案评估](gcp-cost-optimization/SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。

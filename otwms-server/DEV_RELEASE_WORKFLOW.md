@@ -32,4 +32,12 @@
 - **生产写库**：事务内执行，条件限定当前值，校验影响行数与预期一致才提交，否则回滚；先导出变更前的值到临时目录。
 - **服务器**：生产实例 `otwms-group-*`（名称会变，`gcloud compute instances list` 确认），任务日志 `/tmp/<日期>/<log-id>.log`，见 [Runbook](RUNBOOK.md#任务日志)。`otwms-uat`（CentOS 8）SSH 被拒：项目级密钥已登记、未屏蔽；2026-11-21 试过追加实例级密钥，60 秒内仍被拒（已恢复原元数据），确认访客代理的账户/密钥同步不工作（启动脚本部分正常），与账号权限无关。修复需重启实例（UAT 应用中断数分钟，且启动脚本会重新从 GCS 拉 jar），须用户另行确认；VM Manager 未启用。UAT 应用 stdout 经启动脚本进入串口，可用 `gcloud compute instances get-serial-port-output otwms-uat` 只读查看（含完整 SQL 与个人信息，输出需脱敏，不保存）。
 - **XXL-JOB 任务**：UAT 数据稀疏，定时任务行为可能与生产不同。2026-11-21：UAT `syncShipmentJobHandler` 在运行，但增量水位停在 08-31（1 天窗口内无新更新即永不前进），只有非终态补偿生效；测试依赖增量同步时需先处理。
-- **Jenkins**：`otwms/uat/otwms-backend-uat`、`otwms/prod/otwms-backend`，前端 `otwms-frontend-uat`、`otwms-frontend-prod`；只读脚本 `jenkins-service/scripts/jenkins_builds.py`。
+- **Jenkins**：`otwms/uat/otwms-backend-uat`、`otwms/prod/otwms-backend`，前端 `otwms-frontend-uat`、`otwms-frontend-prod`；只读脚本 `jenkins-service/scripts/jenkins_builds.py`。UAT 部署会 stop/start `otwms-uat` 实例并从 GCS 重新拉 jar。
+- **合并 qa/master 前**：`qa` 上别人的分支也会一起被构建，合并后的首次构建失败不一定是本分支的问题，按报错文件追溯来源分支后在源分支上修。合 master 前确认改动文件与最近一次 UAT 构建通过的 qa 版本一致。
+
+## UAT 浏览器测试要点（2026-11-24，CE-2641）
+
+- 外部配置看启动脚本 `gs://cambodian-express/scripts/<env>/startup.sh` 的 `-D` 参数（如 `jt.url`、`jt.verify.*`、`new.ccsl.url`）；yml 里没有的值以启动参数或代码默认值为准。UAT：J&T 测试环境、CCSL UAT、TMS UAT。
+- 门店相关逻辑按登录 token 中的 `shopCode` 判断，管理员账号的门店为空；要测门店功能，请用户用对应门店账号登录 Chrome（账号密码由用户输入）。
+- 在页面里复用前端的鉴权 axios：`document.querySelector('#app').__vue__.$http`。造单用 `POST /api/otwms/order/submit`，`pickupShopCode` 设为门店，`currentLocation` 即为该门店；运费必须 >0。PNH 目的地城市编码要用 J&T 区域表里有的（如 `CHMO`），模板单的 `B01` 会被判为异常区域。姓名、电话用测试值。
+- `[JT-Submit]` 等应用日志不一定进入串口输出；推 J&T 的内容以 `external_delivery.push_content` 为准（`/api/external-delivery/list` 可读）。
