@@ -52,5 +52,5 @@ WHJT02 账号在 UAT 新建测试单（预付，J&T 汇率 4100），经"外部�
 ## 待办
 
 - [x] 生产部署：Jenkins #200（11-24 15:49）检出 `02f3315ed`、BUILD SUCCESS；实例组替换为 `otwms-group-8w54`，15:52 应用在处理请求，无异常/整批 `Error sync`。
-- [ ] 生产首批 WHJT02 推送：只读核对 `push_content` 的 customerid=`J0086003863`、productType、itemsvalue。
+- [x] 生产首单（只读，用户在 Chrome 登录 WHJT02）：CE24112600028，到付、COD 0、运费 2.28，重量 10.00；推送 customerid `J0086003863`、productType `TC`、itemsvalue 9300（2.28×4100=9348→9300），与 `jt_cod` 一致，J&T 单号已返回。
 - [ ] 告知 YUTH：其分支追加了提交，WHJT02 识别方式已改。
