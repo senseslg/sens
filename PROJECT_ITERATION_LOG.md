@@ -4,6 +4,8 @@
 
 ---
 
+- 2026-11-25 — OTWMS CE-2641 J&T 字段改为 `expressTypeCode`，生产部署 #201（`54cf8310d`），TC 下单验证通过；CE-2641/CE-2644 首次生产部署为 11-24 #200，见 [记录](otwms-server/FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
+
 - 2026-11-24 — OTWMS CE-2641（WHJT02 推 J&T 规则）UAT 验收通过，与 CE-2644 一起合入 master，待生产部署；补充 UAT 浏览器测试要点，见 [记录](otwms-server/FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
 
 - 2026-11-21 — 用户决定 TMS/OTWMS 不迁阿里云，本土业务在新系统重做后退役；降本方案改为退役前低风险优化（约 -24–27%）加退役后释放（约 -79–84%），补充 `wms-db`/`wms-server` 服务归属与退役依赖，见 [方案评估](gcp-cost-optimization/SQL_COMPUTE_50PCT_PLAN_2026-11-21.md)。

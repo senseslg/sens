@@ -1,5 +1,7 @@
 # 项目迭代记录
 
+- 2026-11-25 — CE-2641：J&T 字段名应为 `expressTypeCode`（`productType` 被忽略）；改名 `be45d4ffe`，UAT #499 构建成功，TC 单被 J&T 测试环境拒（B094，对方确认为其环境问题）。合入 master `54cf8310d`，02:17 生产部署 #201，测试单推 TC 下单成功，见 [CE-2641 记录](FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
+
 - 2026-11-24 — CE-2641 WHJT02 推 J&T：按登录门店识别，重量 >10.1 时 productType 推空，COD 取整到百位；UAT 验收通过。CE-2644 编译修复 `4c1cb9616`（UAT #497→#498）。两者合入 master `02f3315ed`，15:49 生产部署 #200 成功，见 [CE-2641 记录](FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
 
 - 2026-11-21 — 运单宽表签收状态未同步：修复 38 单（首单+近 30 天 37 单），全量仍有 322 单待定；根因确认为 remark 超长致整批写入失败，已建 CE-2644 与修复分支（未推送），见 [事件记录](INCIDENT_2026-11-21_SHIPMENT_REPORT_STATUS_SYNC.md)。

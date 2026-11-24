@@ -15,7 +15,7 @@ OTWMS 后端、前端、构建发布、XXL-JOB 和相关 Google Cloud 资源的�
 9. [RUNBOOK.md](RUNBOOK.md)：SSH、日志、源码、构建产物和 Cloud Storage 的安全核对方法。
 10. [reference/README.md](reference/README.md)：可复用诊断参考。
 
-最新开发：[2026-11-24 CE-2641 WHJT02 推 J&T 规则](FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)，UAT 验收通过，与 [CE-2644](INCIDENT_2026-11-21_SHIPMENT_REPORT_STATUS_SYNC.md) 一起合入 master `02f3315ed`，11-24 生产部署（#200）。
+最新开发：[2026-11-24 CE-2641 WHJT02 推 J&T 规则](FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)，UAT 验收通过，与 [CE-2644](INCIDENT_2026-11-21_SHIPMENT_REPORT_STATUS_SYNC.md) 一起合入 master `02f3315ed`，11-24 生产部署（#200）；字段改名 `expressTypeCode` 后 11-25 生产部署（#201），TC 下单验证通过。
 
 最新事件：[2026-10-31 新实例磁盘满载与恢复](INCIDENT_2026-10-31_DISK_FULL_CHECK.md)，获批截断日志后恢复空间。前次止血见 [10-16](INCIDENT_2026-10-16_DISK_FULL_RECURRENCE.md)，修复分支见 [10-03](INCIDENT_2026-10-03_DISK_FULL_RECURRENCE.md)。
 
