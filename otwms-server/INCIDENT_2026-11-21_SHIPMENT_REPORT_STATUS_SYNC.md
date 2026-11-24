@@ -47,7 +47,8 @@ TMS 已签收（`tms_shipment.SHIPMENT_STATUS=60`）的运单，在 `otwms.shipm
 - [x] 改动二：PR #3095 合入 `qa`；编译修复后 UAT #498 成功。
 - [ ] 核对 UAT 水位已从 `2026-08-31 13:43:30` 开始前进（#498 部署后未核对）。生产若 TMS 停更超 1 天同样会卡死。
 - [x] 用户决定与 CE-2641 一起上线：2026-11-24 合入 master `02f3315ed`（与 UAT #498 的 qa 版本文件一致）。
-- [ ] 用户 Jenkins 部署 `otwms/prod/otwms-backend` 后核对检出提交，并做 24 h/48 h 复查。
+- [x] 生产部署：Jenkins #200（11-24 15:49）检出 `02f3315ed` 成功，新实例 `otwms-group-8w54`。
+- [ ] 24 h/48 h 复查（约 11-25 16:00、11-26 16:00）。
 - [ ] 发布后看任务日志：无整批 `Error sync`，逐条失败（如有）有运单号和原因。
 - [ ] 发布后按日期参数重跑同步（需授权）或等补偿段自动刷新，复核 TMS=60 而宽表非 Y 归零（含剩余 322 单）。
 - [ ] 可选：`getShipmentRemark` / `setExceptionInfo` 的 `Collectors.toMap` 遇空值会 NPE，目前未发现数据触发，未纳入本次改动。

@@ -2,7 +2,7 @@
 
 ## 结论
 
-WHJT02 门店经"操作 > 外部派送"推 J&T 下单接口时：推送重量 ≤10.1 推 `productType=TC`，否则推空；COD（瑞尔）按十位四舍五入到百位，0 推 0，0<COD<50 推 100。其他门店不变。UAT 验收通过，已合入 master `02f3315ed`（与 CE-2644 一起），**待用户 Jenkins 生产部署**。
+WHJT02 门店经"操作 > 外部派送"推 J&T 下单接口时：推送重量 ≤10.1 推 `productType=TC`，否则推空；COD（瑞尔）按十位四舍五入到百位，0 推 0，0<COD<50 推 100。其他门店不变。UAT 验收通过，已合入 master `02f3315ed`（与 CE-2644 一起），**2026-11-24 15:49 生产部署（#200）**。
 
 ## 分支与提交（`bugfix/CE-2641`）
 
@@ -51,6 +51,6 @@ WHJT02 账号在 UAT 新建测试单（预付，J&T 汇率 4100），经"外部�
 
 ## 待办
 
-- [ ] 用户 Jenkins 部署 `otwms/prod/otwms-backend` 后：核对检出 `02f3315ed`、构建结果。
+- [x] 生产部署：Jenkins #200（11-24 15:49）检出 `02f3315ed`、BUILD SUCCESS；实例组替换为 `otwms-group-8w54`，15:52 应用在处理请求，无异常/整批 `Error sync`。
 - [ ] 生产首批 WHJT02 推送：只读核对 `push_content` 的 customerid=`J0086003863`、productType、itemsvalue。
 - [ ] 告知 YUTH：其分支追加了提交，WHJT02 识别方式已改。
