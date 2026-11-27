@@ -16,6 +16,19 @@ spec.loader.exec_module(sms)
 
 
 class SmsTests(unittest.TestCase):
+    def test_business_sender_selection_single_and_batch(self):
+        original = {"sender": "SMS Info", "to": "85512345678", "content": "Test"}
+        batch = {"globals": {"sender": "SMS Info"}, "messages": [{"to": ["85512345678"], "content": "Test"}]}
+        for business, sender in [("mall", "MallGoGo"), ("logistics", "CE Express")]:
+            selected = sms.select_business_sender(original, business)
+            selected_batch = sms.select_business_sender(batch, business, True)
+            self.assertEqual(selected["sender"], sender)
+            self.assertEqual(selected_batch["globals"]["sender"], sender)
+            self.assertEqual(sms.validate_payload(selected), 1)
+            self.assertEqual(sms.validate_payload(selected_batch, True), 1)
+        self.assertEqual(original["sender"], "SMS Info")
+        self.assertEqual(batch["globals"]["sender"], "SMS Info")
+
     def setUp(self):
         self.payload = {"sender": "SMS Info", "to": "85512345678", "content": "你好 #ma#test#ma#"}
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """PlasGate single/batch SMS; CLI defaults to offline dry-run."""
 import argparse
+import copy
 import json
 import math
 import os
@@ -12,6 +13,19 @@ from urllib import error, parse, request
 
 BASE_URL = "https://cloudapi.plasgate.com"
 DEFAULT_CONFIG = Path(__file__).resolve().parents[1] / "config.local.json"
+BUSINESS_SENDERS = {"mall": "MallGoGo", "logistics": "CE Express"}
+
+
+def select_business_sender(payload, business, batch=False):
+    """Return a copy with the explicitly selected business sender."""
+    if business not in BUSINESS_SENDERS or not isinstance(payload, dict):
+        raise ValueError("请选择有效业务和 JSON 请求对象")
+    selected = copy.deepcopy(payload)
+    target = selected.setdefault("globals", {}) if batch else selected
+    if not isinstance(target, dict):
+        raise ValueError("globals 必须为对象")
+    target["sender"] = BUSINESS_SENDERS[business]
+    return selected
 
 
 class NoRedirect(request.HTTPRedirectHandler):
@@ -106,6 +120,8 @@ def main(argv=None):
     parser.add_argument("--payload", type=Path, required=True)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--batch", action="store_true")
+    parser.add_argument("--business", choices=BUSINESS_SENDERS,
+                        help="mall=商城 MallGoGo；logistics=物流 CE Express；覆盖请求体 sender")
     parser.add_argument("--apply", action="store_true", help="实际发送，可能产生费用")
     parser.add_argument("--base-url", default=os.environ.get("PLASGATE_BASE_URL", BASE_URL))
     parser.add_argument("--timeout", type=float, default=20)
@@ -115,9 +131,12 @@ def main(argv=None):
         if not math.isfinite(args.timeout) or args.timeout <= 0:
             raise ValueError("timeout 必须为有限正数")
         payload = json.loads(args.payload.read_text(encoding="utf-8"))
+        if args.business:
+            payload = select_business_sender(payload, args.business, args.batch)
         count = validate_payload(payload, args.batch)
         if not args.apply:
             result = {"status": "dry_run", "mode": "batch" if args.batch else "single",
+                      "sender": payload["globals"]["sender"] if args.batch else payload["sender"],
                       "recipient_count": count, "network_called": False}
         else:
             credentials = load_credentials(args.config)

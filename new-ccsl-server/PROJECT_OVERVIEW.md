@@ -103,4 +103,4 @@
 ## 相关项目
 
 - [`../ssl/`](../ssl/)：现有 `ceccsl.com` SSL、Nginx、DNS 与站点部署记录。
-- [`../mallgogo-sever/`](../mallgogo-sever/)：MallGoGo ECS 性能与部署诊断。
+- [`../mallgogo-server/`](../mallgogo-server/)：MallGoGo ECS 性能与部署诊断。

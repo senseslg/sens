@@ -56,7 +56,13 @@
 
 - 路径：[`sms_service/`](sms_service/README.md)。
 - 范围：PlasGate REST 单发/批发接口记录、凭据本地配置及默认预览的 Python 调用脚本。
-- 当前状态：`2026-11-19` 官方文档、5 项离线测试及两种预览通过；配置凭据后获授权测试，接口返回 `403 Untrusted Token`，待核对认证配置，见目录说明。
+- 当前状态：`2026-11-26` 商城/物流两种 sender 共四条链接短信均返回 HTTP 200 和队列 ID，服务商已受理入队；手机接收及点击打开浏览器待用户确认，详见目录说明。
+
+### ali_oss
+
+- 路径：[`ali_oss/`](ali_oss/README.md)。
+- 范围：阿里云国际站 OSS Bucket 清单、权限、CDN 关联、用量、安全加固与 API 脚本；已接入 agent 框架 v0.3.1。
+- 当前状态：`2026-11-27` 控制台只读采集 7 个桶（香港，5 个公共读，健康检测 284/500）；`scripts/oss.py` 已用只读账号 `ali-oss-ops` 真实验证；分阶段加固方案待决定。
 
 ### gcp-cost-optimization
 
@@ -120,9 +126,9 @@
 - 范围：`ceccsl.com` 的通配符双证书、自动续期、Nginx、DNS 与网站部署结构。
 - 当前状态：已根据新服务器部署摘要建立基线文档；`static` 与 `download-app` 仍按规划项管理，实时 DNS 和站点状态需要后续验证。
 
-### mallgogo-sever
+### mallgogo-server
 
-- 路径：[`mallgogo-sever/`](mallgogo-sever/)
+- 路径：[`mallgogo-server/`](mallgogo-server/)
 - 范围：MallGoGo ECS 部署、Nuxt/Next.js 版本辨识、网络链路、静态资源、外部 API、图片代理和 MySQL 性能诊断。
 - 当前状态：已完成基于源码、ECS 配置和公网入口的首轮分析；高概率瓶颈为 3 Mbps 公网带宽、生产启动模式、跨网无缓存 API 和图片中转，仍需服务器内分层计时确认。
 
@@ -179,6 +185,7 @@
 - `records/projects/`：长期项目主记录。
 - `records/daily/`：跨天日常记录。
 - `records/meetings/`：会议记录。
+- `ali_oss/`：阿里云 OSS 存储桶管理子项目。
 - `google-otwms/`：OTWMS / GCP 运维子项目。
 - `google-cloud/`：Google Cloud 项目级管理子项目。
 - `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享平台、源码/构建与应用服务器运维子项目。
@@ -187,7 +194,7 @@
 - `otwms-server/`：OTWMS Java 后端源码、构建、生产部署和任务执行故障子项目。
 - `tms-server/`：TMS 域名入口、Java/Tomcat、源码发布与故障恢复子项目。
 - `ssl/`：`ceccsl.com` HTTPS 与网站部署子项目。
-- `mallgogo-sever/`：MallGoGo SSR 服务器性能子项目。
+- `mallgogo-server/`：MallGoGo SSR 服务器性能子项目。
 - `new-ccsl-server/`：新 CCSL 服务器建设与运维子项目。
 - `ce-finance/`：CE 财务账目与月结管理子项目。
 - `cngg-project/`：菜鸟裹裹（CNGG）国际直邮及集运业务对接子项目。

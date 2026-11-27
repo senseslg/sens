@@ -9,6 +9,7 @@
 | 长期沟通与上下文沉淀 | [reference/communication-protocol.md](reference/communication-protocol.md) | 从自然语言沟通中提炼事实、决定、行动项、风险和待确认事项 |
 | 阿里云凭据与 static SSL 自动同步 | [本机私有入口](/Users/lingang/internationl_ali_cloud/SKILL.md)；[续期后 CDN 同步脚本](otwms-ce-lb/scripts/sync_static_cdn_certificate.py) | 定位凭据、检查证书并在 ce-lb 正式续期后上传 CAS、更新 static CDN 绑定；API/TLS已用当前正式证书验收，首次真实续期待观察 |
 | Cloudflare DNS Token 定位与预检 | [独立本机入口](/Users/lingang/cloudflare_cambodianexpress_com/SKILL.md) | 读取 cambodianexpress.com 的唯一 Token 路径、执行无泄密离线预检并交接 ce-lb 自动 DNS 续期；不默认修改 DNS |
+| 阿里云 OSS API 管理 | [ali_oss/RUNBOOK.md](ali_oss/RUNBOOK.md) · [scripts/oss.py](ali_oss/scripts/oss.py) | 列桶/配置/对象、签名 URL；写操作默认 dry-run，生产桶需确认；只读账号 `ali-oss-ops` 已验证 |
 | 记录维护 | [reference/record-maintenance.md](reference/record-maintenance.md) | 新建或更新总览、迭代日志、项目、每日或会议记录 |
 | 工作项生命周期 | [reference/work-item-lifecycle.md](reference/work-item-lifecycle.md) | 接收、推进、暂停、完成或归档一个持续工作项 |
 | CCSL 服务器基线 | [new-ccsl-server/scripts/server_baseline.py](new-ccsl-server/scripts/server_baseline.py) | 通过 SSH 或服务器本机采集脱敏的系统、磁盘、服务、端口与 Java 基线 |

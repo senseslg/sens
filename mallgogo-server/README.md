@@ -1,6 +1,6 @@
-# mallgogo-sever
+# mallgogo-server
 
-MallGoGo SSR 应用的服务器部署与性能诊断子项目。目录名称按创建要求保留为 `mallgogo-sever`。
+MallGoGo SSR 应用的服务器部署与性能诊断子项目。2026-11-27 目录名由 `mallgogo-sever` 更正为 `mallgogo-server`。
 
 ## 阅读顺序
 

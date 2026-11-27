@@ -4,6 +4,12 @@
 
 ---
 
+- 2026-11-27 — 目录 `mallgogo-sever` 更正为 [mallgogo-server](mallgogo-server/README.md) 并同步引用；[ali_oss](ali_oss/README.md) 创建只读 OSS 账号 `ali-oss-ops`，API 脚本真实调用验证通过。
+- 2026-11-27 — [ali_oss](ali_oss/README.md) 采集 OSS 控制台信息，新增 OSS API 脚本（默认 dry-run）与不影响业务的分阶段加固方案；`uat-mallgogo` 流量异常待查。
+- 2026-11-27 — 新增 [ali_oss](ali_oss/README.md) 子项目（阿里云 OSS 管理），按框架 v0.3.1 落地规则并汇总既有 Bucket 记录；Chrome 未登录，控制台信息待采集。
+- 2026-11-26 — [sms_service](sms_service/README.md) 统一使用 sender 称呼；获授权用 MallGoGo/CE Express 向两个号码各发一条链接短信，四条均获 HTTP 200、queue_id 及 message_count=1，终端接收/点击待确认。
+- 2026-11-26 — [sms_service](sms_service/README.md) 记录用户确认的商城 `MallGoGo`、物流 `CE Express` sender，新增 `--business` 选择及更新单发/批发示例；本轮未发送短信。
+- 2026-11-26 — [sms_service](sms_service/README.md) 获授权向两个号码各尝试一条 Mall 链接短信，均返回 HTTP 400 / `Invalid Sender`，待提供有效 sender，未验证手机点击行为。
 - 2026-11-25 — OTWMS CE-2641 J&T 字段改为 `expressTypeCode`，生产部署 #201（`54cf8310d`），TC 下单验证通过；CE-2641/CE-2644 首次生产部署为 11-24 #200，见 [记录](otwms-server/FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
 
 - 2026-11-24 — OTWMS CE-2641（WHJT02 推 J&T 规则）UAT 验收通过，与 CE-2644 一起合入 master，待生产部署；补充 UAT 浏览器测试要点，见 [记录](otwms-server/FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
@@ -102,7 +108,7 @@
 - **v0.4.3** 2026-07-15 — 补充 MallGoGo 带宽之外的加强项：部署一致性、压缩与 HTTP/2、CDN、外部 API 降级、可观测性、发布回滚、Ubuntu 20.04 ESM 与凭证安全
 - **v0.4.2** 2026-07-15 — 为 MallGoGo 增加公网带宽容量方案：先以 10 Mbps 临时 A/B 验证，无 CDN 时从 20 Mbps 起步，并建立 CDN 后源站带宽与扩容判断标准
 - **v0.4.1** 2026-07-15 — 确认 MallGoGo 线上域名为 `www.cel-mall.com`，识别线上 Nuxt 与本地 Next.js 构建不一致，并补充静态资源未压缩、HTTP/1.1 与 3 Mbps 带宽的实测结论
-- **v0.4.0** 2026-07-15 — 新增 `mallgogo-sever` 子项目，完成 MallGoGo 本地快、ECS 线上慢的首轮性能分析，并建立分层诊断 Runbook 与优化路线图
+- **v0.4.0** 2026-07-15 — 新增 `mallgogo-server` 子项目，完成 MallGoGo 本地快、ECS 线上慢的首轮性能分析，并建立分层诊断 Runbook 与优化路线图
 - **v0.3.0** 2026-07-15 — 新增 `ssl` 子项目，整理 `ceccsl.com` 通配符双证书、自动续期、Nginx 站点、DNS 状态边界和新子域名部署流程
 - **v0.2.1** 2026-07-15 — 将公开共享对话“服务器硬盘清理建议”精简并归档到 `google-otwms`，补充 UAT 磁盘监控解释、SSH 公钥认证诊断和安全排查流程
 - **v0.2.0** 2026-07-15 — 新增 `google-otwms` 子项目，整理 GCP 环境总览、生产/UAT SSH 与巡检手册、磁盘事故记录及巡检工具路线图

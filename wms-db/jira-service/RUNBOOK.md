@@ -66,6 +66,8 @@ python3 run.py
 }
 ```
 
+描述只写发布需求和标准处理方案，不带入个人记录、个人开发日志或项目根目录个人文档的内容，详见 [README 项目规则](README.md#项目规则)。
+
 人员选择依据 [跨项目人员分工](../JIRA_REQUIREMENTS.md)；API 的 `assignee` 填 Jira 用户名，不填显示名。用户指定负责人优先，目标项目的可分配权限仍需确认。
 
 支持 `assignee`（用户名）、`priority_id` 和自定义字段 `extra_fields`。预检查只校验字段存在性和必填项，实际值及权限由 Jira 提交时校验。

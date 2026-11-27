@@ -15,6 +15,15 @@
 
 ## 单发
 
+用户于 2026-11-26 确认的业务 sender（保留大小写及空格；同日各向两个号码测试，四条均获 HTTP 200 和队列 ID，终端接收待确认）：
+
+| 业务 | sender | CLI 业务参数 |
+|---|---|---|
+| 商城 | `MallGoGo` | `--business mall` |
+| 物流 | `CE Express` | `--business logistics` |
+
+商城网站链接使用 `MallGoGo`。`SMS Info` 仅为官方文档示例，此账号此前使用它返回 `400 Invalid Sender`，不要作为本项目调用默认值。
+
 JSON 包含 `sender`（发送方文本）、`to`（接收号码）、`content`（短信文本），见 [单发示例](message.example.json)。官方示例以字符串传号码，例如 `85512345678`；真实 sender 使用账号获准的值。
 
 可把敏感片段写成 `#ma#片段#ma#`，支持多个片段。接收人看到原文，交易报告中该片段显示为星号，标记本身不出现在接收设备上。这不代替本地日志脱敏。
@@ -23,9 +32,13 @@ JSON 包含 `sender`（发送方文本）、`to`（接收号码）、`content`�
 
 见 [批发示例](batch.example.json)：
 
-- 必填 `globals`，文档示例为 `{"sender":"SMS Info"}`。
+- 必填 `globals`，本项目商城用 `{"sender":"MallGoGo"}`，物流用 `{"sender":"CE Express"}`。
 - 必填 `messages` 数组，各项包含号码数组 `to` 和文本 `content`。
 - 可选 `batch_config`，文档示例为 `{"callback_url":"https://example.com/callback","schedule_at":"2021-09-30 09:00:00"}`。
+
+## 实测响应（2026-11-26）
+
+四条单发请求均返回 HTTP 200，JSON 包含独立的 `queue_id` 和 `message_count: 1`，可确认受理入队；不代表终端已收到或已点击链接。此为本账号实测，不扩展为服务商完整响应契约。
 
 ## 文档边界
 

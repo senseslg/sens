@@ -19,6 +19,7 @@
 - [telegram-CCSL-Service](telegram-CCSL-Service/README.md)：CCSL Telegram 通知调用工具与私密配置，供其他业务复用；默认检查，显式发送。
 
 - [jenkins-service](jenkins-service/README.md)：公司 Jenkins（`wms-db` 容器）的位置、CCSL 任务路径与只读构建/日志查询脚本。
+- [ali_oss](ali_oss/README.md)：阿里云 OSS 存储桶管理子项目；默认只读，变更逐项授权。
 - `sms_service/`：PlasGate 短信接口说明、私有凭据配置与单发/批发调用脚本。
 - `records/projects/`：项目记录，一项长期工作一个文件。
 - `records/daily/`：需要跨天保留的日常工作记录。
@@ -32,7 +33,7 @@
 - `otwms-server/`：OTWMS Java 后端的源码、Jenkins 构建、生产部署、XXL-JOB 执行与故障定位记录。
 - `tms-server/`：`tms.cambodianexpress.com` 的路由、Tomcat、源码与 Jenkins 发布映射及 OOM 事故记录。
 - `ssl/`：`ceccsl.com` 的 SSL、Nginx、DNS 与网站部署子项目。
-- `mallgogo-sever/`：MallGoGo SSR 的服务器部署与性能诊断子项目。
+- `mallgogo-server/`：MallGoGo SSR 的服务器部署与性能诊断子项目。
 - `new-ccsl-server/`：新 CCSL 服务器的建设、迁移、部署与运维子项目。
 - `admin_portal/`：本机管理后台，聚合本机信息、健康状况和 `sens-server` 文档快照。
 - `ce-finance/`：CE 财务账目、账户、对账与月结管理子项目。
