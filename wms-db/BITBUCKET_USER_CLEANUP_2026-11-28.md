@@ -5,7 +5,7 @@
 - **登录白名单**（用户决定）：sens、BRIAN、ceck、daniel.zhou、huzw、longmh、milf、yuth，另保留 Bitbucket 本地账号 `jenkins`（32 个 Jenkins 任务用凭据 `Bitbucket` 经 HTTPS 拉代码，停用即全部构建失败）。Jira 与 Bitbucket 启用账号已回查与此一致。
 - **Jira 运行模式：私有**（原为「开放」，任何人可自助注册并自动同步进 Bitbucket）。匿名访问注册页已显示私有站点提示。回滚：系统 → 一般设置 → 编辑设置 → 运行模式。
 - **已停用（可恢复，不是删除）**：GUD7XY、rschauditqrnht2is、rt20261027080120a3ce6f83、Thyna、cyj、darvis.clawd、mark、milo、tsw、scott。另 `cdp25417`（CE Probe，11-27 匿名注册）已由 sens 在 Jira 删除。
-- **交接**：scott 负责的 CE 组件（CE.CCSL、CE客户端APP、OTWMS前端、TMS）负责人改为 `huzw`，其中 CE.CCSL、TMS 新问题默认分给 huzw；停用账号名下全部 91 个未解决问题改派 `sens`，回查剩余 0。
+- **交接**：scott 负责的 CE 组件（CE.CCSL、CE客户端APP、OTWMS前端、TMS）负责人改为 `huzw`，其中 CE.CCSL、TMS 新问题默认分给 huzw；停用账号名下全部 91 个未解决问题改派 `sens`，回查剩余 0。其中原 scott 的 83 个按用户决定关闭：CE 21、CCSL 60 为「已关闭 / Won't Do」；TOUCHA-28、TOUCHA-30 因简化工作流不能选解决结果，转「完成」（结果=完成）并备注 Won't Do。
 - 停用账号不能自行恢复；只有 Jira 系统管理员可重新启用，审计日志可查。
 
 ## 权限结构

@@ -4,6 +4,7 @@
 
 ---
 
+- 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 原 scott 的 83 个问题全部关闭：81 个 Won't Do，TOUCHA 2 个转完成并备注。
 - 2026-11-28 — [wms-db RUNBOOK](wms-db/RUNBOOK.md) 新增 Jira/Bitbucket 账号停用方法；账号清理记录压缩为当前状态；tsw、mark 停用后从经办人约定中注明。
 - 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 按白名单在 Jira 停用 9 个账号并同步 Bitbucket；scott 的 4 个组件负责人改为 huzw、83 个未解决问题改派 sens 后停用，其余停用账号 8 个未解决问题也改派 sens；jenkins 保留（32 个构建任务依赖）。
 - 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 按授权把 Jira 改为私有模式（关闭自助注册，已验证）；Bitbucket 本身无匿名访问，用户全部来自 Jira；记录 Jira/Bitbucket 最高权限持有人。
