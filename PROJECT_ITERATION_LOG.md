@@ -4,6 +4,7 @@
 
 ---
 
+- 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 2026 年前创建的未解决问题 55 个关闭为 Won't Do；CE-2140 无可用工作流操作，待处理。
 - 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 全部 22 个未分配未解决问题关闭为 Won't Do（TOUCHA 14 个转完成并备注）。
 - 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) sens 名下 10 月 1 日前创建的 32 个未解决问题关闭为 Won't Do（3 个简化工作流转完成并备注）。
 - 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 原 scott 的 83 个问题全部关闭：81 个 Won't Do，TOUCHA 2 个转完成并备注。
