@@ -1,6 +1,6 @@
 # 项目迭代记录
 
-- 2026-11-28 — CE-2646：本土件（`CCSL-LOCAL`）在订单列表待分配页签不显示。原因是 10-28 `06449cf94` 为推送去重把 `CCSL_LOCAL` 加入共用 `ignoreSource`（同时用于待分配页签、计数、未分配提醒）；页面默认只查当天也会让旧单看不到。分支 `fix/CE-2646-ccsl-local-assign-tabs`（基于 master `54cf8310d`），提交 `7271c918f` 只从 `ignoreSource` 移除 `CCSL_LOCAL`，推送去重不变；未推送，待 UAT 验证。CE-2644 已于本日关闭（生产核对未同步 0 单）。
+- 2026-11-28 — CE-2646：本土件（`CCSL-LOCAL`）在订单列表待分配页签不显示。原因是 10-28 `06449cf94` 为推送去重把 `CCSL_LOCAL` 加入共用 `ignoreSource`（同时用于待分配页签、计数、未分配提醒）；页面默认只查当天也会让旧单看不到。分支 `fix/CE-2646-ccsl-local-assign-tabs`（基于 master `54cf8310d`），提交 `7271c918f` 只从 `ignoreSource` 移除 `CCSL_LOCAL`，推送去重不变。PR #3096 合入 qa `097cfc592`，UAT #500 构建成功；UAT 接口只读验收（09-01~11-28）：待取件 45 单全为 CCSL-LOCAL、计数 45；待分配快递员 4 单（自建 3、GOODY-SHOP 1），库中 3 单 CCSL 仍排除；待分配门店计数 0（库中 CCSL 82、CCAF 1 仍排除）。均与库一致，通过。推送去重代码未改，未实测。PR #3097 合并 master `977d0d505`，生产 #202（11-28 19:32）部署，实例 `otwms-group-rqzr`；生产接口核对用户反馈的本土单已出现在待分配快递员页签与计数，与库一致。CE-2646 已关闭（完成）。CE-2644 已于本日关闭（生产核对未同步 0 单）。
 
 - 2026-11-25 — CE-2641：J&T 字段名应为 `expressTypeCode`（`productType` 被忽略）；改名 `be45d4ffe`，UAT #499 构建成功，TC 单被 J&T 测试环境拒（B094，对方确认为其环境问题）。合入 master `54cf8310d`，02:17 生产部署 #201，测试单推 TC 下单成功，见 [CE-2641 记录](FEATURE_2026-11-24_CE-2641_WHJT02_JT_PUSH.md)。
 
