@@ -95,4 +95,5 @@ python jenkins_builds.py log  --job ccsl/uat/ccsl-backend-uat --build 2345
 
 ## 记录
 
+- 2026-11-28：Jenkins 2.503 使用内置用户库，已关闭注册；授权策略为“登录用户可以做任何事”（`FullControlOnceLoggedIn`），因此 37 个本地账号都有完整管理员权限，任何人都能删除用户。删除用户的操作由用户本人在“系统管理 → 用户”页面完成。
 - 2026-11-19：后端 UAT #2345 失败，原因是 qa 上 CCSL-2859 测试类 `ParcelAutoCollectionDatabaseUatTest` 中 `assertEquals(int, Integer)` 编译歧义（`testCompile` 阶段），不是 Git 合并冲突；前端 UAT 当天 10:02 后无新构建。

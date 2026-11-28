@@ -4,6 +4,9 @@
 
 ---
 
+- 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 按白名单在 Jira 停用 9 个账号并同步 Bitbucket；scott 的 4 个组件负责人改为 huzw、83 个未解决问题改派 sens 后停用，其余停用账号 8 个未解决问题也改派 sens；jenkins 保留（32 个构建任务依赖）。
+- 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) 按授权把 Jira 改为私有模式（关闭自助注册，已验证）；Bitbucket 本身无匿名访问，用户全部来自 Jira；记录 Jira/Bitbucket 最高权限持有人。
+- 2026-11-28 — [wms-db](wms-db/BITBUCKET_USER_CLEANUP_2026-11-28.md) Bitbucket 移除 CE Probe（Jira 已删，手动同步后消失）；Jira 开放注册导致陌生账号进 Bitbucket，待决定是否关闭；Jenkins 所有登录用户均为管理员已记入 jenkins-service。
 - 2026-11-27 — 目录 `mallgogo-sever` 更正为 [mallgogo-server](mallgogo-server/README.md) 并同步引用；[ali_oss](ali_oss/README.md) 创建只读 OSS 账号 `ali-oss-ops`，API 脚本真实调用验证通过。
 - 2026-11-27 — [ali_oss](ali_oss/README.md) 采集 OSS 控制台信息，新增 OSS API 脚本（默认 dry-run）与不影响业务的分阶段加固方案；`uat-mallgogo` 流量异常待查。
 - 2026-11-27 — 新增 [ali_oss](ali_oss/README.md) 子项目（阿里云 OSS 管理），按框架 v0.3.1 落地规则并汇总既有 Bucket 记录；Chrome 未登录，控制台信息待采集。
