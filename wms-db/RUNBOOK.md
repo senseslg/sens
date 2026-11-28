@@ -46,6 +46,17 @@ sudo netstat -ltn
 
 2026-10-23 已按授权将 Bitbucket 4.0.2 的 JVM 时区改为 `Asia/Phnom_Penh` 并重启验证；启动脚本已同步持久化。配置、备份和回滚方法见 [Bitbucket 时区记录](BITBUCKET_TIMEZONE.md)。核对运行中 `user.timezone`，不以容器 `date` 或 HTTP `Date` 头判断应用时区。
 
+## Jira / Bitbucket 账号停用
+
+Bitbucket 用户除本地 `jenkins`、`yuth` 外都来自 Jira，**在 Jira 停用，再到 Bitbucket 同步**。2026-11-28 实操见 [账号清理记录](BITBUCKET_USER_CLEANUP_2026-11-28.md)。
+
+1. 对照白名单：Jira `GET /rest/api/2/user/search?username=.&maxResults=1000` 列启用账号与邮箱。
+2. 停用前查影响：JQL `assignee = "<用户名>" AND resolution is EMPTY` 与近 30 天更新；查是否为组件负责人（Jira 会拒绝停用组件负责人，先改 `PUT /rest/api/2/component/<id>` 的 `leadUserName`）；查 Jenkins 是否用该账号拉代码。
+3. 停用：Jira 7.12 REST 不能改启用状态，只能在「用户管理 → 编辑」取消「活跃」；需管理员二次验证（websudo），密码由用户本人输入，约十几分钟会过期。
+4. 改派：`PUT /rest/api/2/issue/<key>/assignee`，会发通知邮件。
+5. Bitbucket：「管理 → User Directories → JIRA Server → Synchronise」。增量同步会漏掉删除/停用，不要只等每小时同步。
+6. 回查：Bitbucket 库 `cwd_user.is_active='T'` 只读查询（`sudo -u postgres psql -d bitbucket`，`BEGIN READ ONLY`）。
+
 ## 操作边界
 
 - 容器重启、镜像升级、Nginx 修改、数据库操作、数据卷清理、端口或防火墙变更均需明确授权和回滚方案。

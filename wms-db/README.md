@@ -19,4 +19,4 @@ Jira 本体实测为 Server 7.12.0。本机 `jira-service` 已验证 API 建单�
 
 2026-11-02：[CCSL 提交作者核对](BITBUCKET_AUTHOR_IDENTITY_2026-11-02.md) 区分 `SiGentIsHere` Git 作者名与 Bitbucket 登录用户，关联 PR 由 YUTH 创建并合并；实际推送账号未直接确认。
 
-2026-11-28：[Bitbucket 用户清理](BITBUCKET_USER_CLEANUP_2026-11-28.md) 移除 CE Probe（`cdp25417`）；发现 Jira 为开放注册模式，新注册用户会同步进 Bitbucket，待决定是否关闭。
+2026-11-28：[Jira/Bitbucket 账号清理](BITBUCKET_USER_CLEANUP_2026-11-28.md) Jira 改为私有模式，按 8 人白名单（+`jenkins`）停用其余账号并交接问题；方法见 RUNBOOK。

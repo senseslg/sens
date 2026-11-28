@@ -52,6 +52,8 @@ Jira 地址为 [issue.cambodianexpress.com](https://issue.cambodianexpress.com/)
 
 ### 代购商城主要开发人员
 
+> 2026-11-28：`tsw`、`mark` 已按登录白名单停用，不再作为经办人；代购商城后端需求经办人需用户另行指定。
+
 2026-10-07 用户补充：谭赛文和 mark 主要负责代购商城的后端开发；“主要负责”不视为仅支持该项目。Jira 账号已通过 API 核对，均为启用状态。
 
 | 同事／显示名 | Jira 用户名（API 经办人） | 项目与模块职责 |
