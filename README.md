@@ -20,6 +20,7 @@
 
 - [jenkins-service](jenkins-service/README.md)：公司 Jenkins（`wms-db` 容器）的位置、CCSL 任务路径与只读构建/日志查询脚本。
 - [ali_oss](ali_oss/README.md)：阿里云 OSS 存储桶管理子项目；默认只读，变更逐项授权。
+- [api_google_geo](api_google_geo/README.md)：经纬度反向地理编码服务设计（Google Geocoding + `new_ccsl.area` 匹配），目前只有文档和建表脚本。
 - `sms_service/`：PlasGate 短信接口说明、私有凭据配置与单发/批发调用脚本。
 - `records/projects/`：项目记录，一项长期工作一个文件。
 - `records/daily/`：需要跨天保留的日常工作记录。

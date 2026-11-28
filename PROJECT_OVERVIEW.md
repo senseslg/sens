@@ -64,6 +64,12 @@
 - 范围：阿里云国际站 OSS Bucket 清单、权限、CDN 关联、用量、安全加固与 API 脚本；已接入 agent 框架 v0.3.1。
 - 当前状态：`2026-11-27` 控制台只读采集 7 个桶（香港，5 个公共读，健康检测 284/500）；`scripts/oss.py` 已用只读账号 `ali-oss-ops` 真实验证；分阶段加固方案待决定。
 
+### api_google_geo
+
+- 路径：[`api_google_geo/`](api_google_geo/README.md)。
+- 范围：经纬度反向地理编码服务设计（Token 鉴权、调用 Google Geocoding、匹配 `new_ccsl.area` 返回省/市区 id、请求日志表）。
+- 当前状态：`2026-11-28` 从 `/Users/lingang/work/api_google_geo` 复制；只有文档和 `schema.sql`（v0.1.0，2026-04-25），尚无代码。
+
 ### gcp-cost-optimization
 
 - 路径：[`gcp-cost-optimization/`](gcp-cost-optimization/README.md)。
@@ -186,6 +192,7 @@
 - `records/daily/`：跨天日常记录。
 - `records/meetings/`：会议记录。
 - `ali_oss/`：阿里云 OSS 存储桶管理子项目。
+- `api_google_geo/`：经纬度反向地理编码服务设计子项目。
 - `google-otwms/`：OTWMS / GCP 运维子项目。
 - `google-cloud/`：Google Cloud 项目级管理子项目。
 - `otwms-ce-lb/`：CE/WMS 的 GCP 入口、共享平台、源码/构建与应用服务器运维子项目。

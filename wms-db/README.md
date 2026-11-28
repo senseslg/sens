@@ -10,6 +10,7 @@ GCP `wms-db` 的独立运维子项目。该实例是 CE/WMS 的共享平台，�
 4. [RUNBOOK.md](RUNBOOK.md)：IAP 登录和只读巡检方法。
 5. [JIRA_REQUIREMENTS.md](JIRA_REQUIREMENTS.md)：Jira 接入约定、认证和工具选择。
 6. [jira-service/README.md](jira-service/README.md)：本机 Python 需求服务；功能评估与操作说明由该子项目维护。
+7. [bitbucket-service/README.md](bitbucket-service/README.md)：Bitbucket REST 只读查询脚本（项目、分支、提交、PR、用户、权限、白名单比对）。
 
 `2026-10-03`：实例、Nginx 和主要容器均在运行；`issue`、`code`、`yapi`、`jenkins` 的入口均已核实。500 GB 根盘使用约 56%，内存余量约 12 GB。当前主要风险是服务高度集中、CentOS 7 生命周期、无 Swap、旧版或 `latest` 容器镜像，以及备份恢复体系尚未完整确认。
 
